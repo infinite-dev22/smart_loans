@@ -115,7 +115,6 @@ class ClientInfoDataGridSource extends DataGridSource {
 
   @override
   DataGridRowAdapter buildRow(DataGridRow row) {
-    final int rowIndex = dataGridRows.indexOf(row);
     Color backgroundColor = Colors.transparent;
     if (isWebOrDesktop) {
       return DataGridRowAdapter(color: backgroundColor, cells: <Widget>[
@@ -129,10 +128,17 @@ class ClientInfoDataGridSource extends DataGridSource {
         ),
         Container(
           padding: const EdgeInsets.all(8),
-          alignment: Alignment.centerRight,
+          alignment: Alignment.centerLeft,
           child: Text(
             row.getCells()[1].value.toString(),
             overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.all(8),
+          alignment: Alignment.centerRight,
+          child: Text(
+            row.getCells()[2].value.toString(),
           ),
         ),
         Container(
@@ -144,26 +150,19 @@ class ClientInfoDataGridSource extends DataGridSource {
         ),
         Container(
           padding: const EdgeInsets.all(8),
-          alignment: Alignment.centerRight,
-          child: Text(
-              NumberFormat.currency(locale: 'en_US', symbol: currencySymbol)
-                  .format(row.getCells()[3].value)),
-        ),
-        Container(
-          padding: const EdgeInsets.all(8),
           alignment: Alignment.centerLeft,
           child: Text(
             row.getCells()[4].value.toString(),
             overflow: TextOverflow.ellipsis,
           ),
         ),
-        Container(
-          padding: const EdgeInsets.all(8),
-          alignment: Alignment.centerRight,
-          child: Text(NumberFormat.currency(
-                  locale: 'en_US', symbol: currencySymbol, decimalDigits: 0)
-              .format(row.getCells()[5].value)),
-        ),
+        // Container(
+        //   padding: const EdgeInsets.all(8),
+        //   alignment: Alignment.centerRight,
+        //   child: Text(
+        //     row.getCells()[2].value.toString(),
+        //   ),
+        // ),
       ]);
     } else {
       Widget buildWidget({
@@ -186,7 +185,7 @@ class ClientInfoDataGridSource extends DataGridSource {
           color: backgroundColor,
           cells: row.getCells().map<Widget>((DataGridCell dataCell) {
             if (dataCell.columnName == getColumnName('id') ||
-                dataCell.columnName == getColumnName('customerId')) {
+                dataCell.columnName == getColumnName('clientNumber')) {
               return buildWidget(
                   alignment: Alignment.centerRight, value: dataCell.value!);
             } else {
@@ -213,41 +212,6 @@ class ClientInfoDataGridSource extends DataGridSource {
   }
 
   @override
-  Widget? buildTableSummaryCellWidget(
-      GridTableSummaryRow summaryRow,
-      GridSummaryColumn? summaryColumn,
-      RowColumnIndex rowColumnIndex,
-      String summaryValue) {
-    Widget? widget;
-    Widget buildCell(String value, EdgeInsets padding, Alignment alignment) {
-      return Container(
-        padding: padding,
-        alignment: alignment,
-        child: Text(value,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(fontWeight: FontWeight.w500)),
-      );
-    }
-
-    if (summaryRow.showSummaryInRow) {
-      widget = buildCell(
-          summaryValue, const EdgeInsets.all(16.0), Alignment.centerLeft);
-    } else if (summaryValue.isNotEmpty) {
-      if (summaryColumn!.columnName == 'freight') {
-        summaryValue = double.parse(summaryValue).toStringAsFixed(2);
-      }
-
-      summaryValue = 'Sum: ' +
-          NumberFormat.currency(locale: 'en_US', decimalDigits: 0, symbol: r'$')
-              .format(double.parse(summaryValue));
-
-      widget = buildCell(
-          summaryValue, const EdgeInsets.all(8.0), Alignment.centerRight);
-    }
-    return widget;
-  }
-
-  @override
   Widget? buildGroupCaptionCellWidget(
       RowColumnIndex rowColumnIndex, String summaryValue) {
     return Container(
@@ -259,18 +223,16 @@ class ClientInfoDataGridSource extends DataGridSource {
   String getColumnName(String columnName) {
     if (isFilteringSample) {
       switch (columnName) {
-        case 'id':
-          return 'Client ID';
-        case 'customerId':
-          return 'Customer ID';
+        case 'clientNumber':
+          return 'Client Number';
         case 'name':
           return 'Name';
-        case 'freight':
-          return 'Freight';
-        case 'city':
-          return 'City';
-        case 'price':
-          return 'Price';
+        case 'telephone':
+          return 'Telephone';
+        case 'email':
+          return 'Email';
+        case 'nationality':
+          return 'Nationality';
         default:
           return columnName;
       }
