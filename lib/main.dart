@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smart_loans/pages/clients/widgets/success/clients_success_widget.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/pages/root.dart';
 
 void main() {
@@ -11,13 +11,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return ResponsiveSizer(
+      builder: (context, orientation, screenType) => MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home: const MyHomePage(title: 'Flutter Demo Home Page'),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }

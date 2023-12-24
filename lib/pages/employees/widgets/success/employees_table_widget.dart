@@ -9,20 +9,21 @@ import 'package:dynamic_table/dynamic_table_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/config/responsive.dart';
-import 'package:smart_loans/data_source/dummy_data.dart';
 import 'package:smart_loans/global_values.dart';
 import 'package:smart_loans/theme/light.dart';
 
-class ClientsTableWidget extends StatefulWidget {
-  const ClientsTableWidget({super.key});
+import '../../../../data_source/dummy_employee_data.dart';
+
+class EmployeesTableWidget extends StatefulWidget {
+  const EmployeesTableWidget({super.key});
 
   @override
-  State<ClientsTableWidget> createState() => _ClientsTableWidgetState();
+  State<EmployeesTableWidget> createState() => _EmployeesTableWidgetState();
 }
 
-class _ClientsTableWidgetState extends State<ClientsTableWidget> {
+class _EmployeesTableWidgetState extends State<EmployeesTableWidget> {
   var tableKey = GlobalKey<DynamicTableState>();
-  var myData = dummyData.toList();
+  var myData = dummyEmployeeData.toList();
 
   /// DataGridSource required for SfDataGrid to obtain the row data.
 
@@ -43,7 +44,7 @@ class _ClientsTableWidgetState extends State<ClientsTableWidget> {
           child: DynamicTable(
             key: tableKey,
             header: Text(
-              "Clients",
+              "Employees",
               style: TextStyle(
                   color: LightAppColor.textColor, fontSize: headerFontSize),
             ),
@@ -165,7 +166,7 @@ class _ClientsTableWidgetState extends State<ClientsTableWidget> {
         width: 40.w,
         child: TextFormField(
           decoration: InputDecoration(
-            hintText: "Search clients",
+            hintText: "Search employees",
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
             ),
@@ -210,27 +211,37 @@ class _ClientsTableWidgetState extends State<ClientsTableWidget> {
   List<DynamicTableDataColumn> _buildColumns() {
     return [
       DynamicTableDataColumn(
-          label: const Text(
-            "Client Number",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+        label: const Text(
+          "Name",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
           ),
-          onSort: (columnIndex, ascending) {},
-          dynamicTableInputType: DynamicTableInputType.text()),
-      DynamicTableDataColumn(
-          label: const Text(
-            "Name",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          onSort: (columnIndex, ascending) {},
-          isEditable: false,
-          dynamicTableInputType: DynamicTableInputType.text()),
+        ),
+        onSort: (columnIndex, ascending) {},
+        isEditable: false,
+        dynamicTableInputType: DynamicTableInputType.text(),
+      ),
       DynamicTableDataColumn(
         label: const Text(
           "Telephone",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        dynamicTableInputType: DynamicTableInputType.text(),
+      ),
+      DynamicTableDataColumn(
+        label: const Text(
+          "Email",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        dynamicTableInputType: DynamicTableInputType.text(),
+      ),
+      DynamicTableDataColumn(
+        label: const Text(
+          "Added At",
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
@@ -239,53 +250,13 @@ class _ClientsTableWidgetState extends State<ClientsTableWidget> {
         dynamicTableInputType: DynamicTableInputType.date(
           context: context,
           decoration: const InputDecoration(
-              hintText: "Email",
+              hintText: "Date added",
               suffixIcon: Icon(Icons.date_range),
               border: OutlineInputBorder()),
           initialDate: DateTime(1900),
           lastDate: DateTime.now().add(
             const Duration(days: 365),
           ),
-        ),
-      ),
-      DynamicTableDataColumn(
-        label: const Text(
-          "Nationality",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        dynamicTableInputType: DynamicTableInputType.dropDown<String>(
-          items: genderDropdown
-              .map((e) => DropdownMenuItem(
-                    value: e,
-                    child: Text(e),
-                  ))
-              .toList(growable: false),
-          selectedItemBuilder: (context) {
-            return genderDropdown.map((e) => Text(e)).toList(growable: false);
-          },
-          decoration: const InputDecoration(
-              hintText: "Select Gender", border: OutlineInputBorder()),
-          displayBuilder: (value) =>
-              value ??
-              "", // How the string will be displayed in non editing mode
-        ),
-      ),
-      DynamicTableDataColumn(
-        label: const Text(
-          "Other Info",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        onSort: (columnIndex, ascending) {},
-        dynamicTableInputType: DynamicTableInputType.text(
-          decoration: const InputDecoration(
-            hintText: "Enter Other Info",
-            border: OutlineInputBorder(),
-          ),
-          maxLines: 100,
         ),
       ),
     ];
@@ -309,45 +280,13 @@ class _ClientsTableWidgetState extends State<ClientsTableWidget> {
       barrierDismissible: true,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Add Client'),
+          title: const Text('Add Employee'),
           content: SingleChildScrollView(
             child: SizedBox(
               width: 30.w,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
-                    height: 5.h,
-                    child: DropdownButtonFormField2(
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(8.0),
-                            ),
-                          ),
-                          label: Text("Client type")),
-                      items: const [
-                        DropdownMenuItem(
-                          value: 1,
-                          child: Text("Test 1"),
-                        ),
-                        DropdownMenuItem(
-                          value: 2,
-                          child: Text("Test 2"),
-                        ),
-                        DropdownMenuItem(
-                          value: 3,
-                          child: Text("Test 3"),
-                        ),
-                        DropdownMenuItem(
-                          value: 4,
-                          child: Text("Test 4"),
-                        ),
-                      ],
-                      onChanged: (value) {},
-                    ),
-                  ),
-                  const SizedBox(height: 16),
                   SizedBox(
                     height: 5.h,
                     child: TextFormField(
@@ -386,30 +325,6 @@ class _ClientsTableWidgetState extends State<ClientsTableWidget> {
                   const SizedBox(height: 16),
                   SizedBox(
                     height: 5.h,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        label: const Text("Telephone"),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  SizedBox(
-                    height: 5.h,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        label: const Text("Email"),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  SizedBox(
-                    height: 5.h,
                     child: DropdownButtonFormField2(
                       decoration: const InputDecoration(
                           border: OutlineInputBorder(
@@ -417,7 +332,7 @@ class _ClientsTableWidgetState extends State<ClientsTableWidget> {
                               Radius.circular(8.0),
                             ),
                           ),
-                          label: Text("Nationality")),
+                          label: Text("Designations")),
                       items: const [
                         DropdownMenuItem(
                           value: 1,
@@ -437,6 +352,54 @@ class _ClientsTableWidgetState extends State<ClientsTableWidget> {
                         ),
                       ],
                       onChanged: (value) {},
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    height: 5.h,
+                    child: DropdownButtonFormField2(
+                      decoration: const InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(8.0),
+                            ),
+                          ),
+                          label: Text("Gender")),
+                      items: const [
+                        DropdownMenuItem(
+                          value: 1,
+                          child: Text("Male"),
+                        ),
+                        DropdownMenuItem(
+                          value: 2,
+                          child: Text("Female"),
+                        ),
+                      ],
+                      onChanged: (value) {},
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    height: 5.h,
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        label: const Text("Email"),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    height: 5.h,
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        label: const Text("Telephone"),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 16),

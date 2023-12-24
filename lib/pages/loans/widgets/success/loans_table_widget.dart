@@ -9,22 +9,21 @@ import 'package:dynamic_table/dynamic_table_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/config/responsive.dart';
-import 'package:smart_loans/data_source/dummy_data.dart';
 import 'package:smart_loans/global_values.dart';
 import 'package:smart_loans/theme/light.dart';
 
-class ClientsTableWidget extends StatefulWidget {
-  const ClientsTableWidget({super.key});
+import '../../../../data_source/dummy_loans_data.dart';
+
+class LoansTableWidget extends StatefulWidget {
+  const LoansTableWidget({super.key});
 
   @override
-  State<ClientsTableWidget> createState() => _ClientsTableWidgetState();
+  State<LoansTableWidget> createState() => _LoansTableWidgetState();
 }
 
-class _ClientsTableWidgetState extends State<ClientsTableWidget> {
+class _LoansTableWidgetState extends State<LoansTableWidget> {
   var tableKey = GlobalKey<DynamicTableState>();
-  var myData = dummyData.toList();
-
-  /// DataGridSource required for SfDataGrid to obtain the row data.
+  var myData = dummyLoansData.toList();
 
   Widget _buildLayoutBuilder() {
     return LayoutBuilder(
@@ -43,7 +42,7 @@ class _ClientsTableWidgetState extends State<ClientsTableWidget> {
           child: DynamicTable(
             key: tableKey,
             header: Text(
-              "Clients",
+              "Loans",
               style: TextStyle(
                   color: LightAppColor.textColor, fontSize: headerFontSize),
             ),
@@ -165,7 +164,7 @@ class _ClientsTableWidgetState extends State<ClientsTableWidget> {
         width: 40.w,
         child: TextFormField(
           decoration: InputDecoration(
-            hintText: "Search clients",
+            hintText: "Search loans",
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
             ),
@@ -211,7 +210,7 @@ class _ClientsTableWidgetState extends State<ClientsTableWidget> {
     return [
       DynamicTableDataColumn(
           label: const Text(
-            "Client Number",
+            "Loan No.",
             style: TextStyle(
               fontWeight: FontWeight.bold,
             ),
@@ -220,7 +219,37 @@ class _ClientsTableWidgetState extends State<ClientsTableWidget> {
           dynamicTableInputType: DynamicTableInputType.text()),
       DynamicTableDataColumn(
           label: const Text(
-            "Name",
+            "Loan",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          onSort: (columnIndex, ascending) {},
+          isEditable: false,
+          dynamicTableInputType: DynamicTableInputType.text()),
+      DynamicTableDataColumn(
+          label: const Text(
+            "Principal Amount",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          onSort: (columnIndex, ascending) {},
+          isEditable: false,
+          dynamicTableInputType: DynamicTableInputType.text()),
+      DynamicTableDataColumn(
+          label: const Text(
+            "Loan Fees",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          onSort: (columnIndex, ascending) {},
+          isEditable: false,
+          dynamicTableInputType: DynamicTableInputType.text()),
+      DynamicTableDataColumn(
+          label: const Text(
+            "Loan Fees Type",
             style: TextStyle(
               fontWeight: FontWeight.bold,
             ),
@@ -230,51 +259,39 @@ class _ClientsTableWidgetState extends State<ClientsTableWidget> {
           dynamicTableInputType: DynamicTableInputType.text()),
       DynamicTableDataColumn(
         label: const Text(
-          "Telephone",
+          "Currency",
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
         onSort: (columnIndex, ascending) {},
-        dynamicTableInputType: DynamicTableInputType.date(
-          context: context,
+        dynamicTableInputType: DynamicTableInputType.text(
           decoration: const InputDecoration(
-              hintText: "Email",
-              suffixIcon: Icon(Icons.date_range),
-              border: OutlineInputBorder()),
-          initialDate: DateTime(1900),
-          lastDate: DateTime.now().add(
-            const Duration(days: 365),
+            hintText: "Enter Other Info",
+            border: OutlineInputBorder(),
           ),
+          maxLines: 100,
         ),
       ),
       DynamicTableDataColumn(
         label: const Text(
-          "Nationality",
+          "Branch",
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
-        dynamicTableInputType: DynamicTableInputType.dropDown<String>(
-          items: genderDropdown
-              .map((e) => DropdownMenuItem(
-                    value: e,
-                    child: Text(e),
-                  ))
-              .toList(growable: false),
-          selectedItemBuilder: (context) {
-            return genderDropdown.map((e) => Text(e)).toList(growable: false);
-          },
+        onSort: (columnIndex, ascending) {},
+        dynamicTableInputType: DynamicTableInputType.text(
           decoration: const InputDecoration(
-              hintText: "Select Gender", border: OutlineInputBorder()),
-          displayBuilder: (value) =>
-              value ??
-              "", // How the string will be displayed in non editing mode
+            hintText: "Enter Other Info",
+            border: OutlineInputBorder(),
+          ),
+          maxLines: 100,
         ),
       ),
       DynamicTableDataColumn(
         label: const Text(
-          "Other Info",
+          "Loan Status",
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
@@ -309,7 +326,7 @@ class _ClientsTableWidgetState extends State<ClientsTableWidget> {
       barrierDismissible: true,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Add Client'),
+          title: const Text('Add Loan'),
           content: SingleChildScrollView(
             child: SizedBox(
               width: 30.w,
@@ -325,7 +342,103 @@ class _ClientsTableWidgetState extends State<ClientsTableWidget> {
                               Radius.circular(8.0),
                             ),
                           ),
-                          label: Text("Client type")),
+                          label: Text("Client")),
+                      items: const [
+                        DropdownMenuItem(
+                          value: 1,
+                          child: Text("Test 1"),
+                        ),
+                        DropdownMenuItem(
+                          value: 2,
+                          child: Text("Test 2"),
+                        ),
+                        DropdownMenuItem(
+                          value: 3,
+                          child: Text("Test 3"),
+                        ),
+                        DropdownMenuItem(
+                          value: 4,
+                          child: Text("Test 4"),
+                        ),
+                      ],
+                      onChanged: (value) {},
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    height: 5.h,
+                    child: DropdownButtonFormField2(
+                      decoration: const InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(8.0),
+                            ),
+                          ),
+                          label: Text("Loan type")),
+                      items: const [
+                        DropdownMenuItem(
+                          value: 1,
+                          child: Text("Test 1"),
+                        ),
+                        DropdownMenuItem(
+                          value: 2,
+                          child: Text("Test 2"),
+                        ),
+                        DropdownMenuItem(
+                          value: 3,
+                          child: Text("Test 3"),
+                        ),
+                        DropdownMenuItem(
+                          value: 4,
+                          child: Text("Test 4"),
+                        ),
+                      ],
+                      onChanged: (value) {},
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    height: 5.h,
+                    child: DropdownButtonFormField2(
+                      decoration: const InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(8.0),
+                            ),
+                          ),
+                          label: Text("Loan category")),
+                      items: const [
+                        DropdownMenuItem(
+                          value: 1,
+                          child: Text("Test 1"),
+                        ),
+                        DropdownMenuItem(
+                          value: 2,
+                          child: Text("Test 2"),
+                        ),
+                        DropdownMenuItem(
+                          value: 3,
+                          child: Text("Test 3"),
+                        ),
+                        DropdownMenuItem(
+                          value: 4,
+                          child: Text("Test 4"),
+                        ),
+                      ],
+                      onChanged: (value) {},
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    height: 5.h,
+                    child: DropdownButtonFormField2(
+                      decoration: const InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(8.0),
+                            ),
+                          ),
+                          label: Text("Branch")),
                       items: const [
                         DropdownMenuItem(
                           value: 1,
@@ -352,55 +465,7 @@ class _ClientsTableWidgetState extends State<ClientsTableWidget> {
                     height: 5.h,
                     child: TextFormField(
                       decoration: InputDecoration(
-                        label: const Text("First Name"),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  SizedBox(
-                    height: 5.h,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        label: const Text("Last Name"),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  SizedBox(
-                    height: 5.h,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        label: const Text("Other Name"),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  SizedBox(
-                    height: 5.h,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        label: const Text("Telephone"),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  SizedBox(
-                    height: 5.h,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        label: const Text("Email"),
+                        label: const Text("Description"),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0),
                         ),
@@ -417,7 +482,7 @@ class _ClientsTableWidgetState extends State<ClientsTableWidget> {
                               Radius.circular(8.0),
                             ),
                           ),
-                          label: Text("Nationality")),
+                          label: Text("Currency")),
                       items: const [
                         DropdownMenuItem(
                           value: 1,
@@ -444,12 +509,67 @@ class _ClientsTableWidgetState extends State<ClientsTableWidget> {
                     height: 5.h,
                     child: TextFormField(
                       decoration: InputDecoration(
-                        label: const Text("Address"),
+                        label: const Text("Principal Amount"),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
                     ),
+                  ),
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    height: 5.h,
+                    child: DropdownButtonFormField2(
+                      decoration: const InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(8.0),
+                            ),
+                          ),
+                          label: Text("Loan Fees")),
+                      items: const [
+                        DropdownMenuItem(
+                          value: 1,
+                          child: Text("Fixed Rate"),
+                        ),
+                        DropdownMenuItem(
+                          value: 2,
+                          child: Text("Percentage"),
+                        ),
+                      ],
+                      onChanged: (value) {},
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        height: 5.h,
+                        width: 10.w,
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            label: const Text("Unknown Field 1"),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      SizedBox(
+                        height: 5.h,
+                        width: 15.w,
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            label: const Text("Unknown Field 2"),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
