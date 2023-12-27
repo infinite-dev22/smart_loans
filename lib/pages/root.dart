@@ -1,104 +1,146 @@
-import 'package:easy_dashboard/easy_dashboard.dart';
+import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 import 'package:flutter/material.dart';
+import 'package:measured_size/measured_size.dart';
+import 'package:smart_loans/config/responsive.dart';
 import 'package:smart_loans/pages/clients/screens/clients_page.dart';
+import 'package:smart_loans/pages/dashboard/screens/dashboard.dart';
 import 'package:smart_loans/pages/employees/screens/employees_page.dart';
 import 'package:smart_loans/pages/loans/screens/loans_page.dart';
-import 'package:smart_loans/theme/colors.dart';
 
-import 'dashboard/screens/dashboard.dart';
+import 'clients/screens/client_details_page.dart';
 
-class Root extends StatelessWidget {
-  Root({super.key});
+class Root extends StatefulWidget {
+  const Root({super.key});
 
-  late final EasyAppController controller = EasyAppController(
-    intialBody: EasyBody(
-        child: const DashboardPage(),
-        title: const Text(
-          "SmartLoans Manager",
-          style: TextStyle(fontSize: 25, color: AppColor.white45),
-        )),
-  );
+  @override
+  State<Root> createState() => _RootState();
+}
+
+class _RootState extends State<Root> {
+  late List<CollapsibleItem> _items;
+  late List<Map<String, dynamic>> _screens;
+  late Widget currentScreen;
+  late Size sideNavSize;
+
+  @override
+  void initState() {
+    super.initState();
+    _items = _generateItems;
+    _screens = _generatedWidgets;
+    currentScreen =
+        _screens.firstWhere((item) => item["name"] == "dashboard")["widget"];
+  }
 
   @override
   Widget build(BuildContext context) {
-    return EasyDashboard(
-      controller: controller,
-      navigationIcon: const Icon(Icons.menu, color: Colors.white),
-      appBarActions: [],
-      centerTitle: true,
-      appBarColor: AppColor.primary,
-      sideBarColor: AppColor.sideBarPrimary,
-      tabletView: const TabletView(
-        fullAppBar: false,
-        border: BorderSide(width: 0.5, color: Colors.grey),
+    var size = MediaQuery.of(context).size;
+
+    return Scaffold(
+      body: MeasuredSize(
+        onChange: (Size size) {
+          setState(() {
+            sideNavSize = size;
+          });
+        },
+        child: CollapsibleSidebar(
+          isCollapsed:
+              Responsive.isTablet(context) || Responsive.isMobile(context),
+          collapseOnBodyTap: Responsive.isTablet(context),
+          items: _items,
+          title: 'Mark Jonathan',
+          body: _body(size, sideNavSize, context),
+        ),
       ),
-      desktopView: const DesktopView(
-        fullAppBar: true,
-        border: BorderSide(width: 0.5, color: Colors.grey),
-      ),
-      drawer: (Size size, Widget? child) {
-        return EasyDrawer(
-          iconColor: AppColor.sideBarIcon,
-          hoverColor: Colors.grey.shade300.withOpacity(.3),
-          tileColor: AppColor.sideBarPrimary,
-          selectedColor: AppColor.sideBarIcon,
-          selectedIconColor: AppColor.sideBarIcon,
-          textColor: AppColor.sideBarTileText,
-          selectedTileColor: AppColor.sideBarSelectedTile,
-          tiles: _sideTiles(),
-          topWidget: SideBox(
-            scrollable: true,
-            height: 150,
-            child: Text("Top Open Widget") /*topOpenWidget*/,
-          ),
-          bottomWidget: SideBox(
-            scrollable: false,
-            height: 50,
-            child: Text("Bottom Open Widget") /*bottomOpenWidget*/,
-          ),
-          bottomSmallWidget: SideBox(
-            height: 50,
-            child: Text("Bottom Small Widget") /*bottomSmallWidget*/,
-          ),
-          topSmallWidget: SideBox(
-            height: 50,
-            child: Text("Top Small Widget") /*topSmallWidget*/,
-          ),
-          size: size,
-          onTileTapped: (body) {
-            controller.switchBody(body);
-          },
-        );
-      },
     );
   }
 
-  List<SideTile> _sideTiles() {
-    return <SideTile>[
-      SideBarTile(
-        icon: Icons.people_alt_rounded,
-        name: "Dashboard",
-        title: const Text("Dashboard"),
-        body: const DashboardPage(),
+  List<CollapsibleItem> get _generateItems {
+    return [
+      CollapsibleItem(
+        text: 'dashboard',
+        icon: Icons.assessment,
+        onPressed: () => setState(() => currentScreen = _screens
+            .firstWhere((item) => item["name"] == "dashboard")["widget"]),
+        onHold: () => ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text("Dashboard"),
+          ),
+        ),
+        isSelected: true,
       ),
-      SideBarTile(
-        icon: Icons.people_alt_rounded,
-        name: "Clients",
-        title: const Text("Clients"),
-        body: const ClientsPage(),
+      CollapsibleItem(
+        text: 'clients',
+        icon: Icons.search,
+        onPressed: () => setState(() => currentScreen =
+            _screens.firstWhere((item) => item["name"] == "clients")["widget"]),
+        onHold: () => ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text("Clients"),
+          ),
+        ),
       ),
-      SideBarTile(
-        icon: Icons.people_alt_rounded,
-        name: "Employees",
-        title: const Text("Employees"),
-        body: const EmployeesPage(),
+      CollapsibleItem(
+        text: 'employees',
+        icon: Icons.notifications,
+        onPressed: () => setState(() => currentScreen = _screens
+            .firstWhere((item) => item["name"] == "employees")["widget"]),
+        onHold: () => ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text("Employees"),
+          ),
+        ),
       ),
-      SideBarTile(
-        icon: Icons.people_alt_rounded,
-        name: "Loans",
-        title: const Text("Loans"),
-        body: const LoansPage(),
+      CollapsibleItem(
+        text: 'loans',
+        icon: Icons.settings,
+        onPressed: () => setState(() => currentScreen =
+            _screens.firstWhere((item) => item["name"] == "loans")["widget"]),
+        onHold: () => ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text("Loans"),
+          ),
+        ),
       ),
     ];
+  }
+
+  List<Map<String, dynamic>> get _generatedWidgets {
+    return [
+      {
+        "name": "dashboard",
+        "widget": const DashboardPage(),
+      },
+      {
+        "name": "clients",
+        "widget": const ClientsPage(),
+      },
+      {
+        "name": "client_details",
+        "widget": const ClientDetailsPage(),
+      },
+      {
+        "name": "employees",
+        "widget": const EmployeesPage(),
+      },
+      {
+        "name": "loans",
+        "widget": const LoansPage(),
+      },
+    ];
+  }
+
+  Widget _body(Size size, Size sideNavSize, BuildContext context) {
+    return Container(
+      height: double.infinity,
+      width: double.infinity,
+      color: Colors.blueGrey[50],
+      child: Center(
+        child: SizedBox(
+          width: size.width - (sideNavSize.width + 20),
+          height: size.height,
+          child: currentScreen,
+        ),
+      ),
+    );
   }
 }

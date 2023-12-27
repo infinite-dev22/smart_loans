@@ -1,41 +1,76 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:smart_loans/pages/root.dart';
+import 'package:smart_loans/pages/clients/screens/client_details_page.dart';
+import 'package:smart_loans/pages/clients/screens/clients_page.dart';
+import 'package:smart_loans/pages/dashboard/screens/dashboard.dart';
+import 'package:smart_loans/pages/employees/screens/employee_details_page.dart';
+import 'package:smart_loans/pages/employees/screens/employees_page.dart';
+import 'package:smart_loans/pages/loans/screens/loan_details_page.dart';
+import 'package:smart_loans/pages/loans/screens/loans_page.dart';
+import 'package:smart_loans/theme/colors.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const SmartLoansApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class SmartLoansApp extends StatefulWidget {
+  const SmartLoansApp({super.key});
 
+  @override
+  State<SmartLoansApp> createState() => _SmartLoansAppState();
+}
+
+class _SmartLoansAppState extends State<SmartLoansApp> {
   @override
   Widget build(BuildContext context) {
     return ResponsiveSizer(
       builder: (context, orientation, screenType) => MaterialApp(
-        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        title: 'Sample',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
+          primaryColor: AppColor.primary,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: const MyHomePage(title: 'Flutter Demo Home Page'),
+        onGenerateRoute: (settings) {
+          final page = _getPageWidget(settings);
+          if (page != null) {
+            return PageRouteBuilder(
+                settings: settings,
+                pageBuilder: (_, __, ___) => page,
+                transitionsBuilder: (_, anim, __, child) {
+                  return FadeTransition(
+                    opacity: anim,
+                    child: child,
+                  );
+                });
+          }
+          return null;
+        },
       ),
     );
   }
-}
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Root();
+  Widget? _getPageWidget(RouteSettings settings) {
+    if (settings.name == null) {
+      return null;
+    }
+    final uri = Uri.parse(settings.name!);
+    switch (uri.path) {
+      case '/':
+        return const DashboardPage();
+      case '/clients':
+        return const ClientsPage();
+      case '/client':
+        return const ClientDetailsPage();
+      case '/employees':
+        return const EmployeesPage();
+      case '/employee':
+        return const EmployeeDetailsPage();
+      case '/loans':
+        return const LoansPage();
+      case '/loan':
+        return const LoanDetailsPage();
+    }
+    return null;
   }
 }

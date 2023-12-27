@@ -1,6 +1,6 @@
 List<List<dynamic>> dummyLoansData = [
   [
-    "6876713",
+    DateTime(2000, 2, 11),
     "Aakash",
     "101",
     "4561",
@@ -10,7 +10,7 @@ List<List<dynamic>> dummyLoansData = [
     "Some other info about Aakash"
   ],
   [
-    "7869656",
+    DateTime(2000, 8, 30),
     "Rohit",
     "102",
     "68967",
@@ -20,7 +20,7 @@ List<List<dynamic>> dummyLoansData = [
     "Some other info about Rohit"
   ],
   [
-    "6987697",
+    DateTime(2000, 11, 30),
     "Umesh",
     "103",
     "548756",

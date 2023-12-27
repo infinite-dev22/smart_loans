@@ -1,18 +1,11 @@
-import 'dart:math';
+import 'dart:async';
 
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:dynamic_table/dynamic_input_type/dynamic_table_input_type.dart';
-import 'package:dynamic_table/dynamic_table_data_cell.dart';
-import 'package:dynamic_table/dynamic_table_data_column.dart';
-import 'package:dynamic_table/dynamic_table_data_row.dart';
-import 'package:dynamic_table/dynamic_table_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_web_data_table/web_data_table.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/config/responsive.dart';
-import 'package:smart_loans/global_values.dart';
-import 'package:smart_loans/theme/light.dart';
-
-import '../../../../data_source/dummy_loans_data.dart';
+import 'package:smart_loans/pages/loans/widgets/success/smaple_data.dart';
 
 class LoansTableWidget extends StatefulWidget {
   const LoansTableWidget({super.key});
@@ -22,156 +15,151 @@ class LoansTableWidget extends StatefulWidget {
 }
 
 class _LoansTableWidgetState extends State<LoansTableWidget> {
-  var tableKey = GlobalKey<DynamicTableState>();
-  var myData = dummyLoansData.toList();
+  late String _sortColumnName;
+  late bool _sortAscending;
+  List<String>? _filterTexts;
+  bool _willSearch = true;
+  Timer? _timer;
+  int? _latestTick;
+  List<String> _selectedRowKeys = [];
+  int _rowsPerPage = 20;
+
+  /// DataGridSource required for SfDataGrid to obtain the row data.
 
   Widget _buildLayoutBuilder() {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraint) => SizedBox(
         width: constraint.maxWidth,
-        child: _buildBody(context),
+        child: _buildBody(),
       ),
     );
   }
 
-  Widget _buildBody(BuildContext context) {
+  Widget _buildBody() {
     return SingleChildScrollView(
       child: Builder(builder: (context) {
         return SizedBox(
           width: MediaQuery.of(context).size.width * 0.16,
-          child: DynamicTable(
-            key: tableKey,
-            header: Text(
-              "Loans",
-              style: TextStyle(
-                  color: LightAppColor.textColor, fontSize: headerFontSize),
+          child: WebDataTable(
+            header: const Text('Loans'),
+            actions: _buildActions,
+            source: WebDataTableSource(
+              sortColumnName: _sortColumnName,
+              sortAscending: _sortAscending,
+              filterTexts: _filterTexts,
+              columns: [
+                WebDataColumn(
+                  name: 'client',
+                  label: const Text('Client'),
+                  dataCell: (value) => DataCell(Text('$value')),
+                ),
+                WebDataColumn(
+                  name: 'principalAmount',
+                  label: const Text('Principal Amount'),
+                  dataCell: (value) => DataCell(Text('$value')),
+                ),
+                WebDataColumn(
+                  name: 'loanFees',
+                  label: const Text('Loan Fees'),
+                  dataCell: (value) => DataCell(Text('$value')),
+                ),
+                WebDataColumn(
+                  name: 'loanFeesType',
+                  label: const Text('Loan Fees Type)'),
+                  dataCell: (value) => DataCell(Text('$value')),
+                ),
+                WebDataColumn(
+                  name: 'loanCategory',
+                  label: const Text('Loan Category'),
+                  dataCell: (value) => DataCell(Text('$value')),
+                ),
+                WebDataColumn(
+                  name: 'currency',
+                  label: const Text('Currency'),
+                  dataCell: (value) => DataCell(Text('$value')),
+                ),
+                WebDataColumn(
+                  name: 'branch',
+                  label: const Text('Branch'),
+                  dataCell: (value) => DataCell(Text('$value')),
+                ),
+                WebDataColumn(
+                  name: 'loanStatus',
+                  label: const Text('Loan Status'),
+                  dataCell: (value) => DataCell(Text('$value')),
+                ),
+              ],
+              rows: SampleData().data,
+              selectedRowKeys: _selectedRowKeys,
+              onTapRow: (rows, index) {
+                Navigator.pushNamed(context, "/loan");
+              },
+              onSelectRows: (keys) {
+                print('onSelectRows(): count = ${keys.length} keys = $keys');
+                setState(() {
+                  _selectedRowKeys = keys;
+                });
+              },
+              primaryKeyName: 'clientNo',
             ),
-            onRowEdit: (index, row) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text("Row Edited index:$index row:$row"),
-                ),
-              );
-              myData[index] = row;
-              return true;
+            horizontalMargin: 100,
+            onPageChanged: (offset) {
+              print('onPageChanged(): offset = $offset');
             },
-            onRowDelete: (index, row) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text("Row Deleted index:$index row:$row"),
-                ),
-              );
-              myData.removeAt(index);
-              return true;
+            onSort: (columnName, ascending) {
+              print(
+                  'onSort(): columnName = $columnName, ascending = $ascending');
+              setState(() {
+                _sortColumnName = columnName;
+                _sortAscending = ascending;
+              });
             },
-            onRowSave: (index, old, newValue) {
-              // ScaffoldMessenger.of(context).showSnackBar(
-              //   SnackBar(
-              //     content:
-              //         Text("Row Saved index:$index old:$old new:$newValue"),
-              //   ),
-              // );
-              if (newValue[0] == null) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Name cannot be null"),
-                  ),
-                );
-                return null;
-              }
-
-              if (newValue[0].toString().length < 3) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Name must be atleast 3 characters long"),
-                  ),
-                );
-                return null;
-              }
-              if (newValue[0].toString().length > 20) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Name must be less than 20 characters long"),
-                  ),
-                );
-                return null;
-              }
-              if (newValue[1] == null) {
-                //If newly added row then add unique ID
-                newValue[1] = Random()
-                    .nextInt(500)
-                    .toString(); // to add Unique ID because it is not editable
-              }
-              myData[index] = newValue; // Update data
-              if (newValue[0] == null) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Name cannot be null"),
-                  ),
-                );
-                return null;
-              }
-              return newValue;
+            onRowsPerPageChanged: (rowsPerPage) {
+              print('onRowsPerPageChanged(): rowsPerPage = $rowsPerPage');
+              setState(() {
+                if (rowsPerPage != null) {
+                  _rowsPerPage = rowsPerPage;
+                }
+              });
             },
-            showActions: true,
-            showAddRowButton: false,
-            showDeleteAction: true,
-            rowsPerPage: 15,
-            showFirstLastButtons: true,
-            availableRowsPerPage: const [
-              5,
-              10,
-              15,
-              20,
-              25,
-              50,
-              75,
-              100,
-            ],
-            dataRowMinHeight: 4.5.h,
-            dataRowMaxHeight: 4.5.h,
-            columnSpacing: 60,
-            actionColumnTitle: "Actions",
-            showCheckboxColumn: true,
-            onSelectAll: (value) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: value ?? false
-                      ? const Text("All Rows Selected")
-                      : const Text("All Rows Unselected"),
-                ),
-              );
-            },
-            onRowsPerPageChanged: (value) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text("Rows Per Page Changed to $value"),
-                ),
-              );
-            },
-            actions: _buildActions(),
-            rows: _buildRows(),
-            columns: _buildColumns(),
+            rowsPerPage: _rowsPerPage,
           ),
         );
       }),
     );
   }
 
-  List<Widget> _buildActions() {
+  List<Widget> get _buildActions {
     return [
       SizedBox(
         width: 40.w,
         child: TextFormField(
           decoration: InputDecoration(
+            prefixIcon: const Icon(Icons.search),
             hintText: "Search loans",
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
             ),
           ),
+          onChanged: (text) {
+            _filterTexts = text.trim().split(' ');
+            _willSearch = false;
+            _latestTick = _timer?.tick;
+          },
         ),
       ),
       SizedBox(width: 1.w),
+      if (_selectedRowKeys.isNotEmpty)
+        _buildButton(
+          "Delete",
+          () {
+            setState(() {
+              _selectedRowKeys.clear();
+            });
+          },
+          style: const ButtonStyle(
+              backgroundColor: MaterialStatePropertyAll(Colors.red)),
+        ),
       if (!Responsive.isMobile(context) && !Responsive.isTablet(context))
         _buildButton("Copy", () {}),
       _buildButton("Export", () {}),
@@ -182,138 +170,11 @@ class _LoansTableWidgetState extends State<LoansTableWidget> {
     ];
   }
 
-  List<DynamicTableDataRow> _buildRows() {
-    return List.generate(
-      myData.length,
-      (index) => DynamicTableDataRow(
-        onSelectChanged: (value) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: value ?? false
-                  ? Text("Row Selected index:$index")
-                  : Text("Row Unselected index:$index"),
-            ),
-          );
-        },
-        index: index,
-        cells: List.generate(
-          myData[index].length,
-          (cellIndex) => DynamicTableDataCell(
-            value: myData[index][cellIndex],
-          ),
-        ),
-      ),
-    );
-  }
-
-  List<DynamicTableDataColumn> _buildColumns() {
-    return [
-      DynamicTableDataColumn(
-          label: const Text(
-            "Loan No.",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          onSort: (columnIndex, ascending) {},
-          dynamicTableInputType: DynamicTableInputType.text()),
-      DynamicTableDataColumn(
-          label: const Text(
-            "Loan",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          onSort: (columnIndex, ascending) {},
-          isEditable: false,
-          dynamicTableInputType: DynamicTableInputType.text()),
-      DynamicTableDataColumn(
-          label: const Text(
-            "Principal Amount",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          onSort: (columnIndex, ascending) {},
-          isEditable: false,
-          dynamicTableInputType: DynamicTableInputType.text()),
-      DynamicTableDataColumn(
-          label: const Text(
-            "Loan Fees",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          onSort: (columnIndex, ascending) {},
-          isEditable: false,
-          dynamicTableInputType: DynamicTableInputType.text()),
-      DynamicTableDataColumn(
-          label: const Text(
-            "Loan Fees Type",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          onSort: (columnIndex, ascending) {},
-          isEditable: false,
-          dynamicTableInputType: DynamicTableInputType.text()),
-      DynamicTableDataColumn(
-        label: const Text(
-          "Currency",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        onSort: (columnIndex, ascending) {},
-        dynamicTableInputType: DynamicTableInputType.text(
-          decoration: const InputDecoration(
-            hintText: "Enter Other Info",
-            border: OutlineInputBorder(),
-          ),
-          maxLines: 100,
-        ),
-      ),
-      DynamicTableDataColumn(
-        label: const Text(
-          "Branch",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        onSort: (columnIndex, ascending) {},
-        dynamicTableInputType: DynamicTableInputType.text(
-          decoration: const InputDecoration(
-            hintText: "Enter Other Info",
-            border: OutlineInputBorder(),
-          ),
-          maxLines: 100,
-        ),
-      ),
-      DynamicTableDataColumn(
-        label: const Text(
-          "Loan Status",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        onSort: (columnIndex, ascending) {},
-        dynamicTableInputType: DynamicTableInputType.text(
-          decoration: const InputDecoration(
-            hintText: "Enter Other Info",
-            border: OutlineInputBorder(),
-          ),
-          maxLines: 100,
-        ),
-      ),
-    ];
-  }
-
-  Widget _buildButton(
-    String title,
-    Function()? onPressed,
-  ) {
+  Widget _buildButton(String title, Function()? onPressed,
+      {ButtonStyle? style}) {
     return FilledButton(
       onPressed: onPressed,
+      style: style,
       child: Text(
         title,
       ),
@@ -601,5 +462,32 @@ class _LoansTableWidgetState extends State<LoansTableWidget> {
   @override
   void initState() {
     super.initState();
+
+    _sortColumnName = "";
+    _sortAscending = false;
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!_willSearch) {
+        if (_latestTick != null && timer.tick > _latestTick!) {
+          _willSearch = true;
+        }
+      }
+      if (_willSearch) {
+        _willSearch = false;
+        _latestTick = null;
+        setState(() {
+          if (_filterTexts != null && _filterTexts!.isNotEmpty) {
+            _filterTexts = _filterTexts;
+            print('filterTexts = $_filterTexts');
+          }
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _timer?.cancel();
+    _timer = null;
   }
 }
