@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:smart_loans/pages/loans/widgets/details/tabs/loan_collaterals_table.dart';
+import 'package:smart_loans/pages/loans/widgets/details/tabs/loan_disbursements_table.dart';
+import 'package:smart_loans/pages/loans/widgets/details/tabs/loan_documents_table.dart';
+import 'package:smart_loans/pages/loans/widgets/details/tabs/loan_guarantors_table.dart';
+import 'package:smart_loans/pages/loans/widgets/details/tabs/loan_payments_table.dart';
 
-import 'loan_schedules_table.dart';
+import 'tabs/loan_schedules_table.dart';
 
 class LoanDetailsTabbedDisplay extends StatelessWidget {
   const LoanDetailsTabbedDisplay({super.key});
@@ -12,11 +17,10 @@ class LoanDetailsTabbedDisplay extends StatelessWidget {
   }
 
   Widget _buildBody() {
-    return
-      DefaultTabController(
-        length: 7,
-        child: _buildTabs(),
-      );
+    return DefaultTabController(
+      length: 7,
+      child: _buildTabs(),
+    );
   }
 
   Widget _buildTabs() {
@@ -49,15 +53,21 @@ class LoanDetailsTabbedDisplay extends StatelessWidget {
         ),
         SizedBox(
           height: 70.h,
-          child: TabBarView(
+          child: const TabBarView(
             children: [
               LoanSchedulesTable(),
-              const Icon(Icons.directions_transit),
-              const Icon(Icons.directions_bike),
-              const Icon(Icons.directions_bike),
-              const Icon(Icons.directions_bike),
-              const Icon(Icons.directions_bike),
-              const Icon(Icons.directions_bike),
+              LoanPaymentsTable(),
+              LoanCollateralsTable(),
+              LoanDocumentsTable(),
+              LoanGuarantorsTable(),
+              LoanDisbursementsTable(),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Not yet implemented", style: TextStyle(fontSize: 18)),
+                  Text("Loan comments appear here"),
+                ],
+              ),
             ],
           ),
         ),

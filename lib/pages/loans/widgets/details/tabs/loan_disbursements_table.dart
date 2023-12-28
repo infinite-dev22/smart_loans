@@ -9,14 +9,20 @@ import 'package:dynamic_table/dynamic_table_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-import '../../../../data_source/dummy_loans_data.dart';
-import '../../../../global_values.dart';
+import '../../../../../data_source/dummy_loan_disbursements_data.dart';
+import '../../../../../global_values.dart';
 
-class LoanSchedulesTable extends StatelessWidget {
+class LoanDisbursementsTable extends StatefulWidget {
+  const LoanDisbursementsTable({super.key});
+
+  @override
+  State<LoanDisbursementsTable> createState() => _LoanDisbursementsTableState();
+}
+
+class _LoanDisbursementsTableState extends State<LoanDisbursementsTable> {
   var tableKey = GlobalKey<DynamicTableState>();
-  var myData = dummyLoansData.toList();
 
-  LoanSchedulesTable({super.key});
+  var myData = dummyLoanDisbursementsData.toList();
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +119,7 @@ class LoanSchedulesTable extends StatelessWidget {
             dataRowMaxHeight: 4.5.h,
             columnSpacing: 60,
             actionColumnTitle: "Actions",
-            showCheckboxColumn: true,
+            showCheckboxColumn: false,
             onSelectAll: (value) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -146,7 +152,7 @@ class LoanSchedulesTable extends StatelessWidget {
         height: textFieldHeight,
         child: TextFormField(
           decoration: InputDecoration(
-            hintText: "Search documents",
+            hintText: "Search disburments",
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
             ),
@@ -154,8 +160,6 @@ class LoanSchedulesTable extends StatelessWidget {
         ),
       ),
       SizedBox(width: 10.w),
-      // Show only when an item(s) (has/have) been selected.
-      _buildButton("Delete", () {}),
       _buildButton("Add", () async {
         _buildAddForm(context);
       }),
@@ -190,7 +194,7 @@ class LoanSchedulesTable extends StatelessWidget {
     return [
       DynamicTableDataColumn(
         label: const Text(
-          "Date",
+          "Disbursed On",
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
@@ -199,10 +203,10 @@ class LoanSchedulesTable extends StatelessWidget {
         dynamicTableInputType: DynamicTableInputType.date(
           context: context,
           decoration: const InputDecoration(
-              hintText: "Date",
+              hintText: "Date disbursed",
               suffixIcon: Icon(Icons.date_range),
               border: OutlineInputBorder()),
-          initialDate: DateTime(1900),
+          initialDate: DateTime.now(),
           lastDate: DateTime.now().add(
             const Duration(days: 365),
           ),
@@ -210,7 +214,7 @@ class LoanSchedulesTable extends StatelessWidget {
       ),
       DynamicTableDataColumn(
         label: const Text(
-          "Description",
+          "Principal Amount",
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
@@ -219,7 +223,7 @@ class LoanSchedulesTable extends StatelessWidget {
       ),
       DynamicTableDataColumn(
         label: const Text(
-          "Principal",
+          "Disbursed Amount",
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
@@ -228,7 +232,7 @@ class LoanSchedulesTable extends StatelessWidget {
       ),
       DynamicTableDataColumn(
         label: const Text(
-          "Interest",
+          "Loan Fees",
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
@@ -237,7 +241,7 @@ class LoanSchedulesTable extends StatelessWidget {
       ),
       DynamicTableDataColumn(
         label: const Text(
-          "Fines",
+          "Payment Mode",
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
@@ -246,7 +250,7 @@ class LoanSchedulesTable extends StatelessWidget {
       ),
       DynamicTableDataColumn(
         label: const Text(
-          "Due",
+          "Received By",
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
@@ -255,7 +259,7 @@ class LoanSchedulesTable extends StatelessWidget {
       ),
       DynamicTableDataColumn(
         label: const Text(
-          "Paid",
+          "Disbursed By",
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
@@ -264,13 +268,11 @@ class LoanSchedulesTable extends StatelessWidget {
       ),
       DynamicTableDataColumn(
         label: const Text(
-          "Balance",
+          "Comments",
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
-        onSort: (columnIndex, ascending) {},
-        isEditable: false,
         dynamicTableInputType: DynamicTableInputType.text(),
       ),
     ];

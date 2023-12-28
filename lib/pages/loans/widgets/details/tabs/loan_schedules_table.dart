@@ -7,23 +7,23 @@ import 'package:dynamic_table/dynamic_table_data_column.dart';
 import 'package:dynamic_table/dynamic_table_data_row.dart';
 import 'package:dynamic_table/dynamic_table_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:profile_photo/profile_photo.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:smart_loans/data_source/dummy_employee_data.dart';
-import 'package:smart_loans/global_values.dart';
-import 'package:smart_loans/theme/colors.dart';
 
-class ClientDetailSuccessWidget extends StatefulWidget {
-  const ClientDetailSuccessWidget({super.key});
+import '../../../../../data_source/dummy_loans_data.dart';
+import '../../../../../global_values.dart';
+
+class LoanSchedulesTable extends StatefulWidget {
+
+  const LoanSchedulesTable({super.key});
 
   @override
-  State<ClientDetailSuccessWidget> createState() =>
-      _ClientDetailSuccessWidgetState();
+  State<LoanSchedulesTable> createState() => _LoanSchedulesTableState();
 }
 
-class _ClientDetailSuccessWidgetState extends State<ClientDetailSuccessWidget> {
+class _LoanSchedulesTableState extends State<LoanSchedulesTable> {
   var tableKey = GlobalKey<DynamicTableState>();
-  var myData = dummyEmployeeData.toList();
+
+  var myData = dummyLoansData.toList();
 
   @override
   Widget build(BuildContext context) {
@@ -31,302 +31,10 @@ class _ClientDetailSuccessWidgetState extends State<ClientDetailSuccessWidget> {
   }
 
   Widget _buildBody() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Card(
-          child: SizedBox(
-            width: 60.w,
-            child: Column(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: AppColor.primary,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(circularRadius),
-                      topRight: Radius.circular(circularRadius),
-                    ),
-                  ),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(padding),
-                        child: const Text(
-                          "Client Details",
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: AppColor.white,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(padding),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ProfilePhoto(
-                            totalWidth: 10.h,
-                            color: AppColor.white45,
-                          ),
-                          SizedBox(width: 1.w),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _buildTitle(
-                                "Vicent Company",
-                              ),
-                              _buildSubTitle("Individual"),
-                              const Text("I-231204-0001"),
-                              const Text("12295200000"),
-                            ],
-                          ),
-                        ],
-                      ),
-                      FilledButton(
-                        onPressed: () {},
-                        child: const Text("Add Image"),
-                      ),
-                    ],
-                  ),
-                ),
-                DefaultTabController(
-                  length: 5,
-                  child: _buildTabs(),
-                ),
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(width: 20),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  FilledButton(
-                    onPressed: () {},
-                    child: const Text("Edit Client"),
-                  ),
-                  SizedBox(width: 1.w),
-                  FilledButton(
-                    onPressed: () {},
-                    child: const Text("List"),
-                  ),
-                  SizedBox(width: 1.w),
-                  FilledButton(
-                    onPressed: () {},
-                    child: const Text("Convert"),
-                  ),
-                  SizedBox(width: 1.w),
-                  FilledButton(
-                    onPressed: () {},
-                    child: const Text("Add Client"),
-                  ),
-                  SizedBox(width: 1.w),
-                ],
-              ),
-            ),
-            Card(
-              child: SizedBox(
-                width: 25.w,
-                child: Column(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: AppColor.primary,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(circularRadius),
-                          topRight: Radius.circular(circularRadius),
-                        ),
-                      ),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.all(padding),
-                            child: const Text(
-                              "Loans Officer",
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: AppColor.white,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(padding),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          ProfilePhoto(
-                            totalWidth: 5.h,
-                            color: AppColor.white45,
-                          ),
-                          const Text("Valeria Konarld"),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _buildTitle(String data) {
-    return Text(
-      data,
-      style: TextStyle(
-        fontSize: 13.sp,
-        fontWeight: FontWeight.bold,
-      ),
-    );
-  }
-
-  Widget _buildSubTitle(String data) {
-    return Text(
-      data,
-      style: TextStyle(
-        fontSize: 10.sp,
-        fontWeight: FontWeight.w100,
-        fontStyle: FontStyle.italic,
-      ),
-    );
-  }
-
-  Widget _buildTabs() {
-    return Column(
-      children: [
-        const TabBar(
-          tabs: [
-            Tab(
-              child: Text("More Details"),
-            ),
-            Tab(
-              child: Text("Documents"),
-            ),
-            Tab(
-              child: Text("Loans"),
-            ),
-            Tab(
-              child: Text("Next of Kin"),
-            ),
-            Tab(
-              child: Text("Guarantor"),
-            ),
-          ],
-        ),
-        Padding(
-          padding: EdgeInsets.only(top: padding),
-          child: SizedBox(
-            width: 55.w,
-            height: 72.h,
-            child: TabBarView(
-              children: [
-                _buildClientMoreDetails(),
-                _buildClientLoanDocumentDetails(),
-                const Icon(Icons.directions_bike),
-                const Icon(Icons.directions_bike),
-                const Icon(Icons.directions_bike),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildClientMoreDetails() {
-    return Padding(
-      padding: EdgeInsets.all(padding),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("First Name: "),
-                  Text("Last Name: "),
-                  Text("Other Name: "),
-                  Text("Nationality: "),
-                  Text("Business Type: "),
-                  Text("City: "),
-                  Text("Address: "),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "0000001",
-                    style: TextStyle(
-                      color: AppColor.red,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    "Vicent Company",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    "12295200000",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    "Kampala",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    "APPROVED (4.12.2023)",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    "LV2",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    "Address",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              FilledButton(
-                onPressed: () {},
-                child: const Text("Add Details"),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildClientLoanDocumentDetails() {
     return SingleChildScrollView(
       child: Builder(builder: (context) {
         return SizedBox(
-          width: MediaQuery.of(context).size.width * 0.16,
+          // width: MediaQuery.of(context).size.width * 0.16,
           child: DynamicTable(
             header: Container(),
             key: tableKey,
@@ -398,7 +106,6 @@ class _ClientDetailSuccessWidgetState extends State<ClientDetailSuccessWidget> {
               return newValue;
             },
             showActions: true,
-            showAddRowButton: false,
             showDeleteAction: true,
             rowsPerPage: 5,
             showFirstLastButtons: true,
@@ -407,10 +114,6 @@ class _ClientDetailSuccessWidgetState extends State<ClientDetailSuccessWidget> {
               10,
               15,
               20,
-              25,
-              50,
-              75,
-              100,
             ],
             dataRowMinHeight: 4.5.h,
             dataRowMaxHeight: 4.5.h,
@@ -433,39 +136,33 @@ class _ClientDetailSuccessWidgetState extends State<ClientDetailSuccessWidget> {
                 ),
               );
             },
-            actions: _buildActions(),
-            rows: _buildRows(),
-            columns: _buildColumns(),
+            actions: _buildActions(context),
+            rows: _buildRows(context),
+            columns: _buildColumns(context),
           ),
         );
       }),
     );
   }
 
-  List<Widget> _buildActions() {
+  List<Widget> _buildActions(BuildContext context) {
     return [
       SizedBox(
-        width: 20.w,
+        width: 10.w,
         height: textFieldHeight,
         child: TextFormField(
           decoration: InputDecoration(
-            hintText: "Search documents",
+            hintText: "Search schedules",
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
             ),
           ),
         ),
       ),
-      SizedBox(width: 10.w),
-      // Show only when an item(s) (has/have) been selected.
-      _buildButton("Delete", () {}),
-      _buildButton("Add", () async {
-        _buildAddForm();
-      }),
     ];
   }
 
-  List<DynamicTableDataRow> _buildRows() {
+  List<DynamicTableDataRow> _buildRows(BuildContext context) {
     return List.generate(
       myData.length,
       (index) => DynamicTableDataRow(
@@ -489,40 +186,11 @@ class _ClientDetailSuccessWidgetState extends State<ClientDetailSuccessWidget> {
     );
   }
 
-  List<DynamicTableDataColumn> _buildColumns() {
+  List<DynamicTableDataColumn> _buildColumns(BuildContext context) {
     return [
       DynamicTableDataColumn(
         label: const Text(
-          "Date Uploaded",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        onSort: (columnIndex, ascending) {},
-        isEditable: false,
-        dynamicTableInputType: DynamicTableInputType.text(),
-      ),
-      DynamicTableDataColumn(
-        label: const Text(
-          "File Extension",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        dynamicTableInputType: DynamicTableInputType.text(),
-      ),
-      DynamicTableDataColumn(
-        label: const Text(
-          "Document Type",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        dynamicTableInputType: DynamicTableInputType.text(),
-      ),
-      DynamicTableDataColumn(
-        label: const Text(
-          "File Name",
+          "Date",
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
@@ -531,7 +199,7 @@ class _ClientDetailSuccessWidgetState extends State<ClientDetailSuccessWidget> {
         dynamicTableInputType: DynamicTableInputType.date(
           context: context,
           decoration: const InputDecoration(
-              hintText: "Date added",
+              hintText: "Date",
               suffixIcon: Icon(Icons.date_range),
               border: OutlineInputBorder()),
           initialDate: DateTime.now(),
@@ -539,6 +207,71 @@ class _ClientDetailSuccessWidgetState extends State<ClientDetailSuccessWidget> {
             const Duration(days: 365),
           ),
         ),
+      ),
+      DynamicTableDataColumn(
+        label: const Text(
+          "Description",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        dynamicTableInputType: DynamicTableInputType.text(),
+      ),
+      DynamicTableDataColumn(
+        label: const Text(
+          "Principal",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        dynamicTableInputType: DynamicTableInputType.text(),
+      ),
+      DynamicTableDataColumn(
+        label: const Text(
+          "Interest",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        dynamicTableInputType: DynamicTableInputType.text(),
+      ),
+      DynamicTableDataColumn(
+        label: const Text(
+          "Fines",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        dynamicTableInputType: DynamicTableInputType.text(),
+      ),
+      DynamicTableDataColumn(
+        label: const Text(
+          "Due",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        dynamicTableInputType: DynamicTableInputType.text(),
+      ),
+      DynamicTableDataColumn(
+        label: const Text(
+          "Paid",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        dynamicTableInputType: DynamicTableInputType.text(),
+      ),
+      DynamicTableDataColumn(
+        label: const Text(
+          "Balance",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        onSort: (columnIndex, ascending) {},
+        isEditable: false,
+        dynamicTableInputType: DynamicTableInputType.text(),
       ),
     ];
   }
@@ -555,7 +288,7 @@ class _ClientDetailSuccessWidgetState extends State<ClientDetailSuccessWidget> {
     );
   }
 
-  _buildAddForm() async {
+  _buildAddForm(BuildContext context) async {
     return showDialog(
       context: context,
       barrierDismissible: true,
