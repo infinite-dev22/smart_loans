@@ -160,7 +160,7 @@ class _LoansTableWidgetState extends State<LoansTableWidget> {
           style: const ButtonStyle(
               backgroundColor: MaterialStatePropertyAll(Colors.red)),
         ),
-      if (!Responsive.isMobile(context) && !Responsive.isTablet(context))
+      if (!Responsive.isMobile(context))
         _buildButton("Copy", () {}),
       _buildButton("Export", () {}),
       if (!Responsive.isMobile(context)) _buildButton("Filter", () {}),

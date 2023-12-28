@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:profile_photo/profile_photo.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-
-import '../../../../global_values.dart';
-import '../../../../theme/colors.dart';
+import 'package:smart_loans/config/responsive.dart';
+import 'package:smart_loans/global_values.dart';
+import 'package:smart_loans/theme/colors.dart';
 
 class LoanOfficerWidget extends StatelessWidget {
   const LoanOfficerWidget({
@@ -14,7 +14,12 @@ class LoanOfficerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: SizedBox(
-        width: 16.w,
+        width: (Responsive.isDesktop(context)) ? 16.w
+            : (Responsive.isTablet(context))
+            ? 75.w
+            : (Responsive.isMobile(context))
+            ? 95.w
+            : 100.w,
         child: Column(
           children: [
             Container(

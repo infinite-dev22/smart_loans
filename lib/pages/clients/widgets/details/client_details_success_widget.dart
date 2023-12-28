@@ -9,9 +9,12 @@ import 'package:dynamic_table/dynamic_table_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:profile_photo/profile_photo.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:smart_loans/config/responsive.dart';
 import 'package:smart_loans/data_source/dummy_employee_data.dart';
 import 'package:smart_loans/global_values.dart';
 import 'package:smart_loans/theme/colors.dart';
+import 'package:smart_loans/widgets/subtitle_widget.dart';
+import 'package:smart_loans/widgets/title_widget.dart';
 
 class ClientDetailSuccessWidget extends StatefulWidget {
   const ClientDetailSuccessWidget({super.key});
@@ -31,113 +34,22 @@ class _ClientDetailSuccessWidgetState extends State<ClientDetailSuccessWidget> {
   }
 
   Widget _buildBody() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
       children: [
-        Card(
-          child: SizedBox(
-            width: 60.w,
-            child: Column(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: AppColor.primary,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(circularRadius),
-                      topRight: Radius.circular(circularRadius),
-                    ),
-                  ),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(padding),
-                        child: const Text(
-                          "Client Details",
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: AppColor.white,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(padding),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ProfilePhoto(
-                            totalWidth: 10.h,
-                            color: AppColor.white45,
-                          ),
-                          SizedBox(width: 1.w),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _buildTitle(
-                                "Vicent Company",
-                              ),
-                              _buildSubTitle("Individual"),
-                              const Text("I-231204-0001"),
-                              const Text("12295200000"),
-                            ],
-                          ),
-                        ],
-                      ),
-                      FilledButton(
-                        onPressed: () {},
-                        child: const Text("Add Image"),
-                      ),
-                    ],
-                  ),
-                ),
-                DefaultTabController(
-                  length: 5,
-                  child: _buildTabs(),
-                ),
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(width: 20),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  FilledButton(
-                    onPressed: () {},
-                    child: const Text("Edit Client"),
-                  ),
-                  SizedBox(width: 1.w),
-                  FilledButton(
-                    onPressed: () {},
-                    child: const Text("List"),
-                  ),
-                  SizedBox(width: 1.w),
-                  FilledButton(
-                    onPressed: () {},
-                    child: const Text("Convert"),
-                  ),
-                  SizedBox(width: 1.w),
-                  FilledButton(
-                    onPressed: () {},
-                    child: const Text("Add Client"),
-                  ),
-                  SizedBox(width: 1.w),
-                ],
-              ),
-            ),
             Card(
               child: SizedBox(
-                width: 25.w,
+                width: (Responsive.isDesktop(context))
+                    ? 60.w
+                    : (Responsive.isTablet(context))
+                        ? 75.w
+                        : (Responsive.isMobile(context))
+                            ? 95.w
+                            : 100.w,
+                // Remove in favour of responsiveness.
                 child: Column(
                   children: [
                     Container(
@@ -153,7 +65,7 @@ class _ClientDetailSuccessWidgetState extends State<ClientDetailSuccessWidget> {
                           Padding(
                             padding: EdgeInsets.all(padding),
                             child: const Text(
-                              "Loans Officer",
+                              "Client Details",
                               style: TextStyle(
                                 fontSize: 20,
                                 color: AppColor.white,
@@ -168,42 +80,47 @@ class _ClientDetailSuccessWidgetState extends State<ClientDetailSuccessWidget> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          ProfilePhoto(
-                            totalWidth: 5.h,
-                            color: AppColor.white45,
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ProfilePhoto(
+                                totalWidth: 10.h,
+                                color: AppColor.white45,
+                              ),
+                              SizedBox(width: 1.w),
+                              const Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TitleWidget(text: "Vicent Company"),
+                                  SubTitleWidget(text: "Individual"),
+                                  Text("I-231204-0001"),
+                                  Text("12295200000"),
+                                ],
+                              ),
+                            ],
                           ),
-                          const Text("Valeria Konarld"),
+                          FilledButton(
+                            onPressed: () {},
+                            child: const Text("Add Image"),
+                          ),
                         ],
                       ),
+                    ),
+                    DefaultTabController(
+                      length: 5,
+                      child: _buildTabs(),
                     ),
                   ],
                 ),
               ),
             ),
+            if (Responsive.isDesktop(context)) SizedBox(width: 1.w),
+            if (Responsive.isDesktop(context)) const RightSideWidget(),
           ],
         ),
+        if (Responsive.isTablet(context) || Responsive.isMobile(context))
+          const RightSideWidget(),
       ],
-    );
-  }
-
-  Widget _buildTitle(String data) {
-    return Text(
-      data,
-      style: TextStyle(
-        fontSize: 13.sp,
-        fontWeight: FontWeight.bold,
-      ),
-    );
-  }
-
-  Widget _buildSubTitle(String data) {
-    return Text(
-      data,
-      style: TextStyle(
-        fontSize: 10.sp,
-        fontWeight: FontWeight.w100,
-        fontStyle: FontStyle.italic,
-      ),
     );
   }
 
@@ -232,7 +149,6 @@ class _ClientDetailSuccessWidgetState extends State<ClientDetailSuccessWidget> {
         Padding(
           padding: EdgeInsets.only(top: padding),
           child: SizedBox(
-            width: 55.w,
             height: 72.h,
             child: TabBarView(
               children: [
@@ -714,6 +630,102 @@ class _ClientDetailSuccessWidgetState extends State<ClientDetailSuccessWidget> {
           ],
         );
       },
+    );
+  }
+}
+
+class RightSideWidget extends StatelessWidget {
+  const RightSideWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Padding(
+          padding: EdgeInsets.all(padding),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              FilledButton(
+                onPressed: () {},
+                child: const Text("Edit Client"),
+              ),
+              SizedBox(width: 1.w),
+              FilledButton(
+                onPressed: () {},
+                child: const Text("List"),
+              ),
+              SizedBox(width: 1.w),
+              FilledButton(
+                onPressed: () {},
+                child: const Text("Convert"),
+              ),
+              SizedBox(width: 1.w),
+              FilledButton(
+                onPressed: () {},
+                child: const Text("Add Client"),
+              ),
+              SizedBox(width: 1.w),
+            ],
+          ),
+        ),
+        Card(
+          child: SizedBox(
+            width: (Responsive.isDesktop(context))
+                ? 25.w
+                : (Responsive.isTablet(context))
+                    ? 75.w
+                    : (Responsive.isMobile(context))
+                        ? 95.w
+                        : 100.w,
+            child: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: AppColor.primary,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(circularRadius),
+                      topRight: Radius.circular(circularRadius),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(padding),
+                        child: const Text(
+                          "Loans Officer",
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: AppColor.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(padding),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      ProfilePhoto(
+                        totalWidth: 5.h,
+                        color: AppColor.white45,
+                      ),
+                      SizedBox(width: 1.w),
+                      const Text("Valeria Konarld"),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        if (!Responsive.isDesktop(context)) SizedBox(height: 30.h),
+      ],
     );
   }
 }
