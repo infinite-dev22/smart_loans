@@ -5,8 +5,8 @@ import 'package:smart_loans/config/responsive.dart';
 import 'package:smart_loans/global_values.dart';
 import 'package:smart_loans/widgets/dialog_title_wdiget.dart';
 
-class DocumentForm extends StatelessWidget {
-  const DocumentForm({super.key});
+class CollateralForm extends StatelessWidget {
+  const CollateralForm({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class DocumentForm extends StatelessWidget {
         width: (Responsive.isDesktop(context)) ? 25.w : 40.w,
         child: Column(
           children: [
-            const DialogTitleWidget(text: 'Loan Document Form'),
+            const DialogTitleWidget(text: 'Loan Collateral Form'),
             _buildAddForm(context),
           ],
         ),

@@ -5,8 +5,8 @@ import 'package:smart_loans/config/responsive.dart';
 import 'package:smart_loans/global_values.dart';
 import 'package:smart_loans/widgets/dialog_title_wdiget.dart';
 
-class DocumentForm extends StatelessWidget {
-  const DocumentForm({super.key});
+class LoanDocumentForm extends StatelessWidget {
+  const LoanDocumentForm({super.key});
 
   @override
   Widget build(BuildContext context) {
