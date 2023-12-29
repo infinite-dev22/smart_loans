@@ -1,10 +1,11 @@
 import 'dart:async';
 
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_data_table/web_data_table.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/config/responsive.dart';
+import 'package:smart_loans/global_values.dart';
+import 'package:smart_loans/pages/loans/widgets/details/forms/loan_form.dart';
 import 'package:smart_loans/pages/loans/widgets/success/smaple_data.dart';
 
 class LoansTableWidget extends StatefulWidget {
@@ -160,12 +161,11 @@ class _LoansTableWidgetState extends State<LoansTableWidget> {
           style: const ButtonStyle(
               backgroundColor: MaterialStatePropertyAll(Colors.red)),
         ),
-      if (!Responsive.isMobile(context))
-        _buildButton("Copy", () {}),
+      if (!Responsive.isMobile(context)) _buildButton("Copy", () {}),
       _buildButton("Export", () {}),
       if (!Responsive.isMobile(context)) _buildButton("Filter", () {}),
       _buildButton("Add", () async {
-        _buildAddForm();
+        _buildLoanAddDialog();
       }),
     ];
   }
@@ -181,274 +181,16 @@ class _LoansTableWidgetState extends State<LoansTableWidget> {
     );
   }
 
-  _buildAddForm() async {
+  _buildLoanAddDialog() async {
     return showDialog(
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Add Loan'),
-          content: SingleChildScrollView(
-            child: SizedBox(
-              width: 30.w,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    height: 5.h,
-                    child: DropdownButtonFormField2(
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(8.0),
-                            ),
-                          ),
-                          label: Text("Client")),
-                      items: const [
-                        DropdownMenuItem(
-                          value: 1,
-                          child: Text("Test 1"),
-                        ),
-                        DropdownMenuItem(
-                          value: 2,
-                          child: Text("Test 2"),
-                        ),
-                        DropdownMenuItem(
-                          value: 3,
-                          child: Text("Test 3"),
-                        ),
-                        DropdownMenuItem(
-                          value: 4,
-                          child: Text("Test 4"),
-                        ),
-                      ],
-                      onChanged: (value) {},
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  SizedBox(
-                    height: 5.h,
-                    child: DropdownButtonFormField2(
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(8.0),
-                            ),
-                          ),
-                          label: Text("Loan type")),
-                      items: const [
-                        DropdownMenuItem(
-                          value: 1,
-                          child: Text("Test 1"),
-                        ),
-                        DropdownMenuItem(
-                          value: 2,
-                          child: Text("Test 2"),
-                        ),
-                        DropdownMenuItem(
-                          value: 3,
-                          child: Text("Test 3"),
-                        ),
-                        DropdownMenuItem(
-                          value: 4,
-                          child: Text("Test 4"),
-                        ),
-                      ],
-                      onChanged: (value) {},
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  SizedBox(
-                    height: 5.h,
-                    child: DropdownButtonFormField2(
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(8.0),
-                            ),
-                          ),
-                          label: Text("Loan category")),
-                      items: const [
-                        DropdownMenuItem(
-                          value: 1,
-                          child: Text("Test 1"),
-                        ),
-                        DropdownMenuItem(
-                          value: 2,
-                          child: Text("Test 2"),
-                        ),
-                        DropdownMenuItem(
-                          value: 3,
-                          child: Text("Test 3"),
-                        ),
-                        DropdownMenuItem(
-                          value: 4,
-                          child: Text("Test 4"),
-                        ),
-                      ],
-                      onChanged: (value) {},
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  SizedBox(
-                    height: 5.h,
-                    child: DropdownButtonFormField2(
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(8.0),
-                            ),
-                          ),
-                          label: Text("Branch")),
-                      items: const [
-                        DropdownMenuItem(
-                          value: 1,
-                          child: Text("Test 1"),
-                        ),
-                        DropdownMenuItem(
-                          value: 2,
-                          child: Text("Test 2"),
-                        ),
-                        DropdownMenuItem(
-                          value: 3,
-                          child: Text("Test 3"),
-                        ),
-                        DropdownMenuItem(
-                          value: 4,
-                          child: Text("Test 4"),
-                        ),
-                      ],
-                      onChanged: (value) {},
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  SizedBox(
-                    height: 5.h,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        label: const Text("Description"),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  SizedBox(
-                    height: 5.h,
-                    child: DropdownButtonFormField2(
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(8.0),
-                            ),
-                          ),
-                          label: Text("Currency")),
-                      items: const [
-                        DropdownMenuItem(
-                          value: 1,
-                          child: Text("Test 1"),
-                        ),
-                        DropdownMenuItem(
-                          value: 2,
-                          child: Text("Test 2"),
-                        ),
-                        DropdownMenuItem(
-                          value: 3,
-                          child: Text("Test 3"),
-                        ),
-                        DropdownMenuItem(
-                          value: 4,
-                          child: Text("Test 4"),
-                        ),
-                      ],
-                      onChanged: (value) {},
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  SizedBox(
-                    height: 5.h,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        label: const Text("Principal Amount"),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  SizedBox(
-                    height: 5.h,
-                    child: DropdownButtonFormField2(
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(8.0),
-                            ),
-                          ),
-                          label: Text("Loan Fees")),
-                      items: const [
-                        DropdownMenuItem(
-                          value: 1,
-                          child: Text("Fixed Rate"),
-                        ),
-                        DropdownMenuItem(
-                          value: 2,
-                          child: Text("Percentage"),
-                        ),
-                      ],
-                      onChanged: (value) {},
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        height: 5.h,
-                        width: 10.w,
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            label: const Text("Unknown Field 1"),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      SizedBox(
-                        height: 5.h,
-                        width: 15.w,
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            label: const Text("Unknown Field 2"),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(circularRadius),
           ),
-          actions: <Widget>[
-            FilledButton(
-              style: const ButtonStyle(
-                minimumSize: MaterialStatePropertyAll(
-                  Size(double.infinity, 50),
-                ),
-              ),
-              child: const Text('Submit'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
+          child: const LoanForm(),
         );
       },
     );
