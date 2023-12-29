@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:dynamic_table/dynamic_input_type/dynamic_table_input_type.dart';
 import 'package:dynamic_table/dynamic_table_data_cell.dart';
 import 'package:dynamic_table/dynamic_table_data_column.dart';
@@ -11,6 +10,7 @@ import 'package:profile_photo/profile_photo.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/config/responsive.dart';
 import 'package:smart_loans/global_values.dart';
+import 'package:smart_loans/pages/employees/widgets/details/employee_form.dart';
 import 'package:smart_loans/theme/colors.dart';
 
 import '../../../../data_source/dummy_employee_data.dart';
@@ -44,12 +44,13 @@ class _EmployeeDetailsSuccessWidgetState
           children: [
             Card(
               child: SizedBox(
-                width: (Responsive.isDesktop(context)) ? 60.w
+                width: (Responsive.isDesktop(context))
+                    ? 60.w
                     : (Responsive.isTablet(context))
-                    ? 75.w
-                    : (Responsive.isMobile(context))
-                    ? 95.w
-                    : 100.w,
+                        ? 75.w
+                        : (Responsive.isMobile(context))
+                            ? 95.w
+                            : 100.w,
                 // Remove in favour of responsiveness.
                 child: Column(
                   children: [
@@ -122,27 +123,6 @@ class _EmployeeDetailsSuccessWidgetState
         if (Responsive.isTablet(context) || Responsive.isMobile(context))
           const RightSideWidget(),
       ],
-    );
-  }
-
-  Widget _buildTitle(String data) {
-    return Text(
-      data,
-      style: TextStyle(
-        fontSize: 13.sp,
-        fontWeight: FontWeight.bold,
-      ),
-    );
-  }
-
-  Widget _buildSubTitle(String data) {
-    return Text(
-      data,
-      style: TextStyle(
-        fontSize: 10.sp,
-        fontWeight: FontWeight.w100,
-        fontStyle: FontStyle.italic,
-      ),
     );
   }
 
@@ -397,9 +377,7 @@ class _EmployeeDetailsSuccessWidgetState
       SizedBox(width: 10.w),
       // Show only when an item(s) (has/have) been selected.
       _buildButton("Delete", () {}),
-      _buildButton("Add", () async {
-        _buildAddForm();
-      }),
+      _buildButton("Add", _buildAddDocumentDialog),
     ];
   }
 
@@ -493,163 +471,16 @@ class _EmployeeDetailsSuccessWidgetState
     );
   }
 
-  _buildAddForm() async {
+  _buildAddDocumentDialog() async {
     return showDialog(
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Add Employee'),
-          content: SingleChildScrollView(
-            child: SizedBox(
-              width: 30.w,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    height: 5.h,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        label: const Text("First Name"),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  SizedBox(
-                    height: 5.h,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        label: const Text("Last Name"),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  SizedBox(
-                    height: 5.h,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        label: const Text("Other Name"),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  SizedBox(
-                    height: 5.h,
-                    child: DropdownButtonFormField2(
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(8.0),
-                            ),
-                          ),
-                          label: Text("Designations")),
-                      items: const [
-                        DropdownMenuItem(
-                          value: 1,
-                          child: Text("Test 1"),
-                        ),
-                        DropdownMenuItem(
-                          value: 2,
-                          child: Text("Test 2"),
-                        ),
-                        DropdownMenuItem(
-                          value: 3,
-                          child: Text("Test 3"),
-                        ),
-                        DropdownMenuItem(
-                          value: 4,
-                          child: Text("Test 4"),
-                        ),
-                      ],
-                      onChanged: (value) {},
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  SizedBox(
-                    height: 5.h,
-                    child: DropdownButtonFormField2(
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(8.0),
-                            ),
-                          ),
-                          label: Text("Gender")),
-                      items: const [
-                        DropdownMenuItem(
-                          value: 1,
-                          child: Text("Male"),
-                        ),
-                        DropdownMenuItem(
-                          value: 2,
-                          child: Text("Female"),
-                        ),
-                      ],
-                      onChanged: (value) {},
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  SizedBox(
-                    height: 5.h,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        label: const Text("Email"),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  SizedBox(
-                    height: 5.h,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        label: const Text("Telephone"),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  SizedBox(
-                    height: 5.h,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        label: const Text("Address"),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(circularRadius),
           ),
-          actions: <Widget>[
-            FilledButton(
-              style: const ButtonStyle(
-                minimumSize: MaterialStatePropertyAll(
-                  Size(double.infinity, 50),
-                ),
-              ),
-              child: const Text('Submit'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
+          child: const EmployeeForm(),
         );
       },
     );
@@ -687,7 +518,7 @@ class RightSideWidget extends StatelessWidget {
               ),
               SizedBox(width: 1.w),
               FilledButton(
-                onPressed: () {},
+                onPressed: () => _buildAddForm(context),
                 child: const Text("Add Client"),
               ),
               SizedBox(width: 1.w),
@@ -696,12 +527,13 @@ class RightSideWidget extends StatelessWidget {
         ),
         Card(
           child: SizedBox(
-            width: (Responsive.isDesktop(context)) ? 25.w
+            width: (Responsive.isDesktop(context))
+                ? 25.w
                 : (Responsive.isTablet(context))
-                ? 75.w
-                : (Responsive.isMobile(context))
-                ? 95.w
-                : 100.w,
+                    ? 75.w
+                    : (Responsive.isMobile(context))
+                        ? 95.w
+                        : 100.w,
             child: Column(
               children: [
                 Container(
@@ -747,6 +579,21 @@ class RightSideWidget extends StatelessWidget {
         ),
         if (!Responsive.isDesktop(context)) SizedBox(height: 30.h),
       ],
+    );
+  }
+
+  _buildAddForm(BuildContext context) async {
+    return showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(circularRadius),
+          ),
+          child: const EmployeeForm(),
+        );
+      },
     );
   }
 }
