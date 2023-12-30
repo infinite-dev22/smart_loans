@@ -8,7 +8,7 @@ class EmployeeDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const CustomScaffold(
-      route: "/client",
+      route: "/employee",
       body: EmployeeDetailsSuccessWidget(),
     );
   }
