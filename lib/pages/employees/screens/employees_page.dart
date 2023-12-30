@@ -41,4 +41,12 @@ class _EmployeesPageState extends State<EmployeesPage> {
       ),
     );
   }
+
+  
+  @override
+  void dispose() {
+    super.dispose();
+
+    employeesBloc.close();
+  }
 }
