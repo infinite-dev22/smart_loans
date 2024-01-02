@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:dynamic_table/dynamic_input_type/dynamic_table_input_type.dart';
 import 'package:dynamic_table/dynamic_table_data_cell.dart';
 import 'package:dynamic_table/dynamic_table_data_column.dart';
@@ -8,14 +7,12 @@ import 'package:dynamic_table/dynamic_table_data_row.dart';
 import 'package:dynamic_table/dynamic_table_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:smart_loans/global_values.dart';
 import 'package:smart_loans/pages/loans/widgets/details/forms/payment_form.dart';
 
 import '../../../../../data_source/dummy_loan_payments_data.dart';
-import '../../../../../data_source/dummy_loans_data.dart';
-import '../../../../../global_values.dart';
 
 class LoanPaymentsTable extends StatefulWidget {
-
   const LoanPaymentsTable({super.key});
 
   @override
