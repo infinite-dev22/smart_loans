@@ -4,17 +4,19 @@ abstract class SimpleDao {
   * If possible modify the API End Points to return as per function that calls to them.
   */
 
-  Future<Map<String, dynamic>> fetch(int clientId);
+  Future<Map<String, dynamic>> fetch(int id);
 
   Future<List<Map<String, dynamic>>> fetchAll();
 
   Future<List<Map<String, dynamic>>> search(String search);
 
-  Future<dynamic> put(Map<String, dynamic> data, int clientId);
+  Future<dynamic> put(Map<String, dynamic> data, int id);
 
   Future<dynamic> post(Map<String, dynamic> data);
 
-  Future<dynamic> delete(int clientId);
+  Future<dynamic> delete(int id);
 
-  Future<dynamic> deleteMultiple(List<int> clientIds);
+  Future<dynamic> deleteMultiple(List<int> ids);
+
+  
 }
