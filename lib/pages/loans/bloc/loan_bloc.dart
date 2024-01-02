@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_loans/data_source/models/loan_model.dart';
+import 'package:smart_loans/data_source/repositories/loan_repo.dart';
 
 part 'loan_event.dart';
 part 'loan_state.dart';
@@ -16,37 +17,41 @@ class LoanBloc extends Bloc<LoanEvent, LoanState> {
     on<SelectLoan>(_mapSelectLoanEventToState);
   }
 
-  _mapGetLoansEventToState(GetLoans event, Emitter<LoanState> emit) {
+  _mapGetLoansEventToState(GetLoans event, Emitter<LoanState> emit) async {
     emit(state.copyWith(status: LoanStatus.loading));
     try {
-      emit(state.copyWith(status: LoanStatus.success, loans: null));
+      var loans = await LoanRepo.fetchAll();
+      emit(state.copyWith(status: LoanStatus.success, loans: loans));
     } catch (e) {
       emit(state.copyWith(status: LoanStatus.error));
     }
   }
 
-  _mapGetLoanEventToState(GetLoan event, Emitter<LoanState> emit) {
+  _mapGetLoanEventToState(GetLoan event, Emitter<LoanState> emit) async {
     emit(state.copyWith(status: LoanStatus.loading));
     try {
-      emit(state.copyWith(status: LoanStatus.success, loan: null));
+      var loan = await LoanRepo.fetch(event.idSelected);
+      emit(state.copyWith(status: LoanStatus.success, loan: loan));
     } catch (e) {
       emit(state.copyWith(status: LoanStatus.error));
     }
   }
 
-  _mapCreateLoanEventToState(CreateLoan event, Emitter<LoanState> emit) {
+  _mapCreateLoanEventToState(CreateLoan event, Emitter<LoanState> emit) async {
     emit(state.copyWith(status: LoanStatus.loading));
     try {
-      emit(state.copyWith(status: LoanStatus.success, loan: null));
+      var loan = await LoanRepo.post(event.loan);
+      emit(state.copyWith(status: LoanStatus.success, loan: loan));
     } catch (e) {
       emit(state.copyWith(status: LoanStatus.error));
     }
   }
 
-  _mapUpdateLoanEventToState(UpdateLoan event, Emitter<LoanState> emit) {
+  _mapUpdateLoanEventToState(UpdateLoan event, Emitter<LoanState> emit) async {
     emit(state.copyWith(status: LoanStatus.loading));
     try {
-      emit(state.copyWith(status: LoanStatus.success, loan: null));
+      var loan = await LoanRepo.put(event.loan, event.idSelected);
+      emit(state.copyWith(status: LoanStatus.success, loan: loan));
     } catch (e) {
       emit(state.copyWith(status: LoanStatus.error));
     }

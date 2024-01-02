@@ -5,7 +5,7 @@ import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:smart_loans/config/web_config.dart';
 import 'package:smart_loans/data_source/daos/interfaces/simple_dao.dart';
 
-class EmployeeDaoImpl extends SimpleDao {
+class LoanDaoImpl extends SimpleDao {
   /*
   * This always must mirror the class it extends.
   */
@@ -23,7 +23,7 @@ class EmployeeDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.https(urlVariableHere, 'api/employees/show/$id')
+        Uri.https(urlVariableHere, 'api/loans/show/$id')
             .toString(),
       );
 
