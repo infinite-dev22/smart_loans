@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +5,7 @@ import 'package:smart_loans/data_source/models/loan_model.dart';
 
 part 'loan_event.dart';
 part 'loan_state.dart';
+
 class LoanBloc extends Bloc<LoanEvent, LoanState> {
   LoanBloc() : super(LoanInitial()) {
     on<GetLoans>(_mapGetLoansEventToState);
