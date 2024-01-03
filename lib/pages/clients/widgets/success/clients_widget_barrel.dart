@@ -1,1 +1,1 @@
-export 'clients_table_widget.dart';
+export 'clients_success_widget.dart';

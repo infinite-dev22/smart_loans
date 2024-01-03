@@ -8,10 +8,12 @@ class EmployeeRepo {
     return EmployeeModel.fromJson(employeeMap);
   }
 
-  static Future<List<EmployeeModel>> fetchAll({Map<String, dynamic>? body}) async {
+  static Future<List<EmployeeModel>> fetchAll(
+      {Map<String, dynamic>? body}) async {
     var employeeRepo = EmployeeDaoImpl();
     var responseList = await employeeRepo.fetchAll();
-    var employees = responseList.map((doc) => EmployeeModel.fromJson(doc)).toList();
+    var employees =
+        responseList.map((doc) => EmployeeModel.fromJson(doc)).toList();
     return employees;
   }
 
@@ -30,21 +32,25 @@ class EmployeeRepo {
   static Future<List<EmployeeModel>> search(String search) async {
     var employeeRepo = EmployeeDaoImpl();
     var responseList = await employeeRepo.search(search);
-    var employees = responseList.map((doc) => EmployeeModel.fromJson(doc)).toList();
+    var employees =
+        responseList.map((doc) => EmployeeModel.fromJson(doc)).toList();
     return employees;
   }
 
   static Future<List<EmployeeModel>> delete(int employeeId) async {
     var employeeRepo = EmployeeDaoImpl();
     var responseList = await employeeRepo.delete(employeeId);
-    var employees = responseList.map((doc) => EmployeeModel.fromJson(doc)).toList();
+    var employees =
+        responseList.map((doc) => EmployeeModel.fromJson(doc)).toList();
     return employees;
   }
 
-  static Future<List<EmployeeModel>> deleteMultiple(List<int> employeeIds) async {
+  static Future<List<EmployeeModel>> deleteMultiple(
+      List<int> employeeIds) async {
     var employeeRepo = EmployeeDaoImpl();
     var responseList = await employeeRepo.deleteMultiple(employeeIds);
-    var employees = responseList.map((doc) => EmployeeModel.fromJson(doc)).toList();
+    var employees =
+        responseList.map((doc) => EmployeeModel.fromJson(doc)).toList();
     return employees;
   }
 }

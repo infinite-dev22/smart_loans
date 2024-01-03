@@ -1,4 +1,3 @@
-
 class LoanModel {
   String loanNumber;
   String principalAmount;
@@ -33,7 +32,6 @@ class LoanModel {
         branchId: json['branchId'],
         loanStatusId: json['loanStatusId'],
         currencyId: json['currencyId']);
-        
   }
 
   Map<String, dynamic> toJson() {

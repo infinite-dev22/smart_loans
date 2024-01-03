@@ -26,7 +26,7 @@ class _ClientsPageState extends State<ClientsPage> {
         bloc: clientsBloc,
         builder: (context, state) {
           if (state is ClientsSuccess) {
-            return const ClientsSuccessWidget();
+            return ClientsSuccessWidget(blocProvider: clientsBloc);
           } else if (state is ClientsLoading) {
             return const ClientsLoadingWidget();
           } else if (state is ClientsError) {
@@ -36,7 +36,7 @@ class _ClientsPageState extends State<ClientsPage> {
           } else {
             // For now lets just show the data screen as initial screen.
             // return const ClientsInitialWidget();
-            return const ClientsSuccessWidget();
+            return ClientsSuccessWidget(blocProvider: clientsBloc);
           }
         },
       ),

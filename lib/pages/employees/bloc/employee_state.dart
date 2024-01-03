@@ -4,9 +4,13 @@ enum EmployeeStatus { initial, success, error, loading, selected, noData }
 
 extension EmployeeStatusX on EmployeeStatus {
   bool get isInitial => this == EmployeeStatus.initial;
+
   bool get isSuccess => this == EmployeeStatus.success;
+
   bool get isError => this == EmployeeStatus.error;
-  bool get isLoading => this == EmployeeStatus.loading; 
+
+  bool get isLoading => this == EmployeeStatus.loading;
+
   bool get isSelected => this == EmployeeStatus.selected;
 }
 
@@ -47,27 +51,33 @@ class EmployeeState extends Equatable {
 }
 
 class EmployeesInitial extends EmployeeState {}
+
 class EmployeesLoading extends EmployeeState {}
+
 class EmployeesSuccess extends EmployeeState {
-     EmployeesSuccess(employees);
+  EmployeesSuccess(employees);
 
   @override
   List<Object?> get props => [employees];
 }
 
 class EmployeesError extends EmployeeState {}
+
 class EmployeesNoData extends EmployeeState {}
 
 class EmployeeInitial extends EmployeeState {}
+
 class EmployeeLoading extends EmployeeState {}
+
 class EmployeeSuccess extends EmployeeState {
-     EmployeeSuccess(employee);
+  EmployeeSuccess(employee);
 
   @override
   List<Object?> get props => [employee];
 }
 
 class EmployeePosted extends EmployeeState {}
-class EmployeeError extends EmployeeState {}
-class EmployeeNoData extends EmployeeState {}
 
+class EmployeeError extends EmployeeState {}
+
+class EmployeeNoData extends EmployeeState {}

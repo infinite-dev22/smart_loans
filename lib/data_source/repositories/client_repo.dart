@@ -8,7 +8,8 @@ class ClientRepo {
     return ClientModel.fromJson(clientMap);
   }
 
-  static Future<List<ClientModel>> fetchAll({Map<String, dynamic>? body}) async {
+  static Future<List<ClientModel>> fetchAll(
+      {Map<String, dynamic>? body}) async {
     var clientRepo = ClientDaoImpl();
     var responseList = await clientRepo.fetchAll();
     var clients = responseList.map((doc) => ClientModel.fromJson(doc)).toList();

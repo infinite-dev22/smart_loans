@@ -13,7 +13,6 @@ import '../../../../../data_source/dummy_loans_data.dart';
 import '../../../../../global_values.dart';
 
 class LoanSchedulesTable extends StatefulWidget {
-
   const LoanSchedulesTable({super.key});
 
   @override

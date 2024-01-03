@@ -17,6 +17,4 @@ abstract class SimpleDao {
   Future<dynamic> delete(int id);
 
   Future<dynamic> deleteMultiple(List<int> ids);
-
-  
 }

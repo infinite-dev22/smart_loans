@@ -1,6 +1,7 @@
 part of 'loan_bloc.dart';
 
 enum LoanStatus { initial, success, error, loading, selected, noData }
+
 extension LoanStatusX on LoanStatus {
   bool get isInitial => this == LoanStatus.initial;
 
@@ -12,7 +13,6 @@ extension LoanStatusX on LoanStatus {
 
   bool get isSelected => this == LoanStatus.selected;
 }
-
 
 class LoanState extends Equatable {
   final List<LoanModel>? loans;
@@ -45,8 +45,6 @@ class LoanState extends Equatable {
     );
   }
 }
-
-
 
 class LoansInitial extends LoanState {}
 

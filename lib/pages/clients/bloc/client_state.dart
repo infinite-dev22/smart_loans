@@ -2,6 +2,7 @@ part of 'client_bloc.dart';
 
 // Just some preferred state design, it's a personal preference.
 enum ClientStatus { initial, success, error, loading, selected, noData }
+
 extension ClientStatusX on ClientStatus {
   bool get isInitial => this == ClientStatus.initial;
 

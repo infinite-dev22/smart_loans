@@ -22,7 +22,8 @@ class _EmployeesPageState extends State<EmployeesPage> {
     return CustomScaffold(
       route: "employees",
       body: BlocBuilder<EmployeeBloc, EmployeeState>(
-        bloc: employeesBloc, // Use the instance you created instead of the class
+        bloc: employeesBloc,
+        // Use the instance you created instead of the class
         builder: (context, state) {
           if (state is EmployeesSuccess) {
             return const EmployeesSuccessWidget();
@@ -42,7 +43,6 @@ class _EmployeesPageState extends State<EmployeesPage> {
     );
   }
 
-  
   @override
   void dispose() {
     super.dispose();

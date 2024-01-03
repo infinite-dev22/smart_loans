@@ -23,8 +23,7 @@ class LoanDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.https(urlVariableHere, 'api/loans/show/$id')
-            .toString(),
+        Uri.https(urlVariableHere, 'api/loans/show/$id').toString(),
       );
 
       if (response.statusCode == 200) {
@@ -103,8 +102,7 @@ class LoanDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.put(
-        Uri.https(urlVariableHere, 'api/loans/update/$id')
-            .toString(),
+        Uri.https(urlVariableHere, 'api/loans/update/$id').toString(),
         data: jsonEncode(data),
       );
 
@@ -157,8 +155,7 @@ class LoanDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.https(urlVariableHere, 'api/loans/delete/$id')
-            .toString(),
+        Uri.https(urlVariableHere, 'api/loans/delete/$id').toString(),
       );
 
       if (response.statusCode == 200) {
@@ -184,8 +181,7 @@ class LoanDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.delete(
-        Uri.https(urlVariableHere, 'api/loans/delete/multiple/$ids')
-            .toString(),
+        Uri.https(urlVariableHere, 'api/loans/delete/multiple/$ids').toString(),
       );
 
       if (response.statusCode == 200) {

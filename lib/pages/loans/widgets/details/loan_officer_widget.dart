@@ -14,12 +14,13 @@ class LoanOfficerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: SizedBox(
-        width: (Responsive.isDesktop(context)) ? 16.w
+        width: (Responsive.isDesktop(context))
+            ? 16.w
             : (Responsive.isTablet(context))
-            ? 75.w
-            : (Responsive.isMobile(context))
-            ? 95.w
-            : 100.w,
+                ? 75.w
+                : (Responsive.isMobile(context))
+                    ? 95.w
+                    : 100.w,
         child: Column(
           children: [
             Container(

@@ -10,16 +10,15 @@ import 'package:smart_loans/widgets/custom_scaffold.dart';
 class LoansPage extends StatefulWidget {
   const LoansPage({super.key});
 
- @override
+  @override
   State<LoansPage> createState() => _LoansPageState();
 }
 
-
 class _LoansPageState extends State<LoansPage> {
-    final loansBloc = LoanBloc();
+  final loansBloc = LoanBloc();
 
   @override
- Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return CustomScaffold(
       route: "loans",
       body: BlocBuilder<LoanBloc, LoanState>(
@@ -43,7 +42,7 @@ class _LoansPageState extends State<LoansPage> {
     );
   }
 
-    @override
+  @override
   void dispose() {
     super.dispose();
 

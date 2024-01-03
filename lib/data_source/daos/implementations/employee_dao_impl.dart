@@ -23,8 +23,7 @@ class EmployeeDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.https(urlVariableHere, 'api/employees/show/$id')
-            .toString(),
+        Uri.https(urlVariableHere, 'api/employees/show/$id').toString(),
       );
 
       if (response.statusCode == 200) {
@@ -103,8 +102,7 @@ class EmployeeDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.put(
-        Uri.https(urlVariableHere, 'api/employees/update/$id')
-            .toString(),
+        Uri.https(urlVariableHere, 'api/employees/update/$id').toString(),
         data: jsonEncode(data),
       );
 
@@ -157,8 +155,7 @@ class EmployeeDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.https(urlVariableHere, 'api/employees/delete/$id')
-            .toString(),
+        Uri.https(urlVariableHere, 'api/employees/delete/$id').toString(),
       );
 
       if (response.statusCode == 200) {
