@@ -1,11 +1,11 @@
 class EmployeeModel {
-  String name;
-  String telephone;
-  String email;
-  String addedAt;
+  String? first_name;
+  String? telephone;
+  String? email;
+  String? addedAt;
 
   EmployeeModel({
-    required this.name,
+    required this.first_name,
     required this.telephone,
     required this.email,
     required this.addedAt,
@@ -13,7 +13,7 @@ class EmployeeModel {
 
   factory EmployeeModel.fromJson(Map<String, dynamic> json) {
     return EmployeeModel(
-        name: json['name'],
+        first_name: json['first_name'],
         telephone: json['telephone'],
         email: json['email'],
         addedAt: json['created_at']);
@@ -21,7 +21,7 @@ class EmployeeModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'name': name,
+      'first_name': first_name,
       'telephone': telephone,
       'email': email,
       'created_at': addedAt,

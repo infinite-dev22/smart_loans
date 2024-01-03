@@ -69,11 +69,11 @@ class _ClientsSuccessWidgetState extends State<ClientsSuccessWidget> {
                 ),
                 WebDataColumn(
                   name: 'email',
-                  label: const Text('Email)'),
+                  label: const Text('Email'),
                   dataCell: (value) => DataCell(Text('$value')),
                 ),
                 WebDataColumn(
-                  name: 'nation_id',
+                  name: 'nationality',
                   label: const Text('Nationality'),
                   dataCell: (value) => DataCell(Text('$value')),
                 ),

@@ -3,14 +3,16 @@ class ClientModel {
   String? name;
   String? telephone;
   String? email;
-  int? nationality;
+  String? nationality;
+  int? nationId;
 
   ClientModel({
-    required this.clientNumber,
-    required this.name,
-    required this.telephone,
-    required this.email,
-    required this.nationality,
+    this.clientNumber,
+    this.name,
+    this.telephone,
+    this.email,
+    this.nationality,
+    this.nationId,
   });
 
   factory ClientModel.fromJson(Map<String, dynamic> json) {
@@ -19,7 +21,7 @@ class ClientModel {
         name: json['name'],
         telephone: json['telephone'],
         email: json['email'],
-        nationality: json['nation_id']);
+        nationality: json['nation']['name']);
   }
 
   Map<String, dynamic> toJson() {
@@ -28,7 +30,8 @@ class ClientModel {
       'name': name,
       'telephone': telephone,
       'email': email,
-      'nation_id': nationality,
+      'nationality': nationality,
+      'nation_id': nationId,
     };
   }
 }

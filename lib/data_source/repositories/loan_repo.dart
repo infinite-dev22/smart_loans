@@ -9,9 +9,18 @@ class LoanRepo {
   }
 
   static Future<List<LoanModel>> fetchAll({Map<String, dynamic>? body}) async {
-    var loanRepo = LoanDaoImpl();
-    var responseList = await loanRepo.fetchAll();
-    var loans = responseList.map((doc) => LoanModel.fromJson(doc)).toList();
+    var loans;
+    print("Getting Loans");
+    try{
+      var loanRepo = LoanDaoImpl();
+      var responseList = await loanRepo.fetchAll();
+       loans = responseList.map((doc) => LoanModel.fromJson(doc)).toList();
+    }
+     catch(e){
+     print(e);
+     }
+    print("loans Size: ${loans.length}");
+
     return loans;
   }
 

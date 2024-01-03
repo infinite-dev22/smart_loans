@@ -25,17 +25,17 @@ class _LoansPageState extends State<LoansPage> {
         bloc: loansBloc, // Use the instance you created instead of the class
         builder: (context, state) {
           if (state is LoansSuccess) {
-            return const LoansSuccessWidget();
+            return LoansSuccessWidget(blocProvider: loansBloc,);
           } else if (state is LoansLoading) {
-            return const LoansLoadingWidget();
+            return  LoansLoadingWidget();
           } else if (state is LoansError) {
-            return const LoansErrorWidget();
+            return  LoansErrorWidget();
           } else if (state is LoanNoData) {
-            return const LoansInitialWidget();
+            return  LoansInitialWidget();
           } else {
             // For now let's just show the data screen as an initial screen.
             // return const LoansSuccessWidget();
-            return const LoansSuccessWidget();
+            return  LoansSuccessWidget(blocProvider: loansBloc,);
           }
         },
       ),
