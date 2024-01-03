@@ -5,6 +5,7 @@ import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:smart_loans/config/web_config.dart';
 import 'package:smart_loans/data_source/daos/interfaces/simple_dao.dart';
 
+
 class ClientDaoImpl extends SimpleDao {
   /*
   * This always must mirror the class it extends.
@@ -37,7 +38,7 @@ class ClientDaoImpl extends SimpleDao {
   }
 
   @override
-  Future<List<Map<String, dynamic>>> fetchAll() async {
+  Future<List<dynamic>> fetchAll() async {
     Dio dio = Dio(baseOps)
       ..interceptors.add(DioCacheInterceptor(options: options));
 
@@ -49,7 +50,7 @@ class ClientDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.https(urlVariableHere, 'api/clients').toString(),
+        Uri.http(urlVariableHere, 'api/clients').toString(),
       );
 
       if (response.statusCode == 200) {

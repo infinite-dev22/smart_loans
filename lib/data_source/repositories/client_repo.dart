@@ -10,9 +10,16 @@ class ClientRepo {
 
   static Future<List<ClientModel>> fetchAll(
       {Map<String, dynamic>? body}) async {
-    var clientRepo = ClientDaoImpl();
-    var responseList = await clientRepo.fetchAll();
-    var clients = responseList.map((doc) => ClientModel.fromJson(doc)).toList();
+    print("Getting Clients");
+    var clients;
+    try {
+      var clientRepo = ClientDaoImpl();
+      var responseList = await clientRepo.fetchAll();
+      clients = responseList.map((doc) => ClientModel.fromJson(doc)).toList();
+    } catch (e){
+      print(e);
+    }
+    print("Clients Size: ${clients.length}");
     return clients;
   }
 
