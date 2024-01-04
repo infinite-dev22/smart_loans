@@ -1,34 +1,37 @@
 class ClientModel {
-  String clientNumber;
-  String name;
-  String telephone;
-  String email;
-  String nationality;
+  String? clientNumber;
+  String? name;
+  String? telephone;
+  String? email;
+  String? nationality;
+  int? nationId;
 
   ClientModel({
-    required this.clientNumber,
-    required this.name,
-    required this.telephone,
-    required this.email,
-    required this.nationality,
+    this.clientNumber,
+    this.name,
+    this.telephone,
+    this.email,
+    this.nationality,
+    this.nationId,
   });
 
   factory ClientModel.fromJson(Map<String, dynamic> json) {
     return ClientModel(
-        clientNumber: json['clientNumber'],
+        clientNumber: json['number'],
         name: json['name'],
         telephone: json['telephone'],
         email: json['email'],
-        nationality: json['nationality']);
+        nationality: json['nation']['name']);
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'clientNumber': clientNumber,
+      'number': clientNumber,
       'name': name,
       'telephone': telephone,
       'email': email,
       'nationality': nationality,
+      'nation_id': nationId,
     };
   }
 }

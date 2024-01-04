@@ -26,7 +26,7 @@ class _EmployeesPageState extends State<EmployeesPage> {
         // Use the instance you created instead of the class
         builder: (context, state) {
           if (state is EmployeesSuccess) {
-            return const EmployeesSuccessWidget();
+            return  EmployeesSuccessWidget(blocProvider: employeesBloc);
           } else if (state is EmployeesLoading) {
             return const EmployeesLoadingWidget();
           } else if (state is EmployeesError) {
@@ -36,7 +36,7 @@ class _EmployeesPageState extends State<EmployeesPage> {
           } else {
             // For now let's just show the data screen as an initial screen.
             // return const EmployeesSuccessWidget();
-            return const EmployeesSuccessWidget();
+            return  EmployeesSuccessWidget(blocProvider: employeesBloc);
           }
         },
       ),

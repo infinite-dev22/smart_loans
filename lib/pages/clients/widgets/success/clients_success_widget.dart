@@ -53,7 +53,7 @@ class _ClientsSuccessWidgetState extends State<ClientsSuccessWidget> {
               filterTexts: _filterTexts,
               columns: [
                 WebDataColumn(
-                  name: 'clientNo',
+                  name: 'number',
                   label: const Text('Client No.'),
                   dataCell: (value) => DataCell(Text('$value')),
                 ),
@@ -69,7 +69,7 @@ class _ClientsSuccessWidgetState extends State<ClientsSuccessWidget> {
                 ),
                 WebDataColumn(
                   name: 'email',
-                  label: const Text('Email)'),
+                  label: const Text('Email'),
                   dataCell: (value) => DataCell(Text('$value')),
                 ),
                 WebDataColumn(
@@ -92,7 +92,7 @@ class _ClientsSuccessWidgetState extends State<ClientsSuccessWidget> {
                   _selectedRowKeys = keys;
                 });
               },
-              primaryKeyName: 'clientNo',
+              primaryKeyName: 'number',
             ),
             horizontalMargin: 100,
             onPageChanged: (offset) {
@@ -196,6 +196,8 @@ class _ClientsSuccessWidgetState extends State<ClientsSuccessWidget> {
   @override
   void initState() {
     super.initState();
+
+    widget.blocProvider.add(GetClients());
 
     _sortColumnName = "";
     _sortAscending = false;

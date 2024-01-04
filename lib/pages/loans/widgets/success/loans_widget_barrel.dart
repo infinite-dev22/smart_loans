@@ -1,1 +1,1 @@
-export 'loans_table_widget.dart';
+export 'loans_success_widget.dart';

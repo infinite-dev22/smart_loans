@@ -14,7 +14,7 @@ extension ClientStatusX on ClientStatus {
 
   bool get isSelected => this == ClientStatus.selected;
 }
-
+//
 @immutable
 class ClientState extends Equatable {
   final List<ClientModel>? clients;

@@ -6,7 +6,7 @@ abstract class SimpleDao {
 
   Future<Map<String, dynamic>> fetch(int id);
 
-  Future<List<Map<String, dynamic>>> fetchAll();
+  Future<List<dynamic>> fetchAll();
 
   Future<List<Map<String, dynamic>>> search(String search);
 

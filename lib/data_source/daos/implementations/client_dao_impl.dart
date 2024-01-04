@@ -5,6 +5,7 @@ import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:smart_loans/config/web_config.dart';
 import 'package:smart_loans/data_source/daos/interfaces/simple_dao.dart';
 
+
 class ClientDaoImpl extends SimpleDao {
   /*
   * This always must mirror the class it extends.
@@ -23,7 +24,7 @@ class ClientDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.https(urlVariableHere, 'api/clients/show/$id').toString(),
+        Uri.http(urlVariableHere, 'api/clients/show/$id').toString(),
       );
 
       if (response.statusCode == 200) {
@@ -37,7 +38,7 @@ class ClientDaoImpl extends SimpleDao {
   }
 
   @override
-  Future<List<Map<String, dynamic>>> fetchAll() async {
+  Future<List<dynamic>> fetchAll() async {
     Dio dio = Dio(baseOps)
       ..interceptors.add(DioCacheInterceptor(options: options));
 
@@ -49,7 +50,7 @@ class ClientDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.https(urlVariableHere, 'api/clients').toString(),
+        Uri.http(urlVariableHere, 'api/clients').toString(),
       );
 
       if (response.statusCode == 200) {
@@ -75,7 +76,7 @@ class ClientDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.post(
-        Uri.https(urlVariableHere, 'api/clients/create').toString(),
+        Uri.http(urlVariableHere, 'api/clients/create').toString(),
         data: jsonEncode(data),
       );
 
@@ -102,7 +103,7 @@ class ClientDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.put(
-        Uri.https(urlVariableHere, 'api/v1/clients/update/$id').toString(),
+        Uri.http(urlVariableHere, 'api/v1/clients/update/$id').toString(),
         data: jsonEncode(data),
       );
 
@@ -129,7 +130,7 @@ class ClientDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.https(urlVariableHere, 'api/v1/clients/search/$search').toString(),
+        Uri.http(urlVariableHere, 'api/v1/clients/search/$search').toString(),
       );
 
       if (response.statusCode == 200) {
@@ -155,7 +156,7 @@ class ClientDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.https(urlVariableHere, 'api/v1/clients/delete/single/$id')
+        Uri.http(urlVariableHere, 'api/v1/clients/delete/single/$id')
             .toString(),
       );
 
@@ -182,7 +183,7 @@ class ClientDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.delete(
-        Uri.https(urlVariableHere, 'api/v1/clients/delete/multiple/$ids')
+        Uri.http(urlVariableHere, 'api/v1/clients/delete/multiple/$ids')
             .toString(),
       );
 
