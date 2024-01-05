@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:smart_loans/data_source/models/client_model.dart';
 import 'package:smart_loans/data_source/repositories/client_repo.dart';
 
@@ -75,6 +75,39 @@ class ClientBloc extends Bloc<ClientEvent, ClientState> {
       emit(state.copyWith(status: ClientStatus.success, idSelected: null));
     } catch (e) {
       emit(state.copyWith(status: ClientStatus.error));
+    }
+  }
+
+  @override
+  void onChange(Change<ClientState> change) {
+    super.onChange(change);
+    if (kDebugMode) {
+      print("Change: $change");
+    }
+  }
+
+  @override
+  void onEvent(ClientEvent event) {
+    super.onEvent(event);
+    if (kDebugMode) {
+      print("Event: $event");
+    }
+  }
+
+  @override
+  void onTransition(Transition<ClientEvent, ClientState> transition) {
+    super.onTransition(transition);
+    if (kDebugMode) {
+      print("Transition: $transition");
+    }
+  }
+
+  @override
+  void onError(Object error, StackTrace stackTrace) {
+    super.onError(error, stackTrace);
+    if (kDebugMode) {
+      print("Error: $error");
+      print("StackTrace: $stackTrace");
     }
   }
 }

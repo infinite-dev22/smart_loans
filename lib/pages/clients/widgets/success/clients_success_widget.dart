@@ -198,8 +198,6 @@ class _ClientsSuccessWidgetState extends State<ClientsSuccessWidget> {
   void initState() {
     super.initState();
 
-    context.read<ClientBloc>().add(GetClients());
-
     _sortColumnName = "";
     _sortAscending = false;
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {

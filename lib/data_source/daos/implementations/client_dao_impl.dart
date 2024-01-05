@@ -24,7 +24,7 @@ class ClientDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.http(urlVariableHere, 'api/clients/show/$id').toString(),
+        Uri.https(appUrl, 'api/clients/show/$id').toString(),
       );
 
       if (response.statusCode == 200) {
@@ -50,7 +50,7 @@ class ClientDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.http(urlVariableHere, 'api/clients').toString(),
+        Uri.https(appUrl, 'api/clients').toString(),
       );
 
       if (response.statusCode == 200) {
@@ -76,7 +76,7 @@ class ClientDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.post(
-        Uri.http(urlVariableHere, 'api/clients/create').toString(),
+        Uri.https(appUrl, 'api/clients/create').toString(),
         data: jsonEncode(data),
       );
 
@@ -103,7 +103,7 @@ class ClientDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.put(
-        Uri.http(urlVariableHere, 'api/v1/clients/update/$id').toString(),
+        Uri.https(appUrl, 'api/v1/clients/update/$id').toString(),
         data: jsonEncode(data),
       );
 
@@ -130,7 +130,7 @@ class ClientDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.http(urlVariableHere, 'api/v1/clients/search/$search').toString(),
+        Uri.https(appUrl, 'api/v1/clients/search/$search').toString(),
       );
 
       if (response.statusCode == 200) {
@@ -156,7 +156,7 @@ class ClientDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.http(urlVariableHere, 'api/v1/clients/delete/single/$id')
+        Uri.https(appUrl, 'api/v1/clients/delete/single/$id')
             .toString(),
       );
 
@@ -183,7 +183,7 @@ class ClientDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.delete(
-        Uri.http(urlVariableHere, 'api/v1/clients/delete/multiple/$ids')
+        Uri.https(appUrl, 'api/v1/clients/delete/multiple/$ids')
             .toString(),
       );
 

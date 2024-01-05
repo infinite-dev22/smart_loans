@@ -19,7 +19,7 @@ class ClientsPageLayout extends StatelessWidget {
           return const ClientsSuccessWidget();
         } else if (state.status == ClientStatus.loading) {
           return const ClientsLoadingWidget();
-        } else if (state.status == ClientStatus.loading) {
+        } else if (state.status == ClientStatus.error) {
           return const ClientsErrorWidget();
         }
         return const ClientsInitialWidget();

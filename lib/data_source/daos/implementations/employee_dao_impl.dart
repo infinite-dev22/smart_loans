@@ -23,7 +23,7 @@ class EmployeeDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.http(urlVariableHere, 'api/employees/show/$id').toString(),
+        Uri.https(appUrl, 'api/employees/show/$id').toString(),
       );
 
       if (response.statusCode == 200) {
@@ -49,7 +49,7 @@ class EmployeeDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.http(urlVariableHere, 'api/employees').toString(),
+        Uri.https(appUrl, 'api/employees').toString(),
       );
 
       if (response.statusCode == 200) {
@@ -75,7 +75,7 @@ class EmployeeDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.post(
-        Uri.http(urlVariableHere, 'api/employees/create').toString(),
+        Uri.https(appUrl, 'api/employees/create').toString(),
         data: jsonEncode(data),
       );
 
@@ -102,7 +102,7 @@ class EmployeeDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.put(
-        Uri.http(urlVariableHere, 'api/employees/update/$id').toString(),
+        Uri.https(appUrl, 'api/employees/update/$id').toString(),
         data: jsonEncode(data),
       );
 
@@ -129,7 +129,7 @@ class EmployeeDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.http(urlVariableHere, 'api/employees/search/$search').toString(),
+        Uri.https(appUrl, 'api/employees/search/$search').toString(),
       );
 
       if (response.statusCode == 200) {
@@ -155,7 +155,7 @@ class EmployeeDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.http(urlVariableHere, 'api/employees/delete/$id').toString(),
+        Uri.https(appUrl, 'api/employees/delete/$id').toString(),
       );
 
       if (response.statusCode == 200) {
@@ -181,7 +181,7 @@ class EmployeeDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.delete(
-        Uri.http(urlVariableHere, 'api/employees/delete/multiple/$ids')
+        Uri.https(appUrl, 'api/employees/delete/multiple/$ids')
             .toString(),
       );
 
