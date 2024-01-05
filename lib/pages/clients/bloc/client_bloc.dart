@@ -8,7 +8,7 @@ part 'client_event.dart';
 part 'client_state.dart';
 
 class ClientBloc extends Bloc<ClientEvent, ClientState> {
-  ClientBloc() : super(ClientInitial()) {
+  ClientBloc() : super(const ClientState()) {
     on<GetClients>(_mapGetClientsEventToState);
     on<GetClient>(_mapGetClientEventToState);
     on<CreateClient>(_mapCreateClientEventToState);

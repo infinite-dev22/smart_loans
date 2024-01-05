@@ -1,20 +1,17 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_web_data_table/web_data_table.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/config/responsive.dart';
 import 'package:smart_loans/global_values.dart';
 import 'package:smart_loans/pages/loans/widgets/details/forms/loan_form.dart';
-import 'package:smart_loans/pages/loans/widgets/success/smaple_data.dart';
 
 import '../../bloc/loan_bloc.dart';
 
 class LoansSuccessWidget extends StatefulWidget {
-  const LoansSuccessWidget({super.key, required this.blocProvider});
-
-  // Add final variable to hold bloc passed from parent widget.
-  final LoanBloc blocProvider;
+  const LoansSuccessWidget({super.key});
 
   @override
   State<LoansSuccessWidget> createState() => _LoansTableWidgetState();
@@ -95,7 +92,12 @@ class _LoansTableWidgetState extends State<LoansSuccessWidget> {
                   dataCell: (value) => DataCell(Text('$value')),
                 ),
               ],
-              rows: widget.blocProvider.state.loans!.map((e) => e.toJson()).toList(),
+              rows: context
+                  .read<LoanBloc>()
+                  .state
+                  .loans!
+                  .map((e) => e.toJson())
+                  .toList(),
               selectedRowKeys: _selectedRowKeys,
               onTapRow: (rows, index) {
                 Navigator.pushNamed(context, "/loan");
@@ -209,7 +211,7 @@ class _LoansTableWidgetState extends State<LoansSuccessWidget> {
   @override
   void initState() {
     super.initState();
-    widget.blocProvider.add(GetLoans());
+    context.read<LoanBloc>().add(GetLoans());
 
     _sortColumnName = "";
     _sortAscending = false;

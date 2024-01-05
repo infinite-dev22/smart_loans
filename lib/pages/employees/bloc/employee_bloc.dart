@@ -9,7 +9,7 @@ part 'employee_event.dart';
 part 'employee_state.dart';
 
 class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
-  EmployeeBloc() : super(EmployeeInitial()) {
+  EmployeeBloc() : super(const EmployeeState()) {
     on<GetEmployees>(_mapGetEmployeesEventToState);
     on<GetEmployee>(_mapGetEmployeeEventToState);
     on<CreateEmployee>(_mapCreateEmployeeCreateClientEventToState);

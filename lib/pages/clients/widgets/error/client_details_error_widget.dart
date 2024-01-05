@@ -6,11 +6,15 @@ class ClientDetailsLoadingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        "An error occurred while loading client details",
-        style: TextStyle(color: AppColor.red),
-      ),
+    return const Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "An error occurred while loading client details",
+          style: TextStyle(color: AppColor.red),
+        ),
+      ],
     );
   }
 }

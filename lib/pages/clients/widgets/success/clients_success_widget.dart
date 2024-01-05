@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_web_data_table/web_data_table.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/config/responsive.dart';
@@ -9,10 +10,7 @@ import 'package:smart_loans/pages/clients/bloc/client_bloc.dart';
 import 'package:smart_loans/pages/clients/widgets/details/client_add_form.dart';
 
 class ClientsSuccessWidget extends StatefulWidget {
-  const ClientsSuccessWidget({super.key, required this.blocProvider});
-
-  // Add final variable to hold bloc passed from parent widget.
-  final ClientBloc blocProvider;
+  const ClientsSuccessWidget({super.key});
 
   @override
   State<ClientsSuccessWidget> createState() => _ClientsSuccessWidgetState();
@@ -79,7 +77,10 @@ class _ClientsSuccessWidgetState extends State<ClientsSuccessWidget> {
                 ),
               ],
               // Call to bloc to provide state from which we get the variables/data of the current state.
-              rows: widget.blocProvider.state.clients!
+              rows: context
+                  .read<ClientBloc>()
+                  .state
+                  .clients!
                   .map((e) => e.toJson())
                   .toList(),
               selectedRowKeys: _selectedRowKeys,
@@ -197,7 +198,7 @@ class _ClientsSuccessWidgetState extends State<ClientsSuccessWidget> {
   void initState() {
     super.initState();
 
-    widget.blocProvider.add(GetClients());
+    context.read<ClientBloc>().add(GetClients());
 
     _sortColumnName = "";
     _sortAscending = false;

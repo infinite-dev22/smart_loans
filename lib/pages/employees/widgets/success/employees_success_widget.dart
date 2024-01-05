@@ -1,19 +1,17 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_web_data_table/web_data_table.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/config/responsive.dart';
 import 'package:smart_loans/global_values.dart';
 import 'package:smart_loans/pages/employees/bloc/employee_bloc.dart';
 import 'package:smart_loans/pages/employees/widgets/details/employee_form.dart';
-import 'package:smart_loans/pages/employees/widgets/success/smaple_data.dart';
 
 class EmployeesSuccessWidget extends StatefulWidget {
-  const EmployeesSuccessWidget({super.key, required this.blocProvider});
+  const EmployeesSuccessWidget({super.key});
 
-  // Add final variable to hold bloc passed from parent widget.
-  final EmployeeBloc blocProvider;
   @override
   State<EmployeesSuccessWidget> createState() => _EmployeesTableWidgetState();
 }
@@ -52,7 +50,6 @@ class _EmployeesTableWidgetState extends State<EmployeesSuccessWidget> {
               sortAscending: _sortAscending,
               filterTexts: _filterTexts,
               columns: [
-
                 WebDataColumn(
                   name: 'first_name',
                   label: const Text('Name'),
@@ -79,8 +76,12 @@ class _EmployeesTableWidgetState extends State<EmployeesSuccessWidget> {
                   dataCell: (value) => DataCell(Text('$value')),
                 ),
               ],
-              rows: widget.blocProvider.state.employees!
-                  .map((e) => e.toJson()).toList(),
+              rows: context
+                  .read<EmployeeBloc>()
+                  .state
+                  .employees!
+                  .map((e) => e.toJson())
+                  .toList(),
               selectedRowKeys: _selectedRowKeys,
               onTapRow: (rows, index) {
                 Navigator.pushNamed(context, "/employee");
@@ -195,7 +196,7 @@ class _EmployeesTableWidgetState extends State<EmployeesSuccessWidget> {
   @override
   void initState() {
     super.initState();
-    widget.blocProvider.add(GetEmployees());
+    context.read<EmployeeBloc>().add(GetEmployees());
 
     _sortColumnName = "";
     _sortAscending = false;

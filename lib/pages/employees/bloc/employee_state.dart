@@ -20,15 +20,12 @@ class EmployeeState extends Equatable {
   final EmployeeStatus status;
   final int? idSelected;
 
-  EmployeeState({
+  const EmployeeState({
     List<EmployeeModel>? employees,
-    EmployeeModel? employee,
-    EmployeeStatus status = EmployeeStatus.initial,
-    int? idSelected = 0,
-  })  : employees = employees ?? const [],
-        employee = employee,
-        status = status,
-        idSelected = idSelected;
+    this.employee,
+    this.status = EmployeeStatus.initial,
+    this.idSelected = 0,
+  })  : employees = employees ?? const [];
 
   @override
   List<Object?> get props => [employees, employee, status, idSelected];
@@ -55,7 +52,7 @@ class EmployeesInitial extends EmployeeState {}
 class EmployeesLoading extends EmployeeState {}
 
 class EmployeesSuccess extends EmployeeState {
-  EmployeesSuccess(employees);
+  const EmployeesSuccess(employees);
 
   @override
   List<Object?> get props => [employees];
@@ -70,7 +67,7 @@ class EmployeeInitial extends EmployeeState {}
 class EmployeeLoading extends EmployeeState {}
 
 class EmployeeSuccess extends EmployeeState {
-  EmployeeSuccess(employee);
+  const EmployeeSuccess(employee);
 
   @override
   List<Object?> get props => [employee];

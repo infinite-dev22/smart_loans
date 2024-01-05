@@ -8,7 +8,7 @@ part 'loan_event.dart';
 part 'loan_state.dart';
 
 class LoanBloc extends Bloc<LoanEvent, LoanState> {
-  LoanBloc() : super(LoanInitial()) {
+  LoanBloc() : super(const LoanState()) {
     on<GetLoans>(_mapGetLoansEventToState);
     on<GetLoan>(_mapGetLoanEventToState);
     on<CreateLoan>(_mapCreateLoanEventToState);
