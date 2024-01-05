@@ -196,7 +196,6 @@ class _EmployeesTableWidgetState extends State<EmployeesSuccessWidget> {
   @override
   void initState() {
     super.initState();
-    context.read<EmployeeBloc>().add(GetEmployees());
 
     _sortColumnName = "";
     _sortAscending = false;

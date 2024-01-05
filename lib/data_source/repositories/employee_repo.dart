@@ -10,16 +10,16 @@ class EmployeeRepo {
 
   static Future<List<EmployeeModel>> fetchAll(
       {Map<String, dynamic>? body}) async {
-    // print("Getting empolyees");
+    print("Getting employees0");
     var employees;
-    try{
+    try {
       var employeeRepo = EmployeeDaoImpl();
       var responseList = await employeeRepo.fetchAll();
-       employees =
-      responseList.map((doc) => EmployeeModel.fromJson(doc)).toList();
-    }
-    catch(e){
-  print(e);
+      print("Employees response: $responseList");
+      employees =
+          responseList.map((doc) => EmployeeModel.fromJson(doc)).toList();
+    } catch (e) {
+      print(e);
     }
     // print("employees Size: ${employees.length}");
 

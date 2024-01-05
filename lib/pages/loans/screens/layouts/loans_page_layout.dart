@@ -19,17 +19,16 @@ class _LoansPageLayoutState extends State<LoansPageLayout> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoanBloc, LoanState>(
-      bloc: LoanBloc(),
       builder: (context, state) {
-        if (state is LoansInitial) {
+        if (state.status == LoanStatus.initial) {
           context.read<LoanBloc>().add(GetLoans());
-        } else if (state is LoansSuccess) {
+        } else if (state.status == LoanStatus.success) {
           return const LoansSuccessWidget();
-        } else if (state is LoansLoading) {
+        } else if (state.status == LoanStatus.loading) {
           return const LoansLoadingWidget();
-        } else if (state is LoansError) {
+        } else if (state.status == LoanStatus.error) {
           return const LoansErrorWidget();
-        } else if (state is LoanNoData) {
+        } else if (state.status == LoanStatus.noData) {
           return const LoansInitialWidget();
         }
         return const LoansInitialWidget();
