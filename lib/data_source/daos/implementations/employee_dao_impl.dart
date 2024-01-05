@@ -53,8 +53,7 @@ class EmployeeDaoImpl extends SimpleDao {
       );
 
       if (response.statusCode == 200) {
-        print("Employees response: $response");
-        return response.data["employees"];
+        return response.data;
       } else {
         throw Error();
       }

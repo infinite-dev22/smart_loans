@@ -22,15 +22,16 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
   Future<FutureOr<void>> _mapGetEmployeesEventToState(
       GetEmployees event, Emitter<EmployeeState> emit) async {
     emit(state.copyWith(status: EmployeeStatus.loading));
-    try {
-      var employees = await EmployeeRepo.fetchAll();
-      print("Emp Len: ${employees.length}");
+    await EmployeeRepo.fetchAll().then((employees) {
       emit(
           state.copyWith(status: EmployeeStatus.success, employees: employees));
-    } catch (e) {
-      print(e);
+    }).onError((error, stackTrace) {
+      if (kDebugMode) {
+        print(error);
+        print(stackTrace);
+      }
       emit(state.copyWith(status: EmployeeStatus.error));
-    }
+    });
   }
 
   Future<FutureOr<void>> _mapGetEmployeeEventToState(

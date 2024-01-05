@@ -51,7 +51,7 @@ class _EmployeesTableWidgetState extends State<EmployeesSuccessWidget> {
               filterTexts: _filterTexts,
               columns: [
                 WebDataColumn(
-                  name: 'first_name',
+                  name: 'full_name',
                   label: const Text('Name'),
                   dataCell: (value) => DataCell(Text('$value')),
                 ),
@@ -61,12 +61,12 @@ class _EmployeesTableWidgetState extends State<EmployeesSuccessWidget> {
                   dataCell: (value) => DataCell(Text('$value')),
                 ),
                 WebDataColumn(
-                  name: 'email',
+                  name: 'personal_email',
                   label: const Text('Email'),
                   dataCell: (value) => DataCell(Text('$value')),
                 ),
                 WebDataColumn(
-                  name: 'addedAt',
+                  name: 'created_at',
                   label: const Text('AddedAt'),
                   dataCell: (value) => DataCell(Text('$value')),
                 ),
