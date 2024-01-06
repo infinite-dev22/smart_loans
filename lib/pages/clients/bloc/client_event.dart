@@ -47,12 +47,12 @@ class DeleteClient extends ClientEvent {
 }
 
 class SelectClient extends ClientEvent {
-  SelectClient(this.idSelected);
+  SelectClient(this.client);
 
-  final int idSelected;
+  final ClientModel client;
 
   @override
-  List<Object?> get props => [idSelected];
+  List<Object?> get props => [client];
 }
 
 class Success extends ClientEvent {}

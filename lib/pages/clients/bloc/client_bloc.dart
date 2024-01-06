@@ -20,12 +20,15 @@ class ClientBloc extends Bloc<ClientEvent, ClientState> {
   _mapGetClientsEventToState(
       GetClients event, Emitter<ClientState> emit) async {
     emit(state.copyWith(status: ClientStatus.loading));
-    try {
-      var clients = await ClientRepo.fetchAll();
+    await ClientRepo.fetchAll().then((clients) {
       emit(state.copyWith(status: ClientStatus.success, clients: clients));
-    } catch (e) {
+    }).onError((error, stackTrace) {
+      if (kDebugMode) {
+        print(error);
+        print(stackTrace);
+      }
       emit(state.copyWith(status: ClientStatus.error));
-    }
+    });
   }
 
   _mapGetClientEventToState(GetClient event, Emitter<ClientState> emit) async {
@@ -52,12 +55,15 @@ class ClientBloc extends Bloc<ClientEvent, ClientState> {
   _mapUpdateClientEventToState(
       UpdateClient event, Emitter<ClientState> emit) async {
     emit(state.copyWith(status: ClientStatus.loading));
-    try {
-      var client = await ClientRepo.put(event.client, event.idSelected);
+    await ClientRepo.put(event.client, event.idSelected).then((client) {
       emit(state.copyWith(status: ClientStatus.success, client: client));
-    } catch (e) {
+    }).onError((error, stackTrace) {
+      if (kDebugMode) {
+        print(error);
+        print(stackTrace);
+      }
       emit(state.copyWith(status: ClientStatus.error));
-    }
+    });
   }
 
   _mapDeleteClientEventToState(DeleteClient event, Emitter<ClientState> emit) {

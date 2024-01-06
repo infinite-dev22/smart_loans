@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_web_data_table/web_data_table.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/config/responsive.dart';
+import 'package:smart_loans/data_source/models/client_model.dart';
 import 'package:smart_loans/global_values.dart';
 import 'package:smart_loans/pages/clients/bloc/client_bloc.dart';
 import 'package:smart_loans/pages/clients/widgets/details/client_add_form.dart';
@@ -85,6 +86,8 @@ class _ClientsSuccessWidgetState extends State<ClientsSuccessWidget> {
                   .toList(),
               selectedRowKeys: _selectedRowKeys,
               onTapRow: (rows, index) {
+                var client = ClientModel.fromJson(rows[index]);
+                context.read<ClientBloc>().add(SelectClient(client));
                 Navigator.pushNamed(context, "/client");
               },
               onSelectRows: (keys) {
