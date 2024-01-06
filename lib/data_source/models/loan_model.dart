@@ -1,7 +1,7 @@
 class LoanModel {
   String? loanNumber;
-  double? principalAmount;
-  double? loanFees;
+  int? principalAmount;  // should be double but api returns int.
+  int? loanFees;  // should be double but api returns int.
   int? clientId;
   String? clientName;
   int? loanTypeId;

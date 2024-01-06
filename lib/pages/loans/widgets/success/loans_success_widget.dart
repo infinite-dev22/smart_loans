@@ -211,7 +211,6 @@ class _LoansTableWidgetState extends State<LoansSuccessWidget> {
   @override
   void initState() {
     super.initState();
-    context.read<LoanBloc>().add(GetLoans());
 
     _sortColumnName = "";
     _sortAscending = false;

@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:smart_loans/data_source/models/loan_model.dart';
 import 'package:smart_loans/data_source/repositories/loan_repo.dart';
 
@@ -19,12 +19,15 @@ class LoanBloc extends Bloc<LoanEvent, LoanState> {
 
   _mapGetLoansEventToState(GetLoans event, Emitter<LoanState> emit) async {
     emit(state.copyWith(status: LoanStatus.loading));
-    try {
-      var loans = await LoanRepo.fetchAll();
+    await LoanRepo.fetchAll().then((loans) {
       emit(state.copyWith(status: LoanStatus.success, loans: loans));
-    } catch (e) {
+    }).onError((error, stackTrace) {
+      if (kDebugMode) {
+        print(error);
+        print(stackTrace);
+      }
       emit(state.copyWith(status: LoanStatus.error));
-    }
+    });
   }
 
   _mapGetLoanEventToState(GetLoan event, Emitter<LoanState> emit) async {
@@ -72,6 +75,39 @@ class LoanBloc extends Bloc<LoanEvent, LoanState> {
       emit(state.copyWith(status: LoanStatus.success, idSelected: null));
     } catch (e) {
       emit(state.copyWith(status: LoanStatus.error));
+    }
+  }
+
+  @override
+  void onChange(Change<LoanState> change) {
+    super.onChange(change);
+    if (kDebugMode) {
+      print("Change: $change");
+    }
+  }
+
+  @override
+  void onEvent(LoanEvent event) {
+    super.onEvent(event);
+    if (kDebugMode) {
+      print("Event: $event");
+    }
+  }
+
+  @override
+  void onTransition(Transition<LoanEvent, LoanState> transition) {
+    super.onTransition(transition);
+    if (kDebugMode) {
+      print("Transition: $transition");
+    }
+  }
+
+  @override
+  void onError(Object error, StackTrace stackTrace) {
+    super.onError(error, stackTrace);
+    if (kDebugMode) {
+      print("Error: $error");
+      print("StackTrace: $stackTrace");
     }
   }
 }
