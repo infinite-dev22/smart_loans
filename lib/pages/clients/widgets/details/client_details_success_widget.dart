@@ -9,7 +9,7 @@ import 'package:smart_loans/data_source/models/client_model.dart';
 import 'package:smart_loans/global_values.dart';
 import 'package:smart_loans/pages/clients/bloc/client_bloc/client_bloc.dart';
 import 'package:smart_loans/pages/clients/bloc/clients_bloc/clients_bloc.dart';
-import 'package:smart_loans/pages/clients/widgets/details/client_add_form.dart';
+import 'package:smart_loans/pages/clients/widgets/success/forms/client_add_form.dart';
 import 'package:smart_loans/pages/clients/widgets/details/widgets/documents/documents_error_widget.dart';
 import 'package:smart_loans/pages/clients/widgets/details/widgets/documents/documents_initial_widget.dart';
 import 'package:smart_loans/pages/clients/widgets/details/widgets/documents/documents_loading_widget.dart';

@@ -11,11 +11,11 @@ part 'login_state.dart';
 
 class LogInBloc extends Bloc<LoginEvent, LogInState> {
   LogInBloc() : super(const LogInState()) {
-    on<LogInUser>(_mapGetClientEventToState);
+    on<LogInUser>(_mapLoginUserEventToState);
     on<RememberUser>(_mapRememberUserEventToState);
   }
 
-  _mapGetClientEventToState(LogInUser event, Emitter<LogInState> emit) async {
+  _mapLoginUserEventToState(LogInUser event, Emitter<LogInState> emit) async {
     emit(state.copyWith(status: LogInStatus.loading));
     var login = LogInModel(email: event.email, password: event.password);
     await LoginRepo.loginUser(login).then((user) {

@@ -7,9 +7,10 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/config/responsive.dart';
 import 'package:smart_loans/data_source/models/client_model.dart';
 import 'package:smart_loans/global_values.dart';
-import 'package:smart_loans/pages/clients/bloc/clients_bloc/clients_bloc.dart';
 import 'package:smart_loans/pages/clients/bloc/client_bloc/client_bloc.dart';
-import 'package:smart_loans/pages/clients/widgets/details/client_add_form.dart';
+import 'package:smart_loans/pages/clients/bloc/clients_bloc/clients_bloc.dart';
+import 'package:smart_loans/pages/clients/bloc/forms/clients/client_add_form_bloc.dart';
+import 'package:smart_loans/pages/clients/widgets/success/forms/client_add_form.dart';
 
 class ClientsSuccessWidget extends StatefulWidget {
   const ClientsSuccessWidget({super.key});
@@ -187,7 +188,17 @@ class _ClientsSuccessWidgetState extends State<ClientsSuccessWidget> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(circularRadius),
           ),
-          child: const ClientForm(),
+          child: MultiBlocProvider(providers: [
+            BlocProvider<ClientsBloc>(
+              create: (_) => ClientsBloc(),
+            ),
+            BlocProvider<ClientBloc>(
+              create: (_) => ClientBloc(),
+            ),
+            BlocProvider<ClientAddFormBloc>(
+              create: (_) => ClientAddFormBloc(),
+            ),
+          ], child: const ClientForm()),
         );
       },
     );
