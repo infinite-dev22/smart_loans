@@ -56,4 +56,20 @@ class DocumentModel {
       'document_status_id': documentStatusId,
     };
   }
+
+  List<Object?> toList() {
+    return [
+      id.toString(),
+      name.toString(),
+      extension.toString(),
+      nameOnFile.toString(),
+      tempKey.toString(),
+      externalKey.toString(),
+      mimeType.toString(),
+      size.toString(),
+      description.toString(),
+      documentTypeId.toString(),
+      documentStatusId.toString(),
+    ];
+  }
 }

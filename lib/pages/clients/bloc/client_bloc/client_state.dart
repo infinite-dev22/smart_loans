@@ -14,54 +14,40 @@ extension ClientStatusX on ClientStatus {
 
   bool get isSelected => this == ClientStatus.selected;
 }
+
 //
 @immutable
 class ClientState extends Equatable {
-  final List<ClientModel>? clients;
   final ClientModel? client;
+  final List<DocumentModel>? documents;
   final ClientStatus status;
   final int? idSelected;
 
   const ClientState({
-    List<ClientModel>? clients,
     this.client,
+    this.documents,
     this.status = ClientStatus.initial,
     this.idSelected = 0,
-  }) : clients = clients ?? const [];
+  });
 
   @override
-  List<Object?> get props => [clients, client, status, idSelected];
+  List<Object?> get props => [client, documents, status, idSelected];
 
   // Copy state.
   ClientState copyWith({
-    List<ClientModel>? clients,
     ClientModel? client,
+    List<DocumentModel>? documents,
     ClientStatus? status,
     int? idSelected,
   }) {
     return ClientState(
-      clients: clients ?? this.clients,
       client: client ?? this.client,
+      documents: documents ?? this.documents,
       status: status ?? this.status,
       idSelected: idSelected ?? this.idSelected,
     );
   }
 }
-
-class ClientsInitial extends ClientState {}
-
-class ClientsLoading extends ClientState {}
-
-class ClientsSuccess extends ClientState {
-  const ClientsSuccess(clients);
-
-  @override
-  List<Object?> get props => [clients];
-}
-
-class ClientsError extends ClientState {}
-
-class ClientsNoData extends ClientState {}
 
 class ClientInitial extends ClientState {}
 
@@ -74,8 +60,19 @@ class ClientSuccess extends ClientState {
   List<Object?> get props => [client];
 }
 
+class ClientSelected extends ClientState {}
+
 class ClientPosted extends ClientState {}
 
 class ClientError extends ClientState {}
 
 class ClientNoData extends ClientState {}
+
+class DocumentsLoading extends ClientState {}
+
+class DocumentsSuccess extends ClientState {
+  const DocumentsSuccess(documents);
+
+  @override
+  List<Object?> get props => [documents];
+}

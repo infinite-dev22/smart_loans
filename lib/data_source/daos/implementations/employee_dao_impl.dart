@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:smart_loans/config/web_config.dart';
 import 'package:smart_loans/data_source/daos/interfaces/simple_dao.dart';
+import 'package:smart_loans/global_values.dart';
 
 class EmployeeDaoImpl extends SimpleDao {
   /*
@@ -19,7 +20,7 @@ class EmployeeDaoImpl extends SimpleDao {
       dio.options.headers['content-Type'] = 'application/json';
       dio.options.headers['Accept'] = 'application/json';
       dio.options.headers["authorization"] =
-          "Bearer $authToken"; // Add server auth token here.
+          "Bearer ${currentUser.token}"; // Add server auth token here.
       dio.options.followRedirects = false;
 
       var response = await dio.get(
@@ -45,7 +46,7 @@ class EmployeeDaoImpl extends SimpleDao {
       dio.options.headers['content-Type'] = 'application/json';
       dio.options.headers['Accept'] = 'application/json';
       dio.options.headers["authorization"] =
-          "Bearer $authToken"; // Add server auth token here.
+          "Bearer ${currentUser.token}"; // Add server auth token here.
       dio.options.followRedirects = false;
 
       var response = await dio.get(
@@ -71,7 +72,7 @@ class EmployeeDaoImpl extends SimpleDao {
       dio.options.headers['content-Type'] = 'application/json';
       dio.options.headers['Accept'] = 'application/json';
       dio.options.headers["authorization"] =
-          "Bearer $authToken"; // Add server auth token here.
+          "Bearer ${currentUser.token}"; // Add server auth token here.
       dio.options.followRedirects = false;
 
       var response = await dio.post(
@@ -98,7 +99,7 @@ class EmployeeDaoImpl extends SimpleDao {
       dio.options.headers['content-Type'] = 'application/json';
       dio.options.headers['Accept'] = 'application/json';
       dio.options.headers["authorization"] =
-          "Bearer $authToken"; // Add server auth token here.
+          "Bearer ${currentUser.token}"; // Add server auth token here.
       dio.options.followRedirects = false;
 
       var response = await dio.put(
@@ -125,7 +126,7 @@ class EmployeeDaoImpl extends SimpleDao {
       dio.options.headers['content-Type'] = 'application/json';
       dio.options.headers['Accept'] = 'application/json';
       dio.options.headers["authorization"] =
-          "Bearer $authToken"; // Add server auth token here.
+          "Bearer ${currentUser.token}"; // Add server auth token here.
       dio.options.followRedirects = false;
 
       var response = await dio.get(
@@ -151,7 +152,7 @@ class EmployeeDaoImpl extends SimpleDao {
       dio.options.headers['content-Type'] = 'application/json';
       dio.options.headers['Accept'] = 'application/json';
       dio.options.headers["authorization"] =
-          "Bearer $authToken"; // Add server auth token here.
+          "Bearer ${currentUser.token}"; // Add server auth token here.
       dio.options.followRedirects = false;
 
       var response = await dio.get(
@@ -177,12 +178,11 @@ class EmployeeDaoImpl extends SimpleDao {
       dio.options.headers['content-Type'] = 'application/json';
       dio.options.headers['Accept'] = 'application/json';
       dio.options.headers["authorization"] =
-          "Bearer $authToken"; // Add server auth token here.
+          "Bearer ${currentUser.token}"; // Add server auth token here.
       dio.options.followRedirects = false;
 
       var response = await dio.delete(
-        Uri.https(appUrl, 'api/employees/delete/multiple/$ids')
-            .toString(),
+        Uri.https(appUrl, 'api/employees/delete/multiple/$ids').toString(),
       );
 
       if (response.statusCode == 200) {

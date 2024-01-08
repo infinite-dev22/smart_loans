@@ -172,9 +172,7 @@ class CustomScaffold extends StatelessWidget {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: body,
-      ),
+      body: body,
     );
   }
 }

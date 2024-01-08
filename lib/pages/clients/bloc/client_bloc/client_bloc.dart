@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:smart_loans/data_source/models/client_model.dart';
+import 'package:smart_loans/data_source/models/document_model.dart';
 import 'package:smart_loans/data_source/repositories/client_repo.dart';
 
 part 'client_event.dart';
@@ -9,26 +10,12 @@ part 'client_state.dart';
 
 class ClientBloc extends Bloc<ClientEvent, ClientState> {
   ClientBloc() : super(const ClientState()) {
-    on<GetClients>(_mapGetClientsEventToState);
     on<GetClient>(_mapGetClientEventToState);
     on<CreateClient>(_mapCreateClientEventToState);
     on<UpdateClient>(_mapUpdateClientEventToState);
     on<DeleteClient>(_mapDeleteClientEventToState);
     on<SelectClient>(_mapSelectClientEventToState);
-  }
-
-  _mapGetClientsEventToState(
-      GetClients event, Emitter<ClientState> emit) async {
-    emit(state.copyWith(status: ClientStatus.loading));
-    await ClientRepo.fetchAll().then((clients) {
-      emit(state.copyWith(status: ClientStatus.success, clients: clients));
-    }).onError((error, stackTrace) {
-      if (kDebugMode) {
-        print(error);
-        print(stackTrace);
-      }
-      emit(state.copyWith(status: ClientStatus.error));
-    });
+    on<GetClientDocuments>(_mapGetClientDocumentsEventToState);
   }
 
   _mapGetClientEventToState(GetClient event, Emitter<ClientState> emit) async {
@@ -78,7 +65,19 @@ class ClientBloc extends Bloc<ClientEvent, ClientState> {
   _mapSelectClientEventToState(SelectClient event, Emitter<ClientState> emit) {
     emit(state.copyWith(status: ClientStatus.loading));
     try {
-      emit(state.copyWith(status: ClientStatus.success, idSelected: null));
+      print("Client: ${event.client.name}");
+      emit(state.copyWith(status: ClientStatus.success, client: event.client));
+    } catch (e) {
+      emit(state.copyWith(status: ClientStatus.error));
+    }
+  }
+
+  _mapGetClientDocumentsEventToState(
+      GetClientDocuments event, Emitter<ClientState> emit) async {
+    emit(state.copyWith(status: ClientStatus.loading));
+    try {
+      var documents = event.client.documents;
+      emit(state.copyWith(status: ClientStatus.success, documents: documents));
     } catch (e) {
       emit(state.copyWith(status: ClientStatus.error));
     }

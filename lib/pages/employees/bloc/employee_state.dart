@@ -25,7 +25,7 @@ class EmployeeState extends Equatable {
     this.employee,
     this.status = EmployeeStatus.initial,
     this.idSelected = 0,
-  })  : employees = employees ?? const [];
+  }) : employees = employees ?? const [];
 
   @override
   List<Object?> get props => [employees, employee, status, idSelected];

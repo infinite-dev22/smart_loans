@@ -1,24 +1,30 @@
 import 'dart:math';
 
-import 'package:dynamic_table/dynamic_input_type/dynamic_table_input_type.dart';
-import 'package:dynamic_table/dynamic_table_data_cell.dart';
-import 'package:dynamic_table/dynamic_table_data_column.dart';
-import 'package:dynamic_table/dynamic_table_data_row.dart';
-import 'package:dynamic_table/dynamic_table_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile_photo/profile_photo.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/config/responsive.dart';
-import 'package:smart_loans/data_source/dummy_employee_data.dart';
+import 'package:smart_loans/data_source/models/client_model.dart';
 import 'package:smart_loans/global_values.dart';
-import 'package:smart_loans/pages/clients/widgets/details/add_document_form.dart';
+import 'package:smart_loans/pages/clients/bloc/client_bloc/client_bloc.dart';
+import 'package:smart_loans/pages/clients/bloc/clients_bloc/clients_bloc.dart';
 import 'package:smart_loans/pages/clients/widgets/details/client_add_form.dart';
+import 'package:smart_loans/pages/clients/widgets/details/widgets/documents/documents_error_widget.dart';
+import 'package:smart_loans/pages/clients/widgets/details/widgets/documents/documents_initial_widget.dart';
+import 'package:smart_loans/pages/clients/widgets/details/widgets/documents/documents_loading_widget.dart';
+import 'package:smart_loans/pages/clients/widgets/details/widgets/documents/documents_success_widget.dart';
 import 'package:smart_loans/theme/colors.dart';
 import 'package:smart_loans/widgets/subtitle_widget.dart';
 import 'package:smart_loans/widgets/title_widget.dart';
 
 class ClientDetailSuccessWidget extends StatefulWidget {
-  const ClientDetailSuccessWidget({super.key});
+  const ClientDetailSuccessWidget({
+    super.key,
+    required this.client,
+  });
+
+  final ClientModel client;
 
   @override
   State<ClientDetailSuccessWidget> createState() =>
@@ -26,12 +32,13 @@ class ClientDetailSuccessWidget extends StatefulWidget {
 }
 
 class _ClientDetailSuccessWidgetState extends State<ClientDetailSuccessWidget> {
-  var tableKey = GlobalKey<DynamicTableState>();
-  var myData = dummyEmployeeData.toList();
-
   @override
   Widget build(BuildContext context) {
-    return _buildBody();
+    return BlocBuilder<ClientsBloc, ClientsState>(
+      builder: (context, state) {
+        return _buildBody();
+      },
+    );
   }
 
   Widget _buildBody() {
@@ -87,15 +94,19 @@ class _ClientDetailSuccessWidgetState extends State<ClientDetailSuccessWidget> {
                               ProfilePhoto(
                                 totalWidth: 10.h,
                                 color: AppColor.white45,
+                                name: widget.client.name!,
+                                outlineColor:
+                                    colors[Random().nextInt(colors.length)],
                               ),
                               SizedBox(width: 1.w),
-                              const Column(
+                              Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  TitleWidget(text: "Vicent Company"),
-                                  SubTitleWidget(text: "Individual"),
-                                  Text("I-231204-0001"),
-                                  Text("12295200000"),
+                                  TitleWidget(text: widget.client.name!),
+                                  SubTitleWidget(
+                                      text: widget.client.clientType.name!),
+                                  Text(widget.client.number!),
+                                  Text(widget.client.telephone!),
                                 ],
                               ),
                             ],
@@ -240,247 +251,25 @@ class _ClientDetailSuccessWidgetState extends State<ClientDetailSuccessWidget> {
   }
 
   Widget _buildClientLoanDocumentDetails() {
-    return SingleChildScrollView(
-      child: Builder(builder: (context) {
-        return SizedBox(
-          width: MediaQuery.of(context).size.width * 0.16,
-          child: DynamicTable(
-            header: Container(),
-            key: tableKey,
-            onRowEdit: (index, row) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text("Row Edited index:$index row:$row"),
-                ),
-              );
-              myData[index] = row;
-              return true;
-            },
-            onRowDelete: (index, row) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text("Row Deleted index:$index row:$row"),
-                ),
-              );
-              myData.removeAt(index);
-              return true;
-            },
-            onRowSave: (index, old, newValue) {
-              // ScaffoldMessenger.of(context).showSnackBar(
-              //   SnackBar(
-              //     content:
-              //         Text("Row Saved index:$index old:$old new:$newValue"),
-              //   ),
-              // );
-              if (newValue[0] == null) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Name cannot be null"),
-                  ),
-                );
-                return null;
-              }
-
-              if (newValue[0].toString().length < 3) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Name must be atleast 3 characters long"),
-                  ),
-                );
-                return null;
-              }
-              if (newValue[0].toString().length > 20) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Name must be less than 20 characters long"),
-                  ),
-                );
-                return null;
-              }
-              if (newValue[1] == null) {
-                //If newly added row then add unique ID
-                newValue[1] = Random()
-                    .nextInt(500)
-                    .toString(); // to add Unique ID because it is not editable
-              }
-              myData[index] = newValue; // Update data
-              if (newValue[0] == null) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Name cannot be null"),
-                  ),
-                );
-                return null;
-              }
-              return newValue;
-            },
-            showActions: true,
-            showAddRowButton: false,
-            showDeleteAction: true,
-            rowsPerPage: 5,
-            showFirstLastButtons: true,
-            availableRowsPerPage: const [
-              5,
-              10,
-              15,
-              20,
-              25,
-              50,
-              75,
-              100,
-            ],
-            dataRowMinHeight: 4.5.h,
-            dataRowMaxHeight: 4.5.h,
-            columnSpacing: 60,
-            actionColumnTitle: "Actions",
-            showCheckboxColumn: true,
-            onSelectAll: (value) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: value ?? false
-                      ? const Text("All Rows Selected")
-                      : const Text("All Rows Unselected"),
-                ),
-              );
-            },
-            onRowsPerPageChanged: (value) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text("Rows Per Page Changed to $value"),
-                ),
-              );
-            },
-            actions: _buildActions(),
-            rows: _buildRows(),
-            columns: _buildColumns(),
-          ),
-        );
-      }),
-    );
-  }
-
-  List<Widget> _buildActions() {
-    return [
-      SizedBox(
-        width: 20.w,
-        height: textFieldHeight,
-        child: TextFormField(
-          decoration: InputDecoration(
-            hintText: "Search documents",
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
-        ),
-      ),
-      SizedBox(width: 10.w),
-      // Show only when an item(s) (has/have) been selected.
-      _buildButton("Delete", () {}),
-      _buildButton("Add", _buildAddDocumentDialog),
-    ];
-  }
-
-  List<DynamicTableDataRow> _buildRows() {
-    return List.generate(
-      myData.length,
-      (index) => DynamicTableDataRow(
-        onSelectChanged: (value) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: value ?? false
-                  ? Text("Row Selected index:$index")
-                  : Text("Row Unselected index:$index"),
-            ),
-          );
-        },
-        index: index,
-        cells: List.generate(
-          myData[index].length,
-          (cellIndex) => DynamicTableDataCell(
-            value: myData[index][cellIndex],
-          ),
-        ),
-      ),
-    );
-  }
-
-  List<DynamicTableDataColumn> _buildColumns() {
-    return [
-      DynamicTableDataColumn(
-        label: const Text(
-          "Date Uploaded",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        onSort: (columnIndex, ascending) {},
-        isEditable: false,
-        dynamicTableInputType: DynamicTableInputType.text(),
-      ),
-      DynamicTableDataColumn(
-        label: const Text(
-          "File Extension",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        dynamicTableInputType: DynamicTableInputType.text(),
-      ),
-      DynamicTableDataColumn(
-        label: const Text(
-          "Document Type",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        dynamicTableInputType: DynamicTableInputType.text(),
-      ),
-      DynamicTableDataColumn(
-        label: const Text(
-          "File Name",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        onSort: (columnIndex, ascending) {},
-        dynamicTableInputType: DynamicTableInputType.date(
-          context: context,
-          decoration: const InputDecoration(
-              hintText: "Date added",
-              suffixIcon: Icon(Icons.date_range),
-              border: OutlineInputBorder()),
-          initialDate: DateTime.now(),
-          lastDate: DateTime.now().add(
-            const Duration(days: 365),
-          ),
-        ),
-      ),
-    ];
-  }
-
-  Widget _buildButton(
-    String title,
-    Function()? onPressed,
-  ) {
-    return FilledButton(
-      onPressed: onPressed,
-      child: Text(
-        title,
-      ),
-    );
-  }
-
-  _buildAddDocumentDialog() async {
-    return showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(circularRadius),
-          ),
-          child: const DocumentForm(),
-        );
+    return BlocBuilder<ClientBloc, ClientState>(
+      builder: (context, state) {
+        if (state.status == ClientStatus.initial) {
+          context.read<ClientBloc>().add(GetClientDocuments(widget
+              .client)); // TODO: Remove when api gets end points for documents.
+        }
+        if (state.status == ClientStatus.success) {
+          if (widget.client.documents.isEmpty) {
+            return const DocumentsInitialWidget();
+          }
+          return LoanDocumentsSuccessWidget(documents: widget.client.documents);
+        }
+        if (state.status == ClientStatus.loading) {
+          return const DocumentsLoadingWidget();
+        }
+        if (state.status == ClientStatus.error) {
+          return const DocumentsErrorWidget();
+        }
+        return const DocumentsInitialWidget();
       },
     );
   }

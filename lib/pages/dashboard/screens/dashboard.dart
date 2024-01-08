@@ -8,8 +8,10 @@ class DashboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
-      route: "/",
-      body: _buildBody(),
+      route: "/dashboard",
+      body: SingleChildScrollView(
+        child: _buildBody(),
+      ),
     );
   }
 

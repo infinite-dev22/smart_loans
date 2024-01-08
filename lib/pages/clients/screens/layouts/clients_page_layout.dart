@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_loans/pages/clients/bloc/client_bloc.dart';
+import 'package:smart_loans/pages/clients/bloc/clients_bloc/clients_bloc.dart';
 import 'package:smart_loans/pages/clients/widgets/error/clients_error_widget.dart';
 import 'package:smart_loans/pages/clients/widgets/initial/client_initial_widget.dart';
 import 'package:smart_loans/pages/clients/widgets/loading/clients_loading_widget.dart';
@@ -11,15 +11,17 @@ class ClientsPageLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ClientBloc, ClientState>(
+    return BlocBuilder<ClientsBloc, ClientsState>(
       builder: (context, state) {
-        if (state.status == ClientStatus.initial) {
-          context.read<ClientBloc>().add(GetClients());
-        } else if (state.status == ClientStatus.success) {
-          return const ClientsSuccessWidget();
-        } else if (state.status == ClientStatus.loading) {
+        if (state.status == ClientsStatus.initial) {
+          context.read<ClientsBloc>().add(GetClients());
+        } else if (state.status == ClientsStatus.success) {
+          return const SingleChildScrollView(
+            child: ClientsSuccessWidget(),
+          );
+        } else if (state.status == ClientsStatus.loading) {
           return const ClientsLoadingWidget();
-        } else if (state.status == ClientStatus.error) {
+        } else if (state.status == ClientsStatus.error) {
           return const ClientsErrorWidget();
         }
         return const ClientsInitialWidget();

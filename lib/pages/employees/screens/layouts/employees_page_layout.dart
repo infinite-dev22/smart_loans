@@ -16,7 +16,9 @@ class EmployeesPageLayout extends StatelessWidget {
         if (state.status == EmployeeStatus.initial) {
           context.read<EmployeeBloc>().add(GetEmployees());
         } else if (state.status == EmployeeStatus.success) {
-          return const EmployeesSuccessWidget();
+          return const SingleChildScrollView(
+            child: EmployeesSuccessWidget(),
+          );
         } else if (state.status == EmployeeStatus.loading) {
           return const EmployeesLoadingWidget();
         } else if (state.status == EmployeeStatus.error) {

@@ -9,7 +9,9 @@ class EmployeeDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return const CustomScaffold(
       route: "/employee",
-      body: EmployeeDetailsSuccessWidget(),
+      body: SingleChildScrollView(
+        child: EmployeeDetailsSuccessWidget(),
+      ),
     );
   }
 }

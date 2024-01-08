@@ -23,7 +23,9 @@ class _LoansPageLayoutState extends State<LoansPageLayout> {
         if (state.status == LoanStatus.initial) {
           context.read<LoanBloc>().add(GetLoans());
         } else if (state.status == LoanStatus.success) {
-          return const LoansSuccessWidget();
+          return const SingleChildScrollView(
+            child: LoansSuccessWidget(),
+          );
         } else if (state.status == LoanStatus.loading) {
           return const LoansLoadingWidget();
         } else if (state.status == LoanStatus.error) {

@@ -4,6 +4,7 @@ class ClientTypeModel {
   String? code;
   String? description;
   int? isIndividual;
+
   ClientTypeModel({
     required this.id,
     required this.name,

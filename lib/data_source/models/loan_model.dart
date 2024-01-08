@@ -1,7 +1,7 @@
 class LoanModel {
   String? loanNumber;
-  int? principalAmount;  // should be double but api returns int.
-  int? loanFees;  // should be double but api returns int.
+  int? principalAmount; // should be double but api returns int.
+  int? loanFees; // should be double but api returns int.
   int? clientId;
   String? clientName;
   int? loanTypeId;
@@ -14,7 +14,6 @@ class LoanModel {
   String? currencyName;
   int? branchId;
   String? branchName;
-
 
   LoanModel({
     required this.loanNumber,
@@ -50,8 +49,7 @@ class LoanModel {
         loanStatusId: json['loan_status_id'],
         loanStatusName: json['loan_status']['name'],
         currencyId: json['currency_id'],
-        currencyName: json['currency']['name']
-    );
+        currencyName: json['currency']['name']);
   }
 
   Map<String, dynamic> toJson() {
@@ -63,8 +61,8 @@ class LoanModel {
       'client': clientName,
       'loan_type_id': loanTypeId,
       'loanType': loanTypeName,
-      'loan_category_id':loanCategoryId,
-      'loanCategory':loanCategoryName,
+      'loan_category_id': loanCategoryId,
+      'loanCategory': loanCategoryName,
       'branch_id': branchId,
       'branch': branchName,
       'loanStatus': loanStatusName,

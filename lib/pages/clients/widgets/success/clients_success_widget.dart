@@ -7,7 +7,8 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/config/responsive.dart';
 import 'package:smart_loans/data_source/models/client_model.dart';
 import 'package:smart_loans/global_values.dart';
-import 'package:smart_loans/pages/clients/bloc/client_bloc.dart';
+import 'package:smart_loans/pages/clients/bloc/clients_bloc/clients_bloc.dart';
+import 'package:smart_loans/pages/clients/bloc/client_bloc/client_bloc.dart';
 import 'package:smart_loans/pages/clients/widgets/details/client_add_form.dart';
 
 class ClientsSuccessWidget extends StatefulWidget {
@@ -79,7 +80,7 @@ class _ClientsSuccessWidgetState extends State<ClientsSuccessWidget> {
               ],
               // Call to bloc to provide state from which we get the variables/data of the current state.
               rows: context
-                  .read<ClientBloc>()
+                  .read<ClientsBloc>()
                   .state
                   .clients!
                   .map((e) => e.toJson())
@@ -88,7 +89,7 @@ class _ClientsSuccessWidgetState extends State<ClientsSuccessWidget> {
               onTapRow: (rows, index) {
                 var client = ClientModel.fromJson(rows[index]);
                 context.read<ClientBloc>().add(SelectClient(client));
-                Navigator.pushNamed(context, "/client");
+                Navigator.pushNamed(context, "/client", arguments: client);
               },
               onSelectRows: (keys) {
                 print('onSelectRows(): count = ${keys.length} keys = $keys');
