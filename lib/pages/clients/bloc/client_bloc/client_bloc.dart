@@ -30,13 +30,17 @@ class ClientBloc extends Bloc<ClientEvent, ClientState> {
 
   _mapCreateClientEventToState(
       CreateClient event, Emitter<ClientState> emit) async {
+    print("Creating client.....");
     emit(state.copyWith(status: ClientStatus.loading));
-    try {
-      var client = await ClientRepo.post(event.client);
+    await ClientRepo.post(event.client).then((client) {
       emit(state.copyWith(status: ClientStatus.success, client: client));
-    } catch (e) {
+    }).onError((error, stackTrace) {
+      if (kDebugMode) {
+        print(error);
+        print(stackTrace);
+      }
       emit(state.copyWith(status: ClientStatus.error));
-    }
+    });
   }
 
   _mapUpdateClientEventToState(

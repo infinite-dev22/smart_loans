@@ -10,7 +10,7 @@ import 'package:profile_photo/profile_photo.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/config/responsive.dart';
 import 'package:smart_loans/global_values.dart';
-import 'package:smart_loans/pages/employees/widgets/details/employee_form.dart';
+import 'package:smart_loans/pages/employees/widgets/success/forms/employee_add_form.dart';
 import 'package:smart_loans/theme/colors.dart';
 
 import '../../../../data_source/dummy_employee_data.dart';

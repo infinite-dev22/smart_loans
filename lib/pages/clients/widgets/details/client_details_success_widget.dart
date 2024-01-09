@@ -9,11 +9,11 @@ import 'package:smart_loans/data_source/models/client_model.dart';
 import 'package:smart_loans/global_values.dart';
 import 'package:smart_loans/pages/clients/bloc/client_bloc/client_bloc.dart';
 import 'package:smart_loans/pages/clients/bloc/clients_bloc/clients_bloc.dart';
-import 'package:smart_loans/pages/clients/widgets/success/forms/client_add_form.dart';
 import 'package:smart_loans/pages/clients/widgets/details/widgets/documents/documents_error_widget.dart';
 import 'package:smart_loans/pages/clients/widgets/details/widgets/documents/documents_initial_widget.dart';
 import 'package:smart_loans/pages/clients/widgets/details/widgets/documents/documents_loading_widget.dart';
 import 'package:smart_loans/pages/clients/widgets/details/widgets/documents/documents_success_widget.dart';
+import 'package:smart_loans/pages/clients/widgets/success/forms/client_add_form.dart';
 import 'package:smart_loans/theme/colors.dart';
 import 'package:smart_loans/widgets/subtitle_widget.dart';
 import 'package:smart_loans/widgets/title_widget.dart';
@@ -104,7 +104,7 @@ class _ClientDetailSuccessWidgetState extends State<ClientDetailSuccessWidget> {
                                 children: [
                                   TitleWidget(text: widget.client.name!),
                                   SubTitleWidget(
-                                      text: widget.client.clientType.name!),
+                                      text: widget.client.clientType!.name!),
                                   Text(widget.client.number!),
                                   Text(widget.client.telephone!),
                                 ],
@@ -258,10 +258,11 @@ class _ClientDetailSuccessWidgetState extends State<ClientDetailSuccessWidget> {
               .client)); // TODO: Remove when api gets end points for documents.
         }
         if (state.status == ClientStatus.success) {
-          if (widget.client.documents.isEmpty) {
+          if (widget.client.documents!.isEmpty) {
             return const DocumentsInitialWidget();
           }
-          return LoanDocumentsSuccessWidget(documents: widget.client.documents);
+          return LoanDocumentsSuccessWidget(
+              documents: widget.client.documents!);
         }
         if (state.status == ClientStatus.loading) {
           return const DocumentsLoadingWidget();

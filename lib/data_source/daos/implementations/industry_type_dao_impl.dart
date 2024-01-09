@@ -6,11 +6,7 @@ import 'package:smart_loans/config/web_config.dart';
 import 'package:smart_loans/data_source/daos/interfaces/simple_dao.dart';
 import 'package:smart_loans/global_values.dart';
 
-class ClientDaoImpl extends SimpleDao {
-  /*
-  * This always must mirror the class it extends.
-  */
-
+class IndustryTypeDaoImpl extends SimpleDao {
   @override
   Future<Map<String, dynamic>> fetch(int id) async {
     Dio dio = Dio(baseOps)
@@ -24,7 +20,7 @@ class ClientDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.https(appUrl, 'api/clients/show/$id').toString(),
+        Uri.https(appUrl, 'api/clienttypes/show/$id').toString(),
       );
 
       if (response.statusCode == 200) {
@@ -50,7 +46,7 @@ class ClientDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.https(appUrl, 'api/clients').toString(),
+        Uri.https(appUrl, 'api/industries').toString(),
       );
 
       if (response.statusCode == 200) {
@@ -74,15 +70,11 @@ class ClientDaoImpl extends SimpleDao {
       dio.options.headers["authorization"] =
           "Bearer ${currentUser.token}"; // Add server auth token here.
       dio.options.followRedirects = false;
-      print("CLIENT: ${jsonEncode(data)}");
 
       var response = await dio.post(
-        Uri.https(appUrl, 'api/clients/create').toString(),
+        Uri.https(appUrl, 'api/clienttypes/create').toString(),
         data: jsonEncode(data),
       );
-
-      print(response.statusCode);
-      print(response.data);
 
       if (response.statusCode == 201) {
         return response.data;
@@ -107,7 +99,7 @@ class ClientDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.put(
-        Uri.https(appUrl, 'api/v1/clients/update/$id').toString(),
+        Uri.https(appUrl, 'api/v1/clienttypes/update/$id').toString(),
         data: jsonEncode(data),
       );
 
@@ -134,7 +126,7 @@ class ClientDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.https(appUrl, 'api/v1/clients/search/$search').toString(),
+        Uri.https(appUrl, 'api/v1/clienttypes/search/$search').toString(),
       );
 
       if (response.statusCode == 200) {
@@ -160,7 +152,7 @@ class ClientDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.https(appUrl, 'api/v1/clients/delete/single/$id').toString(),
+        Uri.https(appUrl, 'api/v1/clienttypes/delete/single/$id').toString(),
       );
 
       if (response.statusCode == 200) {
@@ -186,7 +178,7 @@ class ClientDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.delete(
-        Uri.https(appUrl, 'api/v1/clients/delete/multiple/$ids').toString(),
+        Uri.https(appUrl, 'api/v1/clienttypes/delete/multiple/$ids').toString(),
       );
 
       if (response.statusCode == 200) {

@@ -15,6 +15,8 @@ class ClientAddFormBloc extends Bloc<ClientAddFormEvent, ClientAddFormState> {
     on<PostClient>(_mapPostClientAddFormEventToState);
     on<PutClient>(_mapPutClientAddFormEventToState);
     on<GetRoles>(_mapLoadRoleEventToState);
+    on<SetIndividual>(_mapSetIndividualEventToState);
+    on<SetCompany>(_mapSetCompanyEventToState);
   }
 
   _mapLoadClientAddFormEventToState(
@@ -71,6 +73,16 @@ class ClientAddFormBloc extends Bloc<ClientAddFormEvent, ClientAddFormState> {
       }
       emit(state.copyWith(status: ClientAddFormStatus.error));
     });
+  }
+
+  _mapSetIndividualEventToState(
+      SetIndividual event, Emitter<ClientAddFormState> emit) async {
+    emit(state.copyWith(status: ClientAddFormStatus.individual));
+  }
+
+  _mapSetCompanyEventToState(
+      SetCompany event, Emitter<ClientAddFormState> emit) async {
+    emit(state.copyWith(status: ClientAddFormStatus.company));
   }
 
   @override

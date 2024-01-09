@@ -6,11 +6,11 @@ class ClientTypeModel {
   int? isIndividual;
 
   ClientTypeModel({
-    required this.id,
-    required this.name,
-    required this.code,
-    required this.description,
-    required this.isIndividual,
+    this.id,
+    this.name,
+    this.code,
+    this.description,
+    this.isIndividual,
   });
 
   factory ClientTypeModel.fromJson(Map<String?, dynamic> json) {

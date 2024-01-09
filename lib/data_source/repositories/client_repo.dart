@@ -21,13 +21,13 @@ class ClientRepo {
 
   static Future post(ClientModel client) async {
     var clientDao = ClientDaoImpl();
-    var clientMap = await clientDao.post(client.toJson());
+    var clientMap = await clientDao.post(client.toApiJson());
     return ClientModel.fromJson(clientMap);
   }
 
   static Future put(ClientModel client, int clientId) async {
     var clientDao = ClientDaoImpl();
-    var clientMap = await clientDao.put(client.toJson(), clientId);
+    var clientMap = await clientDao.put(client.toApiJson(), clientId);
     return ClientModel.fromJson(clientMap);
   }
 

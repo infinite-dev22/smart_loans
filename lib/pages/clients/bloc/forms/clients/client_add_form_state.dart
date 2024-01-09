@@ -1,6 +1,15 @@
 part of 'client_add_form_bloc.dart';
 
-enum ClientAddFormStatus { initial, success, error, loading, selected, noData }
+enum ClientAddFormStatus {
+  initial,
+  success,
+  error,
+  loading,
+  selected,
+  noData,
+  individual,
+  company
+}
 
 extension ClientAddFormStatusX on ClientAddFormStatus {
   bool get isInitial => this == ClientAddFormStatus.initial;
@@ -12,6 +21,10 @@ extension ClientAddFormStatusX on ClientAddFormStatus {
   bool get isLoading => this == ClientAddFormStatus.loading;
 
   bool get isSelected => this == ClientAddFormStatus.selected;
+
+  bool get showIndividual => this == ClientAddFormStatus.initial;
+
+  bool get showCompany => this == ClientAddFormStatus.company;
 }
 
 //
@@ -73,3 +86,7 @@ class RoleSuccess extends ClientAddFormState {
   @override
   List<Object?> get props => [roles];
 }
+
+class ShowCompany extends ClientAddFormState {}
+
+class ShowIndividual extends ClientAddFormState {}

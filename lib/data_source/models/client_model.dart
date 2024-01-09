@@ -5,6 +5,10 @@ import 'package:smart_loans/data_source/models/nation_model.dart';
 class ClientModel {
   int? id;
   String? name;
+  String? firstName;
+  String? lastName;
+  String? otherName;
+  String? occupation;
   String? address;
   String? tin;
   String? number;
@@ -14,27 +18,27 @@ class ClientModel {
   int? inCharge;
   int? nationId;
   int? businessIndustryId;
-  NationModel nation;
+  NationModel? nation;
   dynamic clientProfile;
-  List<DocumentModel> documents;
-  ClientTypeModel clientType;
+  List<DocumentModel>? documents;
+  ClientTypeModel? clientType;
 
   ClientModel({
-    required this.id,
-    required this.name,
-    required this.address,
-    required this.tin,
-    required this.number,
-    required this.email,
-    required this.telephone,
-    required this.clientTypeId,
-    required this.inCharge,
-    required this.nationId,
-    required this.businessIndustryId,
-    required this.nation,
-    required this.clientProfile,
-    required this.documents,
-    required this.clientType,
+    this.id,
+    this.name,
+    this.address,
+    this.tin,
+    this.number,
+    this.email,
+    this.telephone,
+    this.clientTypeId = 1,
+    this.inCharge,
+    this.nationId,
+    this.businessIndustryId,
+    this.nation,
+    this.clientProfile,
+    this.documents,
+    this.clientType,
   });
 
   factory ClientModel.fromJson(Map<String, dynamic> json) {
@@ -58,7 +62,27 @@ class ClientModel {
     );
   }
 
-  Map<String, dynamic> toJson() {
+  static reset() {
+    return ClientModel(
+      id: null,
+      name: null,
+      address: null,
+      tin: null,
+      number: null,
+      email: null,
+      telephone: null,
+      clientTypeId: null,
+      inCharge: null,
+      nationId: null,
+      businessIndustryId: null,
+      nation: null,
+      clientProfile: null,
+      documents: null,
+      clientType: null,
+    );
+  }
+
+  Map<String, dynamic> toViewJson() {
     return {
       'id': id,
       'name': name,
@@ -71,10 +95,30 @@ class ClientModel {
       'in_charge': inCharge,
       'nation_id': nationId,
       'business_industry_id': businessIndustryId,
-      'nation': nation.toJson(),
+      'nation': nation!.toJson(),
       'client_profile': clientProfile,
-      'documents': documents.map((doc) => doc.toJson()).toList(),
-      'client_type': clientType.toJson(),
+      'documents': documents!.map((doc) => doc.toJson()).toList(),
+      'client_type': clientType!.toJson(),
+    };
+  }
+
+  Map<String, dynamic> toApiJson() {
+    return {
+      'first_name': firstName,
+      'middle_name': otherName,
+      'last_name': lastName,
+      'name': name,
+      'address': address,
+      'tin': tin,
+      'number': number,
+      'email': email,
+      'telephone': telephone,
+      'client_type_id': clientTypeId,
+      'in_charge': inCharge ?? 1,
+      'nation_id': nationId,
+      'business_industry_id': businessIndustryId,
+      'client_profile': clientProfile,
+      "organisation_id": 1,
     };
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/data_source/models/user_model.dart';
 
 var padding = 8.0;
@@ -7,6 +8,7 @@ var circularRadius = 8.0;
 var textFieldHeight = 50.0;
 var currentRoute = "/dashboard";
 late UserModel currentUser;
+var smallFont = 12.0;
 var colors = [
   Colors.amberAccent,
   Colors.blue,

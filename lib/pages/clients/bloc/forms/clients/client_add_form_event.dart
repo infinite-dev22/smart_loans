@@ -38,4 +38,9 @@ class PostClient extends ClientAddFormEvent {
 }
 
 class GetRoles extends ClientAddFormEvent {}
+
 class Success extends ClientAddFormEvent {}
+
+class SetIndividual extends ClientAddFormEvent {}
+
+class SetCompany extends ClientAddFormEvent {}
