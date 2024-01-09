@@ -37,8 +37,6 @@ class PostClient extends ClientAddFormEvent {
   List<Object?> get props => [client];
 }
 
-class GetRoles extends ClientAddFormEvent {}
-
 class Success extends ClientAddFormEvent {}
 
 class SetIndividual extends ClientAddFormEvent {}

@@ -26,4 +26,5 @@ class RememberUser extends LoginEvent {
 }
 
 class SuccessfullyLoggedIn extends LoginEvent {}
+
 class Success extends LoginEvent {}

@@ -76,17 +76,6 @@ class ClientError extends ClientAddFormState {}
 
 class ClientNoData extends ClientAddFormState {}
 
-class RoleLoading extends ClientAddFormState {}
-
-class RoleError extends ClientAddFormState {}
-
-class RoleSuccess extends ClientAddFormState {
-  const RoleSuccess(roles);
-
-  @override
-  List<Object?> get props => [roles];
-}
-
 class ShowCompany extends ClientAddFormState {}
 
 class ShowIndividual extends ClientAddFormState {}

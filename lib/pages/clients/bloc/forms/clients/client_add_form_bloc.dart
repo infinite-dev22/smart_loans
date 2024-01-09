@@ -14,27 +14,12 @@ class ClientAddFormBloc extends Bloc<ClientAddFormEvent, ClientAddFormState> {
     on<GetClient>(_mapLoadClientAddFormEventToState);
     on<PostClient>(_mapPostClientAddFormEventToState);
     on<PutClient>(_mapPutClientAddFormEventToState);
-    on<GetRoles>(_mapLoadRoleEventToState);
     on<SetIndividual>(_mapSetIndividualEventToState);
     on<SetCompany>(_mapSetCompanyEventToState);
   }
 
   _mapLoadClientAddFormEventToState(
       GetClient event, Emitter<ClientAddFormState> emit) async {
-    emit(state.copyWith(status: ClientAddFormStatus.loading));
-    await RoleRepo.fetchAll().then((roles) {
-      emit(state.copyWith(status: ClientAddFormStatus.success, roles: roles));
-    }).onError((error, stackTrace) {
-      if (kDebugMode) {
-        print(error);
-        print(stackTrace);
-      }
-      emit(state.copyWith(status: ClientAddFormStatus.error));
-    });
-  }
-
-  _mapLoadRoleEventToState(
-      GetRoles event, Emitter<ClientAddFormState> emit) async {
     emit(state.copyWith(status: ClientAddFormStatus.loading));
     await RoleRepo.fetchAll().then((roles) {
       emit(state.copyWith(status: ClientAddFormStatus.success, roles: roles));

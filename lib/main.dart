@@ -4,7 +4,6 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/global_values.dart';
 import 'package:smart_loans/pages/clients/bloc/client_bloc/client_bloc.dart';
 import 'package:smart_loans/pages/clients/bloc/clients_bloc/clients_bloc.dart';
-import 'package:smart_loans/pages/clients/bloc/forms/clients/client_add_form_bloc.dart';
 import 'package:smart_loans/pages/clients/screens/client_details_page.dart';
 import 'package:smart_loans/pages/clients/screens/clients_page.dart';
 import 'package:smart_loans/pages/dashboard/screens/dashboard.dart';

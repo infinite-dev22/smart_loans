@@ -23,8 +23,7 @@ class ClientTypeBloc extends Bloc<ClientTypeEvent, ClientTypeState> {
       GetClientTypes event, Emitter<ClientTypeState> emit) async {
     emit(state.copyWith(status: ClientTypeStatus.loading));
     await ClientTypeRepo.fetchAll().then((types) {
-      emit(state.copyWith(
-          status: ClientTypeStatus.success, types: types));
+      emit(state.copyWith(status: ClientTypeStatus.success, types: types));
     }).onError((error, stackTrace) {
       if (kDebugMode) {
         print(error);
@@ -40,8 +39,7 @@ class ClientTypeBloc extends Bloc<ClientTypeEvent, ClientTypeState> {
 
     try {
       var type = await ClientTypeRepo.fetch(event.idSelected);
-      emit(
-          state.copyWith(status: ClientTypeStatus.success, type: type));
+      emit(state.copyWith(status: ClientTypeStatus.success, type: type));
     } catch (e) {
       emit(state.copyWith(status: ClientTypeStatus.error));
     }
@@ -53,8 +51,7 @@ class ClientTypeBloc extends Bloc<ClientTypeEvent, ClientTypeState> {
     try {
       var type = await ClientTypeRepo.post(event.type);
 
-      emit(
-          state.copyWith(status: ClientTypeStatus.success, type: type));
+      emit(state.copyWith(status: ClientTypeStatus.success, type: type));
     } catch (e) {
       emit(state.copyWith(status: ClientTypeStatus.error));
     }
@@ -66,8 +63,7 @@ class ClientTypeBloc extends Bloc<ClientTypeEvent, ClientTypeState> {
     try {
       var type = await ClientTypeRepo.put(event.type, event.idSelected);
 
-      emit(
-          state.copyWith(status: ClientTypeStatus.success, type: type));
+      emit(state.copyWith(status: ClientTypeStatus.success, type: type));
     } catch (e) {
       emit(state.copyWith(status: ClientTypeStatus.error));
     }

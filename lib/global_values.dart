@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/data_source/models/user_model.dart';
 
 var padding = 8.0;

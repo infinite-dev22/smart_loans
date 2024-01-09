@@ -1,6 +1,4 @@
-import 'package:smart_loans/data_source/daos/implementations/client_dao_impl.dart';
 import 'package:smart_loans/data_source/daos/implementations/role_dao_impl.dart';
-import 'package:smart_loans/data_source/models/client_model.dart';
 import 'package:smart_loans/data_source/models/role_model.dart';
 
 class RoleRepo {
@@ -10,8 +8,7 @@ class RoleRepo {
     return RoleModel.fromJson(clientMap);
   }
 
-  static Future<List<RoleModel>> fetchAll(
-      {Map<String, dynamic>? body}) async {
+  static Future<List<RoleModel>> fetchAll({Map<String, dynamic>? body}) async {
     List<RoleModel> clients;
     try {
       var clientDao = RoleDaoImpl();

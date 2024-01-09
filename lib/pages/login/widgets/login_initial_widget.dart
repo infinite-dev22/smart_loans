@@ -24,19 +24,19 @@ class _LoginInitialWidgetState extends State<LoginInitialWidget> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LogInBloc, LogInState>(
-  builder: (context, state) {
-    return BlocListener<LogInBloc, LogInState>(
-      listener: (context, state) {
-        if (state.status == LogInStatus.successfullyLoggedIn) {
-          print("User Logged In");
-          print(currentRoute);
-          Navigator.popAndPushNamed(context, currentRoute);
-        }
+      builder: (context, state) {
+        return BlocListener<LogInBloc, LogInState>(
+          listener: (context, state) {
+            if (state.status == LogInStatus.successfullyLoggedIn) {
+              print("User Logged In");
+              print(currentRoute);
+              Navigator.popAndPushNamed(context, currentRoute);
+            }
+          },
+          child: _buildBody(),
+        );
       },
-      child: _buildBody(),
     );
-  },
-);
   }
 
   Widget _buildBody() {

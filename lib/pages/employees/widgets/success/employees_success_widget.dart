@@ -6,10 +6,9 @@ import 'package:flutter_web_data_table/web_data_table.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/config/responsive.dart';
 import 'package:smart_loans/global_values.dart';
-import 'package:smart_loans/pages/clients/bloc/client_bloc/client_bloc.dart';
 import 'package:smart_loans/pages/clients/bloc/clients_bloc/clients_bloc.dart';
-import 'package:smart_loans/pages/clients/bloc/forms/clients/client_add_form_bloc.dart';
 import 'package:smart_loans/pages/employees/bloc/employee_bloc.dart';
+import 'package:smart_loans/pages/employees/bloc/forms/clients/employee_add_form_bloc.dart';
 import 'package:smart_loans/pages/employees/widgets/success/forms/employee_add_form.dart';
 
 class EmployeesSuccessWidget extends StatefulWidget {
@@ -33,11 +32,10 @@ class _EmployeesTableWidgetState extends State<EmployeesSuccessWidget> {
 
   Widget _buildLayoutBuilder() {
     return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraint) =>
-          SizedBox(
-            width: constraint.maxWidth,
-            child: _buildBody(),
-          ),
+      builder: (BuildContext context, BoxConstraints constraint) => SizedBox(
+        width: constraint.maxWidth,
+        child: _buildBody(),
+      ),
     );
   }
 
@@ -45,10 +43,7 @@ class _EmployeesTableWidgetState extends State<EmployeesSuccessWidget> {
     return SingleChildScrollView(
       child: Builder(builder: (context) {
         return SizedBox(
-          width: MediaQuery
-              .of(context)
-              .size
-              .width * 0.16,
+          width: MediaQuery.of(context).size.width * 0.16,
           child: WebDataTable(
             header: const Text('Employees'),
             actions: _buildActions,
@@ -151,7 +146,7 @@ class _EmployeesTableWidgetState extends State<EmployeesSuccessWidget> {
       if (_selectedRowKeys.isNotEmpty)
         _buildButton(
           "Delete",
-              () {
+          () {
             setState(() {
               _selectedRowKeys.clear();
             });
@@ -186,20 +181,20 @@ class _EmployeesTableWidgetState extends State<EmployeesSuccessWidget> {
       barrierDismissible: true,
       builder: (BuildContext context) {
         return Dialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(circularRadius),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(circularRadius),
+          ),
+          child: MultiBlocProvider(providers: [
+            BlocProvider<ClientsBloc>(
+              create: (_) => ClientsBloc(),
             ),
-            child: MultiBlocProvider(providers: [
-              BlocProvider<ClientsBloc>(
-                create: (_) => ClientsBloc(),
-              ),
-              BlocProvider<ClientBloc>(
-                create: (_) => ClientBloc(),
-              ),
-              BlocProvider<ClientAddFormBloc>(
-                create: (_) => ClientAddFormBloc(),
-              ),
-            ], child: const EmployeeForm()),
+            BlocProvider<EmployeeBloc>(
+              create: (_) => EmployeeBloc(),
+            ),
+            BlocProvider<EmployeeAddFormBloc>(
+              create: (_) => EmployeeAddFormBloc(),
+            ),
+          ], child: const EmployeeForm()),
         );
       },
     );

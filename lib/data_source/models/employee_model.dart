@@ -1,60 +1,54 @@
 class EmployeeModel {
-  final int id;
-  final String firstName;
-  final String middleName;
-  final String lastName;
-  final String telephone;
-  final DateTime? dateOfBirth;
-  final int gender;
-  final int departmentId;
-  final String code;
-  final String idNumber;
-  final String nssfNumber;
-  final String tinNumber;
-  final double? height;
-  final String bloodGroup;
-  final String personalEmail;
-  final String? permanentAddress;
-  final String? presentAddress;
-  final bool? isAddressSame;
-  final String? officeNumber;
-  final String? mobileNumber;
-  final int userId;
-  final int? salutationId;
-  final int maritalStatusId;
-  final int createdBy;
-  final int? updatedBy;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+  int? id;
+  String? firstName;
+  String? middleName;
+  String? lastName;
+  String? telephone;
+  DateTime? dateOfBirth;
+  int? gender;
+  int? departmentId;
+  String? code;
+  String? idNumber;
+  String? nssfNumber;
+  String? tinNumber;
+  double? height;
+  String? bloodGroup;
+  String? personalEmail;
+  String? permanentAddress;
+  String? presentAddress;
+  bool? isAddressSame;
+  String? officeNumber;
+  String? mobileNumber;
+  int? userId;
+  int? salutationId;
+  int? maritalStatusId;
+  DateTime? createdAt;
 
   EmployeeModel({
-    required this.id,
-    required this.firstName,
-    required this.middleName,
-    required this.lastName,
-    required this.telephone,
+    this.id,
+    this.firstName,
+    this.middleName,
+    this.lastName,
+    this.telephone,
     this.dateOfBirth,
-    required this.gender,
-    required this.departmentId,
-    required this.code,
-    required this.idNumber,
-    required this.nssfNumber,
-    required this.tinNumber,
+    this.gender,
+    this.departmentId,
+    this.code,
+    this.idNumber,
+    this.nssfNumber,
+    this.tinNumber,
     this.height,
-    required this.bloodGroup,
-    required this.personalEmail,
+    this.bloodGroup,
+    this.personalEmail,
     this.permanentAddress,
     this.presentAddress,
     this.isAddressSame,
     this.officeNumber,
     this.mobileNumber,
-    required this.userId,
+    this.userId,
     this.salutationId,
-    required this.maritalStatusId,
-    required this.createdBy,
-    this.updatedBy,
-    required this.createdAt,
-    required this.updatedAt,
+    this.maritalStatusId,
+    this.createdAt,
   });
 
   factory EmployeeModel.fromJson(Map<String, dynamic> json) {
@@ -84,10 +78,7 @@ class EmployeeModel {
       userId: json['user_id'] as int,
       salutationId: json['salutation_id'] as int?,
       maritalStatusId: json['marital_status_id'] as int,
-      createdBy: json['created_by'] as int,
-      updatedBy: json['updated_by'] as int?,
       createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
     );
   }
 
@@ -119,5 +110,34 @@ class EmployeeModel {
       'marital_status_id': maritalStatusId,
       'created_at': createdAt,
     };
+  }
+
+  static reset(Map<String, dynamic> json) {
+    return EmployeeModel(
+      id: null,
+      firstName: null,
+      middleName: null,
+      lastName: null,
+      telephone: null,
+      dateOfBirth: null,
+      gender: null,
+      departmentId: null,
+      code: null,
+      idNumber: null,
+      nssfNumber: null,
+      tinNumber: null,
+      height: null,
+      bloodGroup: null,
+      personalEmail: null,
+      permanentAddress: null,
+      presentAddress: null,
+      isAddressSame: null,
+      officeNumber: null,
+      mobileNumber: null,
+      userId: null,
+      salutationId: null,
+      maritalStatusId: null,
+      createdAt: null,
+    );
   }
 }

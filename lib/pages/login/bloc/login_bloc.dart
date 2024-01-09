@@ -20,7 +20,8 @@ class LogInBloc extends Bloc<LoginEvent, LogInState> {
     var login = LogInModel(email: event.email, password: event.password);
     await LoginRepo.loginUser(login).then((user) {
       currentUser = user;
-      emit(state.copyWith(status: LogInStatus.successfullyLoggedIn, user: user));
+      emit(
+          state.copyWith(status: LogInStatus.successfullyLoggedIn, user: user));
     }).onError((error, stackTrace) {
       print(error);
       print(stackTrace);

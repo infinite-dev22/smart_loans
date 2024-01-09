@@ -19,8 +19,7 @@ class DocumentDaoImpl extends SimpleDao {
     try {
       dio.options.headers['content-Type'] = 'application/json';
       dio.options.headers['Accept'] = 'application/json';
-      dio.options.headers["authorization"] =
-          "Bearer ${currentUser.token}";
+      dio.options.headers["authorization"] = "Bearer ${currentUser.token}";
       dio.options.followRedirects = false;
 
       var response = await dio.get(
@@ -45,8 +44,7 @@ class DocumentDaoImpl extends SimpleDao {
     try {
       dio.options.headers['content-Type'] = 'application/json';
       dio.options.headers['Accept'] = 'application/json';
-      dio.options.headers["authorization"] =
-          "Bearer ${currentUser.token}";
+      dio.options.headers["authorization"] = "Bearer ${currentUser.token}";
       dio.options.followRedirects = false;
 
       var response = await dio.get(
@@ -71,8 +69,7 @@ class DocumentDaoImpl extends SimpleDao {
     try {
       dio.options.headers['content-Type'] = 'application/json';
       dio.options.headers['Accept'] = 'application/json';
-      dio.options.headers["authorization"] =
-          "Bearer ${currentUser.token}";
+      dio.options.headers["authorization"] = "Bearer ${currentUser.token}";
       dio.options.followRedirects = false;
 
       var response = await dio.post(
@@ -98,8 +95,7 @@ class DocumentDaoImpl extends SimpleDao {
     try {
       dio.options.headers['content-Type'] = 'application/json';
       dio.options.headers['Accept'] = 'application/json';
-      dio.options.headers["authorization"] =
-          "Bearer ${currentUser.token}";
+      dio.options.headers["authorization"] = "Bearer ${currentUser.token}";
       dio.options.followRedirects = false;
 
       var response = await dio.put(
@@ -125,8 +121,7 @@ class DocumentDaoImpl extends SimpleDao {
     try {
       dio.options.headers['content-Type'] = 'application/json';
       dio.options.headers['Accept'] = 'application/json';
-      dio.options.headers["authorization"] =
-          "Bearer ${currentUser.token}";
+      dio.options.headers["authorization"] = "Bearer ${currentUser.token}";
       dio.options.followRedirects = false;
 
       var response = await dio.get(
@@ -151,8 +146,7 @@ class DocumentDaoImpl extends SimpleDao {
     try {
       dio.options.headers['content-Type'] = 'application/json';
       dio.options.headers['Accept'] = 'application/json';
-      dio.options.headers["authorization"] =
-          "Bearer ${currentUser.token}";
+      dio.options.headers["authorization"] = "Bearer ${currentUser.token}";
       dio.options.followRedirects = false;
 
       var response = await dio.get(
@@ -177,8 +171,7 @@ class DocumentDaoImpl extends SimpleDao {
     try {
       dio.options.headers['content-Type'] = 'application/json';
       dio.options.headers['Accept'] = 'application/json';
-      dio.options.headers["authorization"] =
-          "Bearer ${currentUser.token}";
+      dio.options.headers["authorization"] = "Bearer ${currentUser.token}";
       dio.options.followRedirects = false;
 
       var response = await dio.delete(

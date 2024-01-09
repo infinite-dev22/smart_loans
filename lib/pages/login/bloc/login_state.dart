@@ -1,6 +1,14 @@
 part of 'login_bloc.dart';
 
-enum LogInStatus { initial, success, successfullyLoggedIn, error, loading, selected, noData }
+enum LogInStatus {
+  initial,
+  success,
+  successfullyLoggedIn,
+  error,
+  loading,
+  selected,
+  noData
+}
 
 extension LogInStatusX on LogInStatus {
   bool get isInitial => this == LogInStatus.initial;

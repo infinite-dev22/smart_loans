@@ -54,11 +54,16 @@ class ClientModel {
       inCharge: json['in_charge'],
       nationId: json['nation_id'],
       businessIndustryId: json['business_industry_id'],
-      nation: NationModel.fromJson(json['nation']),
+      nation:
+          json['nation'] == null ? NationModel.fromJson(json['nation']) : null,
       clientProfile: json['client_profile'],
-      documents: List<DocumentModel>.from(
-          json['documents'].map((doc) => DocumentModel.fromJson(doc))),
-      clientType: ClientTypeModel.fromJson(json['client_type']),
+      documents: json['documents'] == null
+          ? List<DocumentModel>.from(
+              json['documents'].map((doc) => DocumentModel.fromJson(doc)))
+          : null,
+      clientType: json['client_type'] == null
+          ? ClientTypeModel.fromJson(json['client_type'])
+          : null,
     );
   }
 
