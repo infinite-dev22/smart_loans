@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
-class EmployeeDetailsLoadingWidget extends StatelessWidget {
-  const EmployeeDetailsLoadingWidget({super.key});
+class LoanDetailsLoadingWidget extends StatelessWidget {
+  const LoanDetailsLoadingWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

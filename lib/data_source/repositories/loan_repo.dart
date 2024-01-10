@@ -5,7 +5,7 @@ class LoanRepo {
   static Future<LoanModel> fetch(int loanId) async {
     var loanRepo = LoanDaoImpl();
     var loanMap = await loanRepo.fetch(loanId);
-    return LoanModel.fromJson(loanMap);
+    return LoanModel.fromApiJson(loanMap);
   }
 
   static Future<List<LoanModel>> fetchAll({Map<String, dynamic>? body}) async {

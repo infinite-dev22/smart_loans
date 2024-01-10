@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smart_loans/pages/loans/widgets/details/loan_details_success_widget.dart';
+import 'package:smart_loans/data_source/models/loan_model.dart';
+import 'package:smart_loans/pages/loans/screens/layouts/loans_details_page_layout.dart';
 import 'package:smart_loans/widgets/custom_scaffold.dart';
 
 class LoanDetailsPage extends StatelessWidget {
@@ -7,9 +8,10 @@ class LoanDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CustomScaffold(
+    var loanId = ModalRoute.of(context)!.settings.arguments as int;
+    return CustomScaffold(
       route: "/loan",
-      body: LoanDetailSuccessWidget(),
+      body: LoanDetailsPageLayout(loanId: loanId),
     );
   }
 }

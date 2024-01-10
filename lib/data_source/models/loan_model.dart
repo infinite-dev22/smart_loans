@@ -102,6 +102,40 @@ class LoanModel {
     currencyName = json['currency']['name'];
   }
 
+  LoanModel.fromApiJson(Map<String, dynamic> json) {
+    id = json['id'];
+    loanNumber = json['loan_number'];
+    principalAmount = json['principal_amount'];
+    loanFees = json['loan_fees'];
+    loansFeesType = json['loans_fees_type'];
+    description = json['description'];
+    clientId = json['client_id'];
+    clientName = json['client']['name'];
+    loanTypeId = json['loan_type_id'];
+    loanTypeName = json['loan_type']['name'];
+    loanCategoryId = json['loan_category_id'];
+    currencyId = json['currency_id'];
+    loanCategoryName = json['loan_category']['name'];
+    branchId = json['branch_id'];
+    loanStatusId = json['loan_status_id'];
+    createdBy = json['created_by'];
+    updatedBy = json['updated_by'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    organisationId = json['organisation_id'];
+    client = ClientModel.fromJson(json['client']);
+    loanType = LoanTypeModel.fromJson(json['loan_type']);
+    loanCategory = LoanCategoryModel.fromJson(json['loan_category']);
+    currency = CurrencyModel.fromJson(json['currency']);
+    branch = BranchModel.fromJson(json['branch']);
+    loanStatus = LoanStatusModel.fromJson(json['loan_status']);
+    branchName = json['branch']['name'];
+    loanStatusId = json['loan_status_id'];
+    loanStatusName = json['loan_status']['name'];
+    currencyId = json['currency_id'];
+    currencyName = json['currency']['name'];
+  }
+
   LoanModel.fromCreateJson(Map<String, dynamic> json) {
     id = json['id'];
   }
@@ -136,6 +170,7 @@ class LoanModel {
 
   Map<String, dynamic> toViewJson() {
     return {
+      'id': id,
       'loan_number': loanNumber,
       'principal': principalAmount,
       'fees': loanFees,

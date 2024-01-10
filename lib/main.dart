@@ -10,6 +10,7 @@ import 'package:smart_loans/pages/dashboard/screens/dashboard.dart';
 import 'package:smart_loans/pages/employees/bloc/employee_bloc.dart';
 import 'package:smart_loans/pages/employees/screens/employee_details_page.dart';
 import 'package:smart_loans/pages/employees/screens/employees_page.dart';
+import 'package:smart_loans/pages/loans/bloc/details/loan_details_bloc.dart';
 import 'package:smart_loans/pages/loans/bloc/loan_bloc.dart';
 import 'package:smart_loans/pages/loans/screens/loan_details_page.dart';
 import 'package:smart_loans/pages/loans/screens/loans_page.dart';
@@ -60,6 +61,9 @@ class _SmartLoansAppState extends State<SmartLoansApp> {
                         ),
                         BlocProvider<LoanBloc>(
                           create: (_) => LoanBloc(),
+                        ),
+                        BlocProvider<LoanDetailBloc>(
+                          create: (_) => LoanDetailBloc(),
                         ),
                       ],
                       child: child,

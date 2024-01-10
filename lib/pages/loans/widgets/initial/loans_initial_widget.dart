@@ -6,7 +6,7 @@ class LoansInitialWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text("Your loans appear here"),
+      child: Text("No loan currently"),
     );
   }
 }

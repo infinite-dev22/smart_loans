@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:smart_loans/theme/colors.dart';
 
-class LoanDetailsLoadingWidget extends StatelessWidget {
-  const LoanDetailsLoadingWidget({super.key});
+class LoanDetailsErrorWidget extends StatelessWidget {
+  const LoanDetailsErrorWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

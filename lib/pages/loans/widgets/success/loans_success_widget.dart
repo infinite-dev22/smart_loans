@@ -106,7 +106,8 @@ class _LoansTableWidgetState extends State<LoansSuccessWidget> {
                   .toList(),
               selectedRowKeys: _selectedRowKeys,
               onTapRow: (rows, index) {
-                Navigator.pushNamed(context, "/loan");
+                Navigator.pushNamed(context, "/loan",
+                    arguments: rows[index]['id']);
               },
               onSelectRows: (keys) {
                 print('onSelectRows(): count = ${keys.length} keys = $keys');

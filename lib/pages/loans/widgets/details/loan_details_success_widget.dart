@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile_photo/profile_photo.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/config/responsive.dart';
 import 'package:smart_loans/global_values.dart';
+import 'package:smart_loans/pages/loans/bloc/details/loan_details_bloc.dart';
 import 'package:smart_loans/pages/loans/widgets/details/forms/interest_form.dart';
 import 'package:smart_loans/pages/loans/widgets/details/forms/loan_form.dart';
 import 'package:smart_loans/pages/loans/widgets/details/forms/process_form.dart';
@@ -12,21 +14,19 @@ import 'loan_details_tabbed_display.dart';
 import 'loan_officer_widget.dart';
 import 'loan_summary_widget.dart';
 
-class LoanDetailSuccessWidget extends StatefulWidget {
+class LoanDetailSuccessWidget extends StatelessWidget {
   const LoanDetailSuccessWidget({super.key});
 
   @override
-  State<LoanDetailSuccessWidget> createState() =>
-      _LoanDetailSuccessWidgetState();
-}
-
-class _LoanDetailSuccessWidgetState extends State<LoanDetailSuccessWidget> {
-  @override
   Widget build(BuildContext context) {
-    return _buildBody();
+    return BlocBuilder<LoanDetailBloc, LoanDetailState>(
+      builder: (context, state) {
+        return _buildBody(context);
+      },
+    );
   }
 
-  Widget _buildBody() {
+  Widget _buildBody(BuildContext context) {
     return Column(
       children: [
         Row(
@@ -95,39 +95,69 @@ class _LoanDetailSuccessWidgetState extends State<LoanDetailSuccessWidget> {
                                       Text("Flow Type: "),
                                     ],
                                   ),
-                                  const Column(
+                                  Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "0000001",
-                                        style: TextStyle(
+                                        context
+                                            .read<LoanDetailBloc>()
+                                            .state
+                                            .loan!
+                                            .id
+                                            .toString(),
+                                        style: const TextStyle(
                                           color: AppColor.red,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                       Text(
-                                        "Vicent Company",
-                                        style: TextStyle(
+                                        context
+                                            .read<LoanDetailBloc>()
+                                            .state
+                                            .loan!
+                                            .client!
+                                            .name
+                                            .toString(),
+                                        style: const TextStyle(
                                             fontWeight: FontWeight.bold),
                                       ),
                                       Text(
-                                        "12295200000",
-                                        style: TextStyle(
+                                        context
+                                            .read<LoanDetailBloc>()
+                                            .state
+                                            .loan!
+                                            .client!
+                                            .telephone
+                                            .toString(),
+                                        style: const TextStyle(
                                             fontWeight: FontWeight.bold),
                                       ),
                                       Text(
-                                        "Kampala",
-                                        style: TextStyle(
+                                        context
+                                            .read<LoanDetailBloc>()
+                                            .state
+                                            .loan!
+                                            .client!
+                                            .address
+                                            .toString(),
+                                        style: const TextStyle(
                                             fontWeight: FontWeight.bold),
                                       ),
                                       Text(
-                                        "APPROVED (4.12.2023)",
-                                        style: TextStyle(
+                                        // "APPROVED (4.12.2023)",
+                                        context
+                                            .read<LoanDetailBloc>()
+                                            .state
+                                            .loan!
+                                            .loanStatus!
+                                            .name
+                                            .toString(),
+                                        style: const TextStyle(
                                             fontWeight: FontWeight.bold),
                                       ),
-                                      Text(
-                                        "LV2",
+                                      const Text(
+                                        "LV2(To Be Added)",
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold),
                                       ),
@@ -137,10 +167,10 @@ class _LoanDetailSuccessWidgetState extends State<LoanDetailSuccessWidget> {
                               ),
                               if (Responsive.isDesktop(context) ||
                                   Responsive.isTablet(context))
-                                const Row(
+                                Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Column(
+                                    const Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
@@ -157,31 +187,47 @@ class _LoanDetailSuccessWidgetState extends State<LoanDetailSuccessWidget> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "Business",
-                                          style: TextStyle(
+                                          context
+                                              .read<LoanDetailBloc>()
+                                              .state
+                                              .loan!
+                                              .loanType!
+                                              .name
+                                              .toString(),
+                                          style: const TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Text(
-                                          "UGX 2,000,000",
-                                          style: TextStyle(
+                                          context
+                                              .read<LoanDetailBloc>()
+                                              .state
+                                              .loan!
+                                              .principalAmount!
+                                              .toString(),
+                                          style: const TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Text(
-                                          "UGX 200,000",
-                                          style: TextStyle(
+                                          context
+                                              .read<LoanDetailBloc>()
+                                              .state
+                                              .loan!
+                                              .loanFees!
+                                              .toString(),
+                                          style: const TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Text(
-                                          "UGX 100,000",
-                                          style: TextStyle(
+                                          "${context.read<LoanDetailBloc>().state.loan!.loanFees!} Showing Loan Fee",
+                                          style: const TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
-                                        Text(
+                                        const Text(
                                           "10 Months",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
-                                        Text(
+                                        const Text(
                                           "Monthly",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
@@ -195,12 +241,14 @@ class _LoanDetailSuccessWidgetState extends State<LoanDetailSuccessWidget> {
                                 Row(
                                   children: [
                                     FilledButton(
-                                      onPressed: _buildInterestForm,
+                                      onPressed: () =>
+                                          _buildInterestForm(context),
                                       child: const Text("Edit Interest"),
                                     ),
                                     SizedBox(width: 1.w),
                                     FilledButton(
-                                      onPressed: _buildProcessDialog,
+                                      onPressed: () =>
+                                          _buildProcessDialog(context),
                                       child: const Text("Process Loan"),
                                     ),
                                   ],
@@ -269,12 +317,14 @@ class _LoanDetailSuccessWidgetState extends State<LoanDetailSuccessWidget> {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     FilledButton(
-                                      onPressed: _buildInterestForm,
+                                      onPressed: () =>
+                                          _buildInterestForm(context),
                                       child: const Text("Edit Interest"),
                                     ),
                                     SizedBox(width: 1.w),
                                     FilledButton(
-                                      onPressed: _buildProcessDialog,
+                                      onPressed: () =>
+                                          _buildProcessDialog(context),
                                       child: const Text("Process Loan"),
                                     ),
                                   ],
@@ -300,7 +350,7 @@ class _LoanDetailSuccessWidgetState extends State<LoanDetailSuccessWidget> {
     );
   }
 
-  _buildInterestForm() async {
+  _buildInterestForm(BuildContext context) async {
     return showDialog(
       context: context,
       barrierDismissible: true,
@@ -315,7 +365,7 @@ class _LoanDetailSuccessWidgetState extends State<LoanDetailSuccessWidget> {
     );
   }
 
-  _buildProcessDialog() async {
+  _buildProcessDialog(BuildContext context) async {
     return showDialog(
       context: context,
       barrierDismissible: true,
