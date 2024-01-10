@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile_photo/profile_photo.dart';
@@ -81,6 +83,14 @@ class LoanDetailSuccessWidget extends StatelessWidget {
                                   ProfilePhoto(
                                     totalWidth: 10.h,
                                     color: AppColor.white45,
+                                    name: context
+                                        .read<LoanDetailBloc>()
+                                        .state
+                                        .loan!
+                                        .clientName
+                                        .toString(),
+                                    outlineColor:
+                                        colors[Random().nextInt(colors.length)],
                                   ),
                                   SizedBox(width: 1.w),
                                   const Column(

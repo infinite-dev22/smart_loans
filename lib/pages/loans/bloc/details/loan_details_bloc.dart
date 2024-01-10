@@ -11,6 +11,7 @@ class LoanDetailBloc extends Bloc<LoanDetailEvent, LoanDetailState> {
   LoanDetailBloc() : super(const LoanDetailState()) {
     on<GetLoanDetails>(_mapGetLoanDetailsEventToState);
     on<GetLoanDetail>(_mapGetLoanDetailEventToState);
+    on<GetLoan>(_mapGetLoanEventToState);
     on<CreateLoanDetail>(_mapCreateLoanDetailEventToState);
     on<UpdateLoanDetail>(_mapUpdateLoanDetailEventToState);
     on<DeleteLoanDetail>(_mapDeleteLoanDetailEventToState);
@@ -43,6 +44,15 @@ class LoanDetailBloc extends Bloc<LoanDetailEvent, LoanDetailState> {
       }
       emit(state.copyWith(status: LoanDetailStatus.error));
     });
+  }
+
+  _mapGetLoanEventToState(GetLoan event, Emitter<LoanDetailState> emit) async {
+    emit(state.copyWith(status: LoanDetailStatus.loading));
+    try {
+      emit(state.copyWith(status: LoanDetailStatus.success, loan: event.loan));
+    } catch (e) {
+      emit(state.copyWith(status: LoanDetailStatus.error));
+    }
   }
 
   _mapCreateLoanDetailEventToState(

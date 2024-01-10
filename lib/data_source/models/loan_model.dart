@@ -165,6 +165,12 @@ class LoanModel {
     data['currency'] = currency?.toJson();
     data['branch'] = branch?.toJson();
     data['loan_status'] = loanStatus?.toJson();
+    data['client_name'] = clientName;
+    data['loan_type_name'] = loanType?.name;
+    data['loan_category_name'] = loanCategory?.name;
+    data['currency_name'] = currency?.name;
+    data['branch_name'] = branch?.name;
+    data['loan_status_name'] = loanStatus?.name;
     return data;
   }
 

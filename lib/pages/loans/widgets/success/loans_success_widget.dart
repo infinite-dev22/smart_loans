@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_web_data_table/web_data_table.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/config/responsive.dart';
+import 'package:smart_loans/data_source/models/loan_model.dart';
 import 'package:smart_loans/global_values.dart';
 import 'package:smart_loans/pages/branches/bloc/branch_bloc.dart';
 import 'package:smart_loans/pages/clients/bloc/clients_bloc/clients_bloc.dart';
@@ -58,42 +59,42 @@ class _LoansTableWidgetState extends State<LoansSuccessWidget> {
               filterTexts: _filterTexts,
               columns: [
                 WebDataColumn(
-                  name: 'client',
+                  name: 'client_name',
                   label: const Text('Client'),
                   dataCell: (value) => DataCell(Text('$value')),
                 ),
                 WebDataColumn(
-                  name: 'principal',
+                  name: 'principal_amount',
                   label: const Text('Principal Amount'),
                   dataCell: (value) => DataCell(Text('$value')),
                 ),
                 WebDataColumn(
-                  name: 'fees',
+                  name: 'loan_fees',
                   label: const Text('Loan Fees'),
                   dataCell: (value) => DataCell(Text('$value')),
                 ),
                 WebDataColumn(
-                  name: 'loanType',
+                  name: 'loan_type_name',
                   label: const Text('Loan Fees Type'),
                   dataCell: (value) => DataCell(Text('$value')),
                 ),
                 WebDataColumn(
-                  name: 'loanCategory',
+                  name: 'loan_category_name',
                   label: const Text('Loan Category'),
                   dataCell: (value) => DataCell(Text('$value')),
                 ),
                 WebDataColumn(
-                  name: 'currency',
+                  name: 'currency_name',
                   label: const Text('Currency'),
                   dataCell: (value) => DataCell(Text('$value')),
                 ),
                 WebDataColumn(
-                  name: 'branch',
+                  name: 'branch_name',
                   label: const Text('Branch'),
                   dataCell: (value) => DataCell(Text('$value')),
                 ),
                 WebDataColumn(
-                  name: 'loanStatus',
+                  name: 'loan_status_name',
                   label: const Text('Loan Status'),
                   dataCell: (value) => DataCell(Text('$value')),
                 ),
@@ -102,12 +103,12 @@ class _LoansTableWidgetState extends State<LoansSuccessWidget> {
                   .read<LoanBloc>()
                   .state
                   .loans!
-                  .map((e) => e.toViewJson())
+                  .map((e) => e.toJson())
                   .toList(),
               selectedRowKeys: _selectedRowKeys,
               onTapRow: (rows, index) {
-                Navigator.pushNamed(context, "/loan",
-                    arguments: rows[index]['id']);
+                var loan = LoanModel.fromJson(rows[index]);
+                Navigator.pushNamed(context, "/loan", arguments: loan);
               },
               onSelectRows: (keys) {
                 print('onSelectRows(): count = ${keys.length} keys = $keys');

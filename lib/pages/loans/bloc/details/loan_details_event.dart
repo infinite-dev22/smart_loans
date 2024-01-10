@@ -17,6 +17,15 @@ class GetLoanDetail extends LoanDetailEvent {
   List<Object?> get props => [idSelected];
 }
 
+class GetLoan extends LoanDetailEvent {
+  GetLoan(this.loan);
+
+  final LoanModel loan;
+
+  @override
+  List<Object?> get props => [loan];
+}
+
 class CreateLoanDetail extends LoanDetailEvent {
   CreateLoanDetail(this.loan);
 

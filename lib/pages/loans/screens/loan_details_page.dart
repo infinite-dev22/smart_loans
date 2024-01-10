@@ -8,10 +8,10 @@ class LoanDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var loanId = ModalRoute.of(context)!.settings.arguments as int;
+    var loan = ModalRoute.of(context)!.settings.arguments as LoanModel;
     return CustomScaffold(
       route: "/loan",
-      body: LoanDetailsPageLayout(loanId: loanId),
+      body: LoanDetailsPageLayout(loan: loan),
     );
   }
 }
