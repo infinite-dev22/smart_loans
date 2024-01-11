@@ -99,7 +99,7 @@ class RoleDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.put(
-        Uri.https(appUrl, 'api/v1/roles/update/$id').toString(),
+        Uri.https(appUrl, 'api/roles/update/$id').toString(),
         data: jsonEncode(data),
       );
 
@@ -126,7 +126,7 @@ class RoleDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.https(appUrl, 'api/v1/roles/search/$search').toString(),
+        Uri.https(appUrl, 'api/roles/search/$search').toString(),
       );
 
       if (response.statusCode == 200) {
@@ -152,7 +152,7 @@ class RoleDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.https(appUrl, 'api/v1/roles/delete/single/$id').toString(),
+        Uri.https(appUrl, 'api/roles/delete/single/$id').toString(),
       );
 
       if (response.statusCode == 200) {
@@ -178,7 +178,7 @@ class RoleDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.delete(
-        Uri.https(appUrl, 'api/v1/roles/delete/multiple/$ids').toString(),
+        Uri.https(appUrl, 'api/roles/delete/multiple/$ids').toString(),
       );
 
       if (response.statusCode == 200) {

@@ -5,11 +5,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile_photo/profile_photo.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/config/responsive.dart';
+import 'package:smart_loans/data_source/models/loan_model.dart';
 import 'package:smart_loans/global_values.dart';
+import 'package:smart_loans/pages/interest_methods/bloc/interest_method_bloc.dart';
+import 'package:smart_loans/pages/interest_periods/bloc/interest_period_bloc.dart';
+import 'package:smart_loans/pages/loan_duration/bloc/loan_duration_bloc.dart';
+import 'package:smart_loans/pages/loan_schedules/bloc/loan_schedule_bloc.dart';
 import 'package:smart_loans/pages/loans/bloc/details/loan_details_bloc.dart';
+import 'package:smart_loans/pages/loans/bloc/forms/interests/interest_form_bloc.dart';
+import 'package:smart_loans/pages/loans/bloc/loan_bloc.dart';
 import 'package:smart_loans/pages/loans/widgets/details/forms/interest_form.dart';
 import 'package:smart_loans/pages/loans/widgets/details/forms/loan_form.dart';
 import 'package:smart_loans/pages/loans/widgets/details/forms/process_form.dart';
+import 'package:smart_loans/pages/repayment_cycle/bloc/repayment_cycle_bloc.dart';
 import 'package:smart_loans/theme/colors.dart';
 
 import 'loan_details_tabbed_display.dart';
@@ -29,6 +37,7 @@ class LoanDetailSuccessWidget extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context) {
+    var loan = context.read<LoanDetailBloc>().state.loan;
     return Column(
       children: [
         Row(
@@ -219,16 +228,30 @@ class LoanDetailSuccessWidget extends StatelessWidget {
                                         ),
                                         Text(
                                           context
-                                              .read<LoanDetailBloc>()
-                                              .state
-                                              .loan!
-                                              .loanFees!
-                                              .toString(),
+                                                      .read<LoanDetailBloc>()
+                                                      .state
+                                                      .loan!
+                                                      .loanFees !=
+                                                  null
+                                              ? context
+                                                  .read<LoanDetailBloc>()
+                                                  .state
+                                                  .loan!
+                                                  .loanFees!
+                                                  .toString()
+                                              : "N/A",
                                           style: const TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Text(
-                                          "${context.read<LoanDetailBloc>().state.loan!.loanFees!} Showing Loan Fee",
+                                          context
+                                                      .read<LoanDetailBloc>()
+                                                      .state
+                                                      .loan!
+                                                      .loanFees !=
+                                                  null
+                                              ? "${context.read<LoanDetailBloc>().state.loan!.loanFees!} Showing Loan Fee"
+                                              : "N/A",
                                           style: const TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
@@ -252,7 +275,7 @@ class LoanDetailSuccessWidget extends StatelessWidget {
                                   children: [
                                     FilledButton(
                                       onPressed: () =>
-                                          _buildInterestForm(context),
+                                          _buildInterestForm(context, loan),
                                       child: const Text("Edit Interest"),
                                     ),
                                     SizedBox(width: 1.w),
@@ -328,7 +351,7 @@ class LoanDetailSuccessWidget extends StatelessWidget {
                                   children: [
                                     FilledButton(
                                       onPressed: () =>
-                                          _buildInterestForm(context),
+                                          _buildInterestForm(context, loan),
                                       child: const Text("Edit Interest"),
                                     ),
                                     SizedBox(width: 1.w),
@@ -345,7 +368,22 @@ class LoanDetailSuccessWidget extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const LoanDetailsTabbedDisplay(),
+                    MultiBlocProvider(
+                      providers: [
+                        BlocProvider<LoanBloc>(
+                          create: (_) => LoanBloc(),
+                        ),
+                        BlocProvider<LoanDetailBloc>(
+                          create: (_) => LoanDetailBloc(),
+                        ),
+                        BlocProvider<LoanScheduleBloc>(
+                          create: (_) => LoanScheduleBloc(),
+                        ),
+                      ],
+                      child: LoanDetailsTabbedDisplay(
+                          loanId:
+                              context.read<LoanDetailBloc>().state.loan!.id!),
+                    ),
                   ],
                 ),
               ),
@@ -360,7 +398,7 @@ class LoanDetailSuccessWidget extends StatelessWidget {
     );
   }
 
-  _buildInterestForm(BuildContext context) async {
+  _buildInterestForm(BuildContext context, LoanModel? loan) async {
     return showDialog(
       context: context,
       barrierDismissible: true,
@@ -369,7 +407,29 @@ class LoanDetailSuccessWidget extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(circularRadius),
           ),
-          child: const InterestForm(),
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider<InterestMethodBloc>(
+                create: (_) => InterestMethodBloc(),
+              ),
+              BlocProvider<InterestPeriodBloc>(
+                create: (_) => InterestPeriodBloc(),
+              ),
+              BlocProvider<RepaymentCycleBloc>(
+                create: (_) => RepaymentCycleBloc(),
+              ),
+              BlocProvider<LoanDurationBloc>(
+                create: (_) => LoanDurationBloc(),
+              ),
+              BlocProvider<LoanBloc>(
+                create: (_) => LoanBloc(),
+              ),
+              BlocProvider<InterestFormBloc>(
+                create: (_) => InterestFormBloc(),
+              ),
+            ],
+            child: InterestForm(loanModel: loan!),
+          ),
         );
       },
     );

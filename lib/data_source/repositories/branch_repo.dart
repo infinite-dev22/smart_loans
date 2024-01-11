@@ -34,21 +34,24 @@ class BranchRepo {
   static Future<List<BranchModel>> search(String search) async {
     var branchDao = BranchDaoImpl();
     var responseList = await branchDao.search(search);
-    var branches = responseList.map((doc) => BranchModel.fromJson(doc)).toList();
+    var branches =
+        responseList.map((doc) => BranchModel.fromJson(doc)).toList();
     return branches;
   }
 
   static Future<List<BranchModel>> delete(int branchId) async {
     var branchDao = BranchDaoImpl();
     var responseList = await branchDao.delete(branchId);
-    var branches = responseList.map((doc) => BranchModel.fromJson(doc)).toList();
+    var branches =
+        responseList.map((doc) => BranchModel.fromJson(doc)).toList();
     return branches;
   }
 
   static Future<List<BranchModel>> deleteMultiple(List<int> branchIds) async {
     var branchDao = BranchDaoImpl();
     var responseList = await branchDao.deleteMultiple(branchIds);
-    var branches = responseList.map((doc) => BranchModel.fromJson(doc)).toList();
+    var branches =
+        responseList.map((doc) => BranchModel.fromJson(doc)).toList();
     return branches;
   }
 }

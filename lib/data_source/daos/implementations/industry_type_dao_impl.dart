@@ -99,7 +99,7 @@ class IndustryTypeDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.put(
-        Uri.https(appUrl, 'api/v1/clienttypes/update/$id').toString(),
+        Uri.https(appUrl, 'api/clienttypes/update/$id').toString(),
         data: jsonEncode(data),
       );
 
@@ -126,7 +126,7 @@ class IndustryTypeDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.https(appUrl, 'api/v1/clienttypes/search/$search').toString(),
+        Uri.https(appUrl, 'api/clienttypes/search/$search').toString(),
       );
 
       if (response.statusCode == 200) {
@@ -152,7 +152,7 @@ class IndustryTypeDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.https(appUrl, 'api/v1/clienttypes/delete/single/$id').toString(),
+        Uri.https(appUrl, 'api/clienttypes/delete/single/$id').toString(),
       );
 
       if (response.statusCode == 200) {
@@ -178,7 +178,7 @@ class IndustryTypeDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.delete(
-        Uri.https(appUrl, 'api/v1/clienttypes/delete/multiple/$ids').toString(),
+        Uri.https(appUrl, 'api/clienttypes/delete/multiple/$ids').toString(),
       );
 
       if (response.statusCode == 200) {

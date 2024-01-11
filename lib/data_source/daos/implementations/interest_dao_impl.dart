@@ -1,0 +1,201 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
+import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
+import 'package:smart_loans/config/web_config.dart';
+import 'package:smart_loans/data_source/daos/interfaces/interest_dao.dart';
+import 'package:smart_loans/global_values.dart';
+
+class InterestDaoImpl extends InterestDao {
+  @override
+  Future<Map<String, dynamic>> fetch(int loanId) async {
+    Dio dio = Dio(baseOps)
+      ..interceptors.add(DioCacheInterceptor(options: options));
+
+    try {
+      dio.options.headers['content-Type'] = 'application/json';
+      dio.options.headers['Accept'] = 'application/json';
+      dio.options.headers["authorization"] =
+          "Bearer ${currentUser.token}"; // Add server auth token here.
+      dio.options.followRedirects = false;
+
+      var response = await dio.get(
+        Uri.https(appUrl, 'api/loans/$loanId/loanInterestShow').toString(),
+      );
+
+      if (response.statusCode == 200) {
+        return response.data;
+      } else {
+        throw Error();
+      }
+    } finally {
+      dio.close();
+    }
+  }
+
+  @override
+  Future<List<dynamic>> fetchAll(int loanId) async {
+    Dio dio = Dio(baseOps)
+      ..interceptors.add(DioCacheInterceptor(options: options));
+
+    try {
+      dio.options.headers['content-Type'] = 'application/json';
+      dio.options.headers['Accept'] = 'application/json';
+      dio.options.headers["authorization"] =
+          "Bearer ${currentUser.token}"; // Add server auth token here.
+      dio.options.followRedirects = false;
+
+      var response = await dio.get(
+        Uri.https(appUrl, 'api/loans/$loanId/loanInterestShow').toString(),
+      );
+
+      if (response.statusCode == 200) {
+        return response.data;
+      } else {
+        throw Error();
+      }
+    } finally {
+      dio.close();
+    }
+  }
+
+  @override
+  Future post(Map<String, dynamic> data, int loanId) async {
+    Dio dio = Dio(baseOps)
+      ..interceptors.add(DioCacheInterceptor(options: options));
+
+    try {
+      dio.options.headers['content-Type'] = 'application/json';
+      dio.options.headers['Accept'] = 'application/json';
+      dio.options.headers["authorization"] =
+          "Bearer ${currentUser.token}"; // Add server auth token here.
+      dio.options.followRedirects = false;
+
+      print("DATA BEFORE POST: ${jsonEncode(data)}");
+
+      var response = await dio.post(
+        Uri.https(appUrl, 'api/loans/$loanId/add-interest').toString(),
+        data: jsonEncode(data),
+      );
+
+      print("DATA AFTER POST: ${response.statusCode}");
+      print("DATA AFTER POST: ${response.data}");
+
+      print(response.statusCode);
+      print(response.data);
+
+      if (response.statusCode == 201) {
+        return {};
+      } else {
+        throw Error();
+      }
+    } finally {
+      dio.close();
+    }
+  }
+
+  @override
+  Future put(Map<String, dynamic> data, int loanId) async {
+    Dio dio = Dio(baseOps)
+      ..interceptors.add(DioCacheInterceptor(options: options));
+
+    try {
+      dio.options.headers['content-Type'] = 'application/json';
+      dio.options.headers['Accept'] = 'application/json';
+      dio.options.headers["authorization"] =
+          "Bearer ${currentUser.token}"; // Add server auth token here.
+      dio.options.followRedirects = false;
+
+      var response = await dio.put(
+        Uri.https(appUrl, 'api/loans/$loanId/edit-interest').toString(),
+        data: jsonEncode(data),
+      );
+
+      if (response.statusCode == 200) {
+        return response.data;
+      } else {
+        throw Error();
+      }
+    } finally {
+      dio.close();
+    }
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> search(String search, int loanId) async {
+    Dio dio = Dio(baseOps)
+      ..interceptors.add(DioCacheInterceptor(options: options));
+
+    try {
+      dio.options.headers['content-Type'] = 'application/json';
+      dio.options.headers['Accept'] = 'application/json';
+      dio.options.headers["authorization"] =
+          "Bearer ${currentUser.token}"; // Add server auth token here.
+      dio.options.followRedirects = false;
+
+      var response = await dio.get(
+        Uri.https(appUrl, 'api/loans/$loanId/search/$search').toString(),
+      );
+
+      if (response.statusCode == 200) {
+        return response.data;
+      } else {
+        throw Error();
+      }
+    } finally {
+      dio.close();
+    }
+  }
+
+  @override
+  Future<dynamic> delete(int id, int loanId) async {
+    Dio dio = Dio(baseOps)
+      ..interceptors.add(DioCacheInterceptor(options: options));
+
+    try {
+      dio.options.headers['content-Type'] = 'application/json';
+      dio.options.headers['Accept'] = 'application/json';
+      dio.options.headers["authorization"] =
+          "Bearer ${currentUser.token}"; // Add server auth token here.
+      dio.options.followRedirects = false;
+
+      var response = await dio.get(
+        Uri.https(appUrl, 'api/loans/$loanId/delete/single/$id').toString(),
+      );
+
+      if (response.statusCode == 200) {
+        return response.data;
+      } else {
+        throw Error();
+      }
+    } finally {
+      dio.close();
+    }
+  }
+
+  @override
+  Future<dynamic> deleteMultiple(List<int> ids, int loanId) async {
+    Dio dio = Dio(baseOps)
+      ..interceptors.add(DioCacheInterceptor(options: options));
+
+    try {
+      dio.options.headers['content-Type'] = 'application/json';
+      dio.options.headers['Accept'] = 'application/json';
+      dio.options.headers["authorization"] =
+          "Bearer ${currentUser.token}"; // Add server auth token here.
+      dio.options.followRedirects = false;
+
+      var response = await dio.delete(
+        Uri.https(appUrl, 'api/loans/$loanId/delete/multiple/$ids').toString(),
+      );
+
+      if (response.statusCode == 200) {
+        return response.data;
+      } else {
+        throw Error();
+      }
+    } finally {
+      dio.close();
+    }
+  }
+}

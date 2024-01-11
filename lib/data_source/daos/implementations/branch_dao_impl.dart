@@ -70,7 +70,6 @@ class BranchDaoImpl extends SimpleDao {
       dio.options.headers["authorization"] =
           "Bearer ${currentUser.token}"; // Add server auth token here.
       dio.options.followRedirects = false;
-      print("CLIENT: ${jsonEncode(data)}");
 
       var response = await dio.post(
         Uri.https(appUrl, 'api/branches/create').toString(),
@@ -103,7 +102,7 @@ class BranchDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.put(
-        Uri.https(appUrl, 'api/v1/branches/update/$id').toString(),
+        Uri.https(appUrl, 'api/branches/update/$id').toString(),
         data: jsonEncode(data),
       );
 
@@ -130,7 +129,7 @@ class BranchDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.https(appUrl, 'api/v1/branches/search/$search').toString(),
+        Uri.https(appUrl, 'api/branches/search/$search').toString(),
       );
 
       if (response.statusCode == 200) {
@@ -156,7 +155,7 @@ class BranchDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.https(appUrl, 'api/v1/branches/delete/single/$id').toString(),
+        Uri.https(appUrl, 'api/branches/delete/single/$id').toString(),
       );
 
       if (response.statusCode == 200) {
@@ -182,7 +181,7 @@ class BranchDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.delete(
-        Uri.https(appUrl, 'api/v1/branches/delete/multiple/$ids').toString(),
+        Uri.https(appUrl, 'api/branches/delete/multiple/$ids').toString(),
       );
 
       if (response.statusCode == 200) {

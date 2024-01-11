@@ -7,10 +7,11 @@ import 'package:dynamic_table/dynamic_table_data_column.dart';
 import 'package:dynamic_table/dynamic_table_data_row.dart';
 import 'package:dynamic_table/dynamic_table_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:smart_loans/pages/loan_schedules/bloc/loan_schedule_bloc.dart';
 
-import '../../../../../data_source/dummy_loans_data.dart';
-import '../../../../../global_values.dart';
+import '../../../../../../global_values.dart';
 
 class LoanSchedulesTable extends StatefulWidget {
   const LoanSchedulesTable({super.key});
@@ -21,8 +22,6 @@ class LoanSchedulesTable extends StatefulWidget {
 
 class _LoanSchedulesTableState extends State<LoanSchedulesTable> {
   var tableKey = GlobalKey<DynamicTableState>();
-
-  var myData = dummyLoansData.toList();
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +42,7 @@ class _LoanSchedulesTableState extends State<LoanSchedulesTable> {
                   content: Text("Row Edited index:$index row:$row"),
                 ),
               );
-              myData[index] = row;
+              // myData[index] = row;
               return true;
             },
             onRowDelete: (index, row) {
@@ -52,7 +51,7 @@ class _LoanSchedulesTableState extends State<LoanSchedulesTable> {
                   content: Text("Row Deleted index:$index row:$row"),
                 ),
               );
-              myData.removeAt(index);
+              // myData.removeAt(index);
               return true;
             },
             onRowSave: (index, old, newValue) {
@@ -93,7 +92,7 @@ class _LoanSchedulesTableState extends State<LoanSchedulesTable> {
                     .nextInt(500)
                     .toString(); // to add Unique ID because it is not editable
               }
-              myData[index] = newValue; // Update data
+              // myData[index] = newValue; // Update data
               if (newValue[0] == null) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
@@ -162,8 +161,17 @@ class _LoanSchedulesTableState extends State<LoanSchedulesTable> {
   }
 
   List<DynamicTableDataRow> _buildRows(BuildContext context) {
+    var loanSchedules = List.empty(growable: true);
+    context.read<LoanScheduleBloc>().state.loanSchedules != []
+        ? loanSchedules.addAll(context
+            .read<LoanScheduleBloc>()
+            .state
+            .loanSchedules!
+            .map((loanSchedule) => loanSchedule.toList())
+            .toList())
+        : loanSchedules;
     return List.generate(
-      myData.length,
+      loanSchedules.length,
       (index) => DynamicTableDataRow(
         onSelectChanged: (value) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -176,9 +184,9 @@ class _LoanSchedulesTableState extends State<LoanSchedulesTable> {
         },
         index: index,
         cells: List.generate(
-          myData[index].length,
+          loanSchedules[index].length,
           (cellIndex) => DynamicTableDataCell(
-            value: myData[index][cellIndex],
+            value: loanSchedules[index][cellIndex],
           ),
         ),
       ),
@@ -187,6 +195,15 @@ class _LoanSchedulesTableState extends State<LoanSchedulesTable> {
 
   List<DynamicTableDataColumn> _buildColumns(BuildContext context) {
     return [
+      // DynamicTableDataColumn(
+      //   label: const Text(
+      //     "ID",
+      //     style: TextStyle(
+      //       fontWeight: FontWeight.bold,
+      //     ),
+      //   ),
+      //   dynamicTableInputType: DynamicTableInputType.text(),
+      // ),
       DynamicTableDataColumn(
         label: const Text(
           "Date",
@@ -195,17 +212,7 @@ class _LoanSchedulesTableState extends State<LoanSchedulesTable> {
           ),
         ),
         onSort: (columnIndex, ascending) {},
-        dynamicTableInputType: DynamicTableInputType.date(
-          context: context,
-          decoration: const InputDecoration(
-              hintText: "Date",
-              suffixIcon: Icon(Icons.date_range),
-              border: OutlineInputBorder()),
-          initialDate: DateTime.now(),
-          lastDate: DateTime.now().add(
-            const Duration(days: 365),
-          ),
-        ),
+        dynamicTableInputType: DynamicTableInputType.text(),
       ),
       DynamicTableDataColumn(
         label: const Text(

@@ -51,4 +51,16 @@ class LoanScheduleModel {
         'loan_id': loanId,
         'organisation_id': organisationId,
       };
+
+  List<dynamic> toList() => [
+        // id,
+        scheduleDate,
+        description,
+        principalAmount,
+        loanInterest,
+        penaltyAmount,
+        due,
+        paid,
+        balance,
+      ];
 }

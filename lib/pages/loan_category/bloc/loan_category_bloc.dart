@@ -40,7 +40,8 @@ class LoanCategoryBloc extends Bloc<LoanCategoryEvent, LoanCategoryState> {
 
     try {
       var loanCategory = await LoanCategoryRepo.fetch(event.idSelected);
-      emit(state.copyWith(status: LoanCategoryStatus.success, loanCategory: loanCategory));
+      emit(state.copyWith(
+          status: LoanCategoryStatus.success, loanCategory: loanCategory));
     } catch (e) {
       emit(state.copyWith(status: LoanCategoryStatus.error));
     }
@@ -52,7 +53,8 @@ class LoanCategoryBloc extends Bloc<LoanCategoryEvent, LoanCategoryState> {
     try {
       var loanCategory = await LoanCategoryRepo.post(event.loanCategory);
 
-      emit(state.copyWith(status: LoanCategoryStatus.success, loanCategory: loanCategory));
+      emit(state.copyWith(
+          status: LoanCategoryStatus.success, loanCategory: loanCategory));
     } catch (e) {
       emit(state.copyWith(status: LoanCategoryStatus.error));
     }
@@ -62,9 +64,11 @@ class LoanCategoryBloc extends Bloc<LoanCategoryEvent, LoanCategoryState> {
       UpdateLoanCategory event, Emitter<LoanCategoryState> emit) async {
     emit(state.copyWith(status: LoanCategoryStatus.loading));
     try {
-      var loanCategory = await LoanCategoryRepo.put(event.loanCategory, event.idSelected);
+      var loanCategory =
+          await LoanCategoryRepo.put(event.loanCategory, event.idSelected);
 
-      emit(state.copyWith(status: LoanCategoryStatus.success, loanCategory: loanCategory));
+      emit(state.copyWith(
+          status: LoanCategoryStatus.success, loanCategory: loanCategory));
     } catch (e) {
       emit(state.copyWith(status: LoanCategoryStatus.error));
     }
@@ -84,7 +88,8 @@ class LoanCategoryBloc extends Bloc<LoanCategoryEvent, LoanCategoryState> {
       SelectLoanCategory event, Emitter<LoanCategoryState> emit) {
     emit(state.copyWith(status: LoanCategoryStatus.loading));
     try {
-      emit(state.copyWith(status: LoanCategoryStatus.success, idSelected: null));
+      emit(
+          state.copyWith(status: LoanCategoryStatus.success, idSelected: null));
     } catch (e) {
       emit(state.copyWith(status: LoanCategoryStatus.error));
     }
@@ -107,7 +112,8 @@ class LoanCategoryBloc extends Bloc<LoanCategoryEvent, LoanCategoryState> {
   }
 
   @override
-  void onTransition(Transition<LoanCategoryEvent, LoanCategoryState> transition) {
+  void onTransition(
+      Transition<LoanCategoryEvent, LoanCategoryState> transition) {
     super.onTransition(transition);
     if (kDebugMode) {
       print("Transition: $transition");

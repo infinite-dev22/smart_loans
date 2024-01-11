@@ -7,10 +7,6 @@ import 'package:smart_loans/data_source/daos/interfaces/simple_dao.dart';
 import 'package:smart_loans/global_values.dart';
 
 class LoanDaoImpl extends SimpleDao {
-  /*
-  * This always must mirror the class it extends.
-  */
-
   @override
   Future<Map<String, dynamic>> fetch(int id) async {
     Dio dio = Dio(baseOps)

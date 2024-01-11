@@ -99,7 +99,7 @@ class NationDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.put(
-        Uri.https(appUrl, 'api/v1/nations/update/$id').toString(),
+        Uri.https(appUrl, 'api/nations/update/$id').toString(),
         data: jsonEncode(data),
       );
 
@@ -126,7 +126,7 @@ class NationDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.https(appUrl, 'api/v1/nations/search/$search').toString(),
+        Uri.https(appUrl, 'api/nations/search/$search').toString(),
       );
 
       if (response.statusCode == 200) {
@@ -152,7 +152,7 @@ class NationDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.https(appUrl, 'api/v1/nations/delete/single/$id').toString(),
+        Uri.https(appUrl, 'api/nations/delete/single/$id').toString(),
       );
 
       if (response.statusCode == 200) {
@@ -178,7 +178,7 @@ class NationDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.delete(
-        Uri.https(appUrl, 'api/v1/nations/delete/multiple/$ids').toString(),
+        Uri.https(appUrl, 'api/nations/delete/multiple/$ids').toString(),
       );
 
       if (response.statusCode == 200) {

@@ -10,7 +10,11 @@ import 'package:smart_loans/pages/dashboard/screens/dashboard.dart';
 import 'package:smart_loans/pages/employees/bloc/employee_bloc.dart';
 import 'package:smart_loans/pages/employees/screens/employee_details_page.dart';
 import 'package:smart_loans/pages/employees/screens/employees_page.dart';
+import 'package:smart_loans/pages/loan_duration/bloc/loan_duration_bloc.dart';
+import 'package:smart_loans/pages/loan_schedules/bloc/loan_schedule_bloc.dart';
+import 'package:smart_loans/pages/loan_type/bloc/loan_type_bloc.dart';
 import 'package:smart_loans/pages/loans/bloc/details/loan_details_bloc.dart';
+import 'package:smart_loans/pages/loans/bloc/forms/loans/loan_form_bloc.dart';
 import 'package:smart_loans/pages/loans/bloc/loan_bloc.dart';
 import 'package:smart_loans/pages/loans/screens/loan_details_page.dart';
 import 'package:smart_loans/pages/loans/screens/loans_page.dart';
@@ -64,6 +68,18 @@ class _SmartLoansAppState extends State<SmartLoansApp> {
                         ),
                         BlocProvider<LoanDetailBloc>(
                           create: (_) => LoanDetailBloc(),
+                        ),
+                        BlocProvider<LoanDurationBloc>(
+                          create: (_) => LoanDurationBloc(),
+                        ),
+                        BlocProvider<LoanScheduleBloc>(
+                          create: (_) => LoanScheduleBloc(),
+                        ),
+                        BlocProvider<LoanFormBloc>(
+                          create: (_) => LoanFormBloc(),
+                        ),
+                        BlocProvider<LoanTypeBloc>(
+                          create: (_) => LoanTypeBloc(),
                         ),
                       ],
                       child: child,

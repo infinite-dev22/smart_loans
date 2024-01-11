@@ -7,10 +7,6 @@ import 'package:smart_loans/data_source/daos/interfaces/simple_dao.dart';
 import 'package:smart_loans/global_values.dart';
 
 class ClientDaoImpl extends SimpleDao {
-  /*
-  * This always must mirror the class it extends.
-  */
-
   @override
   Future<Map<String, dynamic>> fetch(int id) async {
     Dio dio = Dio(baseOps)
@@ -74,7 +70,6 @@ class ClientDaoImpl extends SimpleDao {
       dio.options.headers["authorization"] =
           "Bearer ${currentUser.token}"; // Add server auth token here.
       dio.options.followRedirects = false;
-      print("CLIENT: ${jsonEncode(data)}");
 
       var response = await dio.post(
         Uri.https(appUrl, 'api/clients/create').toString(),
@@ -107,7 +102,7 @@ class ClientDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.put(
-        Uri.https(appUrl, 'api/v1/clients/update/$id').toString(),
+        Uri.https(appUrl, 'api/clients/update/$id').toString(),
         data: jsonEncode(data),
       );
 
@@ -134,7 +129,7 @@ class ClientDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.https(appUrl, 'api/v1/clients/search/$search').toString(),
+        Uri.https(appUrl, 'api/clients/search/$search').toString(),
       );
 
       if (response.statusCode == 200) {
@@ -160,7 +155,7 @@ class ClientDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.https(appUrl, 'api/v1/clients/delete/single/$id').toString(),
+        Uri.https(appUrl, 'api/clients/delete/single/$id').toString(),
       );
 
       if (response.statusCode == 200) {
@@ -186,7 +181,7 @@ class ClientDaoImpl extends SimpleDao {
       dio.options.followRedirects = false;
 
       var response = await dio.delete(
-        Uri.https(appUrl, 'api/v1/clients/delete/multiple/$ids').toString(),
+        Uri.https(appUrl, 'api/clients/delete/multiple/$ids').toString(),
       );
 
       if (response.statusCode == 200) {
