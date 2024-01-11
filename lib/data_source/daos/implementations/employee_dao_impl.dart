@@ -76,7 +76,7 @@ class EmployeeDaoImpl extends SimpleDao {
         data: jsonEncode(data),
       );
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         return response.data;
       } else {
         throw Error();

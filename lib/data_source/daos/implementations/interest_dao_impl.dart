@@ -84,7 +84,7 @@ class InterestDaoImpl extends InterestDao {
       print(response.statusCode);
       print(response.data);
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         return {};
       } else {
         throw Error();

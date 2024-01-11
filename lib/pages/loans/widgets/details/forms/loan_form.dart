@@ -1,6 +1,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/config/responsive.dart';
@@ -16,8 +17,15 @@ import 'package:smart_loans/pages/loans/bloc/loan_bloc.dart';
 import 'package:smart_loans/theme/light.dart';
 import 'package:smart_loans/widgets/dialog_title_wdiget.dart';
 
-class LoanForm extends StatelessWidget {
+class LoanForm extends StatefulWidget {
   const LoanForm({super.key});
+
+  @override
+  State<LoanForm> createState() => _LoanFormState();
+}
+
+class _LoanFormState extends State<LoanForm> {
+  var interestController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -514,24 +522,37 @@ class LoanForm extends StatelessWidget {
           width: 18.h,
           child: TextFormField(
             decoration: InputDecoration(
+              label: const Text("Percentage(%)"),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(circularRadius),
+              ),
+            ),
+            inputFormatters: [
+              LengthLimitingTextInputFormatter(3),
+            ],
+            onChanged: (value) {
+              var percentage = int.parse(value) * .001;
+              var interest = loan.principalAmount! * percentage;
+              interestController.text = interest.toString();
+            },
+          ),
+        ),
+        SizedBox(
+          height: 50,
+          width: 25.h,
+          child: TextFormField(
+            readOnly: true,
+            controller: interestController,
+            decoration: InputDecoration(
               label: Text(
                   "Interest${loan.currency != null ? '(${loan.currency!.code})' : ''}"),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(circularRadius),
               ),
             ),
-          ),
-        ),
-        SizedBox(
-          height: 50,
-          width: 18.h,
-          child: TextFormField(
-            decoration: InputDecoration(
-              label: const Text("Percentage(%)"),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(circularRadius),
-              ),
-            ),
+            onChanged: (value) {
+              interest.interestAmount = value;
+            },
           ),
         ),
       ],

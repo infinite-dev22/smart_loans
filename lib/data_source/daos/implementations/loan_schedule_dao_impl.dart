@@ -81,7 +81,7 @@ class LoanScheduleDaoImpl extends LoanScheduleDao {
       print(response.statusCode);
       print(response.data);
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         return response.data;
       } else {
         throw Error();
