@@ -7,6 +7,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/config/responsive.dart';
 import 'package:smart_loans/data_source/models/loan_model.dart';
 import 'package:smart_loans/global_values.dart';
+import 'package:smart_loans/pages/clients/bloc/clients_bloc/clients_bloc.dart';
 import 'package:smart_loans/pages/interest_methods/bloc/interest_method_bloc.dart';
 import 'package:smart_loans/pages/interest_periods/bloc/interest_period_bloc.dart';
 import 'package:smart_loans/pages/loan_duration/bloc/loan_duration_bloc.dart';
@@ -370,6 +371,9 @@ class LoanDetailSuccessWidget extends StatelessWidget {
                     ),
                     MultiBlocProvider(
                       providers: [
+                        BlocProvider<ClientsBloc>(
+                          create: (_) => ClientsBloc(),
+                        ),
                         BlocProvider<LoanBloc>(
                           create: (_) => LoanBloc(),
                         ),

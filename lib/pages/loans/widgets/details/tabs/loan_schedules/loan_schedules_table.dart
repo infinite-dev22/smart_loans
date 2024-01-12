@@ -13,14 +13,9 @@ import 'package:smart_loans/pages/loan_schedules/bloc/loan_schedule_bloc.dart';
 
 import '../../../../../../global_values.dart';
 
-class LoanSchedulesTable extends StatefulWidget {
-  const LoanSchedulesTable({super.key});
+class LoanSchedulesTable extends StatelessWidget {
+  LoanSchedulesTable({super.key});
 
-  @override
-  State<LoanSchedulesTable> createState() => _LoanSchedulesTableState();
-}
-
-class _LoanSchedulesTableState extends State<LoanSchedulesTable> {
   var tableKey = GlobalKey<DynamicTableState>();
 
   @override

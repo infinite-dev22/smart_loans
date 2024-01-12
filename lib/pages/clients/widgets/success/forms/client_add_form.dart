@@ -8,6 +8,7 @@ import 'package:smart_loans/global_values.dart';
 import 'package:smart_loans/init.dart';
 import 'package:smart_loans/pages/client_types/bloc/client_type_bloc.dart';
 import 'package:smart_loans/pages/clients/bloc/client_bloc/client_bloc.dart';
+import 'package:smart_loans/pages/clients/bloc/clients_bloc/clients_bloc.dart';
 import 'package:smart_loans/pages/clients/bloc/forms/clients/client_add_form_bloc.dart';
 import 'package:smart_loans/pages/industry_types/bloc/industry_type_bloc.dart';
 import 'package:smart_loans/pages/nations/bloc/nation_bloc.dart';
@@ -224,6 +225,7 @@ class ClientForm extends StatelessWidget {
                       child: const Text('Submit'),
                       onPressed: () {
                         context.read<ClientBloc>().add(CreateClient(client));
+                        context.read<ClientsBloc>().add(GetClients());
                         Navigator.of(context).pop();
                       },
                     ),
