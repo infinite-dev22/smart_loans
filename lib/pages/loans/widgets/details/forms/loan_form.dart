@@ -335,7 +335,7 @@ class _LoanFormState extends State<LoanForm> {
               ),
               SizedBox(height: 2.h),
               SizedBox(
-                height: 50,
+                height: 55,
                 child: TextFormField(
                   decoration: InputDecoration(
                     label: const Text("Description"),
@@ -355,7 +355,7 @@ class _LoanFormState extends State<LoanForm> {
                         context.read<CurrencyBloc>().add(GetCurrencies());
                         return Container(
                           height: 55,
-                          width: double.infinity,
+                          width: constraints.maxWidth * .5,
                           decoration: BoxDecoration(
                             borderRadius: const BorderRadius.all(
                               Radius.circular(8.0),
@@ -368,7 +368,7 @@ class _LoanFormState extends State<LoanForm> {
                       }
                       if (state.status == CurrencyStatus.success) {
                         return SizedBox(
-                          height: 50,
+                          height: 55,
                           width: constraints.maxWidth * .5,
                           child: DropdownButtonFormField2(
                             decoration: const InputDecoration(
@@ -394,7 +394,7 @@ class _LoanFormState extends State<LoanForm> {
                       if (state.status == CurrencyStatus.error) {
                         return Container(
                           height: 55,
-                          width: double.infinity,
+                          width: constraints.maxWidth * .5,
                           decoration: BoxDecoration(
                             borderRadius: const BorderRadius.all(
                               Radius.circular(8.0),
@@ -409,7 +409,7 @@ class _LoanFormState extends State<LoanForm> {
                       }
                       return Container(
                         height: 55,
-                        width: double.infinity,
+                        width: constraints.maxWidth * .5,
                         decoration: BoxDecoration(
                           borderRadius: const BorderRadius.all(
                             Radius.circular(8.0),
@@ -423,7 +423,7 @@ class _LoanFormState extends State<LoanForm> {
                   ),
                   SizedBox(width: 2.h),
                   SizedBox(
-                    height: 50,
+                    height: 55,
                     width: constraints.maxWidth * .45,
                     child: TextFormField(
                       decoration: InputDecoration(

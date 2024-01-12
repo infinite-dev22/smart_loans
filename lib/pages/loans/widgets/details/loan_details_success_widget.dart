@@ -7,13 +7,18 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/config/responsive.dart';
 import 'package:smart_loans/data_source/models/loan_model.dart';
 import 'package:smart_loans/global_values.dart';
+import 'package:smart_loans/pages/branches/bloc/branch_bloc.dart';
 import 'package:smart_loans/pages/clients/bloc/clients_bloc/clients_bloc.dart';
+import 'package:smart_loans/pages/currencies/bloc/currency_bloc.dart';
 import 'package:smart_loans/pages/interest_methods/bloc/interest_method_bloc.dart';
 import 'package:smart_loans/pages/interest_periods/bloc/interest_period_bloc.dart';
+import 'package:smart_loans/pages/loan_category/bloc/loan_category_bloc.dart';
 import 'package:smart_loans/pages/loan_duration/bloc/loan_duration_bloc.dart';
 import 'package:smart_loans/pages/loan_schedules/bloc/loan_schedule_bloc.dart';
+import 'package:smart_loans/pages/loan_type/bloc/loan_type_bloc.dart';
 import 'package:smart_loans/pages/loans/bloc/details/loan_details_bloc.dart';
 import 'package:smart_loans/pages/loans/bloc/forms/interests/interest_form_bloc.dart';
+import 'package:smart_loans/pages/loans/bloc/forms/loans/loan_form_bloc.dart';
 import 'package:smart_loans/pages/loans/bloc/loan_bloc.dart';
 import 'package:smart_loans/pages/loans/widgets/details/forms/interest_form.dart';
 import 'package:smart_loans/pages/loans/widgets/details/forms/loan_form.dart';
@@ -504,7 +509,29 @@ class RightSideWidget extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(circularRadius),
           ),
-          child: const LoanForm(),
+          child: MultiBlocProvider(providers: [
+            BlocProvider<LoanBloc>(
+              create: (_) => LoanBloc(),
+            ),
+            BlocProvider<LoanFormBloc>(
+              create: (_) => LoanFormBloc(),
+            ),
+            BlocProvider<ClientsBloc>(
+              create: (_) => ClientsBloc(),
+            ),
+            BlocProvider<LoanTypeBloc>(
+              create: (_) => LoanTypeBloc(),
+            ),
+            BlocProvider<LoanCategoryBloc>(
+              create: (_) => LoanCategoryBloc(),
+            ),
+            BlocProvider<BranchBloc>(
+              create: (_) => BranchBloc(),
+            ),
+            BlocProvider<CurrencyBloc>(
+              create: (_) => CurrencyBloc(),
+            ),
+          ], child: const LoanForm()),
         );
       },
     );

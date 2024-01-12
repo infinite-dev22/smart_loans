@@ -9,7 +9,7 @@ import 'package:smart_loans/global_values.dart';
 import 'package:smart_loans/pages/clients/bloc/clients_bloc/clients_bloc.dart';
 import 'package:smart_loans/pages/employees/bloc/employee_bloc.dart';
 import 'package:smart_loans/pages/employees/bloc/forms/clients/employee_add_form_bloc.dart';
-import 'package:smart_loans/pages/employees/widgets/success/forms/employee_add_form.dart';
+import 'package:smart_loans/pages/employees/widgets/success/forms/employee_form.dart';
 
 class EmployeesSuccessWidget extends StatefulWidget {
   const EmployeesSuccessWidget({super.key});
