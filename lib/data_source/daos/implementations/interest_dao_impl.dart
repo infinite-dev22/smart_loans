@@ -4,11 +4,14 @@ import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:smart_loans/config/web_config.dart';
 import 'package:smart_loans/data_source/daos/interfaces/interest_dao.dart';
-import 'package:smart_loans/global_values.dart';
+import 'package:smart_loans/init.dart';
 
 class InterestDaoImpl extends InterestDao {
+  var prefs = getLocalStorage();
+
   @override
-  Future<Map<String, dynamic>> fetch(int loanId) async {
+  Future<Map<String, dynamic>> fetch(int id) async {
+    var token = prefs.get("authToken");
     Dio dio = Dio(baseOps)
       ..interceptors.add(DioCacheInterceptor(options: options));
 
@@ -16,11 +19,11 @@ class InterestDaoImpl extends InterestDao {
       dio.options.headers['content-Type'] = 'application/json';
       dio.options.headers['Accept'] = 'application/json';
       dio.options.headers["authorization"] =
-          "Bearer ${currentUser.token}"; // Add server auth token here.
+          "Bearer $token"; // Add server auth token here.
       dio.options.followRedirects = false;
 
       var response = await dio.get(
-        Uri.https(appUrl, 'api/loans/$loanId/loanInterestShow').toString(),
+        Uri.https(appUrl, 'api/loans/$id/loanInterestShow').toString(),
       );
 
       if (response.statusCode == 200) {
@@ -35,6 +38,7 @@ class InterestDaoImpl extends InterestDao {
 
   @override
   Future<List<dynamic>> fetchAll(int loanId) async {
+    var token = prefs.get("authToken");
     Dio dio = Dio(baseOps)
       ..interceptors.add(DioCacheInterceptor(options: options));
 
@@ -42,7 +46,7 @@ class InterestDaoImpl extends InterestDao {
       dio.options.headers['content-Type'] = 'application/json';
       dio.options.headers['Accept'] = 'application/json';
       dio.options.headers["authorization"] =
-          "Bearer ${currentUser.token}"; // Add server auth token here.
+          "Bearer $token"; // Add server auth token here.
       dio.options.followRedirects = false;
 
       var response = await dio.get(
@@ -61,6 +65,7 @@ class InterestDaoImpl extends InterestDao {
 
   @override
   Future post(Map<String, dynamic> data, int loanId) async {
+    var token = prefs.get("authToken");
     Dio dio = Dio(baseOps)
       ..interceptors.add(DioCacheInterceptor(options: options));
 
@@ -68,21 +73,13 @@ class InterestDaoImpl extends InterestDao {
       dio.options.headers['content-Type'] = 'application/json';
       dio.options.headers['Accept'] = 'application/json';
       dio.options.headers["authorization"] =
-          "Bearer ${currentUser.token}"; // Add server auth token here.
+          "Bearer $token"; // Add server auth token here.
       dio.options.followRedirects = false;
-
-      print("DATA BEFORE POST: ${jsonEncode(data)}");
 
       var response = await dio.post(
         Uri.https(appUrl, 'api/loans/$loanId/add-interest').toString(),
         data: jsonEncode(data),
       );
-
-      print("DATA AFTER POST: ${response.statusCode}");
-      print("DATA AFTER POST: ${response.data}");
-
-      print(response.statusCode);
-      print(response.data);
 
       if (response.statusCode == 200) {
         return {};
@@ -96,6 +93,7 @@ class InterestDaoImpl extends InterestDao {
 
   @override
   Future put(Map<String, dynamic> data, int loanId) async {
+    var token = prefs.get("authToken");
     Dio dio = Dio(baseOps)
       ..interceptors.add(DioCacheInterceptor(options: options));
 
@@ -103,7 +101,7 @@ class InterestDaoImpl extends InterestDao {
       dio.options.headers['content-Type'] = 'application/json';
       dio.options.headers['Accept'] = 'application/json';
       dio.options.headers["authorization"] =
-          "Bearer ${currentUser.token}"; // Add server auth token here.
+          "Bearer $token"; // Add server auth token here.
       dio.options.followRedirects = false;
 
       var response = await dio.put(
@@ -123,6 +121,7 @@ class InterestDaoImpl extends InterestDao {
 
   @override
   Future<List<Map<String, dynamic>>> search(String search, int loanId) async {
+    var token = prefs.get("authToken");
     Dio dio = Dio(baseOps)
       ..interceptors.add(DioCacheInterceptor(options: options));
 
@@ -130,7 +129,7 @@ class InterestDaoImpl extends InterestDao {
       dio.options.headers['content-Type'] = 'application/json';
       dio.options.headers['Accept'] = 'application/json';
       dio.options.headers["authorization"] =
-          "Bearer ${currentUser.token}"; // Add server auth token here.
+          "Bearer $token"; // Add server auth token here.
       dio.options.followRedirects = false;
 
       var response = await dio.get(
@@ -149,6 +148,7 @@ class InterestDaoImpl extends InterestDao {
 
   @override
   Future<dynamic> delete(int id, int loanId) async {
+    var token = prefs.get("authToken");
     Dio dio = Dio(baseOps)
       ..interceptors.add(DioCacheInterceptor(options: options));
 
@@ -156,7 +156,7 @@ class InterestDaoImpl extends InterestDao {
       dio.options.headers['content-Type'] = 'application/json';
       dio.options.headers['Accept'] = 'application/json';
       dio.options.headers["authorization"] =
-          "Bearer ${currentUser.token}"; // Add server auth token here.
+          "Bearer $token"; // Add server auth token here.
       dio.options.followRedirects = false;
 
       var response = await dio.get(
@@ -175,6 +175,7 @@ class InterestDaoImpl extends InterestDao {
 
   @override
   Future<dynamic> deleteMultiple(List<int> ids, int loanId) async {
+    var token = prefs.get("authToken");
     Dio dio = Dio(baseOps)
       ..interceptors.add(DioCacheInterceptor(options: options));
 
@@ -182,7 +183,7 @@ class InterestDaoImpl extends InterestDao {
       dio.options.headers['content-Type'] = 'application/json';
       dio.options.headers['Accept'] = 'application/json';
       dio.options.headers["authorization"] =
-          "Bearer ${currentUser.token}"; // Add server auth token here.
+          "Bearer $token"; // Add server auth token here.
       dio.options.followRedirects = false;
 
       var response = await dio.delete(

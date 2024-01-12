@@ -21,7 +21,10 @@ import 'package:smart_loans/pages/loans/screens/loans_page.dart';
 import 'package:smart_loans/pages/login/screens/login_page.dart';
 import 'package:smart_loans/theme/colors.dart';
 
+import 'init.dart';
+
 void main() {
+  initLocalStorage();
   runApp(const SmartLoansApp());
 }
 

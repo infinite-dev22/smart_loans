@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,10 +17,16 @@ import 'package:smart_loans/pages/repayment_cycle/bloc/repayment_cycle_bloc.dart
 import 'package:smart_loans/theme/light.dart';
 import 'package:smart_loans/widgets/dialog_title_wdiget.dart';
 
-class InterestForm extends StatelessWidget {
-  InterestForm({super.key, required this.loanModel});
+class InterestForm extends StatefulWidget {
+  const InterestForm({super.key, required this.loanModel});
 
   final LoanModel loanModel;
+
+  @override
+  State<InterestForm> createState() => _InterestFormState();
+}
+
+class _InterestFormState extends State<InterestForm> {
   var interestController = TextEditingController();
 
   @override
@@ -446,13 +450,10 @@ class InterestForm extends StatelessWidget {
                           ),
                           child: const Text('Submit'),
                           onPressed: () {
-                            interest.loanId = loanModel.id;
-                            print(
-                                "MyInterest: ${jsonEncode(interest.toJson())}");
-                            context
-                                .read<InterestFormBloc>()
-                                .add(PostInterest(loanModel.id!, interest));
-                            // Navigator.of(context).pop();
+                            interest.loanId = widget.loanModel.id;
+                            context.read<InterestFormBloc>().add(
+                                PostInterest(widget.loanModel.id!, interest));
+                            Navigator.of(context).pop();
                           },
                         ),
                       ],
@@ -490,7 +491,7 @@ class InterestForm extends StatelessWidget {
                 ],
                 onChanged: (value) {
                   var percentage = int.parse(value) * .001;
-                  var interest = loanModel.principalAmount! * percentage;
+                  var interest = widget.loanModel.principalAmount! * percentage;
                   interestController.text = interest.toString();
                 },
               ),

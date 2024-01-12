@@ -42,7 +42,6 @@ class ClientsBloc extends Bloc<ClientsEvent, ClientsState> {
       SelectClients event, Emitter<ClientsState> emit) {
     emit(state.copyWith(status: ClientsStatus.loading));
     try {
-      print("Client: ${event.client.name}");
       emit(state.copyWith(status: ClientsStatus.success, client: event.client));
     } catch (e) {
       emit(state.copyWith(status: ClientsStatus.error));

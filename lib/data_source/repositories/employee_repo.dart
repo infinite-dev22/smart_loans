@@ -10,7 +10,7 @@ class EmployeeRepo {
 
   static Future<List<EmployeeModel>> fetchAll(
       {Map<String, dynamic>? body}) async {
-    var employees;
+    List<EmployeeModel> employees;
     try {
       var employeeRepo = EmployeeDaoImpl();
       var responseList = await employeeRepo.fetchAll();

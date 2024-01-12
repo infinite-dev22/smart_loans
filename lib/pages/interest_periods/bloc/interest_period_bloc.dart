@@ -104,7 +104,8 @@ class InterestPeriodBloc
       DeleteMultipleInterestPeriod event,
       Emitter<InterestPeriodState> emit) async {
     emit(state.copyWith(status: InterestPeriodStatus.loading));
-    await InterestPeriodRepo.deleteMultiple(event.idsSelected).then((interestPeriod) {
+    await InterestPeriodRepo.deleteMultiple(event.idsSelected)
+        .then((interestPeriod) {
       emit(state.copyWith(status: InterestPeriodStatus.success));
     }).onError((error, stackTrace) {
       if (kDebugMode) {

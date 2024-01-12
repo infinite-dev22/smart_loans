@@ -89,7 +89,6 @@ class _EmployeesTableWidgetState extends State<EmployeesSuccessWidget> {
                 Navigator.pushNamed(context, "/employee");
               },
               onSelectRows: (keys) {
-                print('onSelectRows(): count = ${keys.length} keys = $keys');
                 setState(() {
                   _selectedRowKeys = keys;
                 });
@@ -98,18 +97,14 @@ class _EmployeesTableWidgetState extends State<EmployeesSuccessWidget> {
             ),
             horizontalMargin: 100,
             onPageChanged: (offset) {
-              print('onPageChanged(): offset = $offset');
             },
             onSort: (columnName, ascending) {
-              print(
-                  'onSort(): columnName = $columnName, ascending = $ascending');
               setState(() {
                 _sortColumnName = columnName;
                 _sortAscending = ascending;
               });
             },
             onRowsPerPageChanged: (rowsPerPage) {
-              print('onRowsPerPageChanged(): rowsPerPage = $rowsPerPage');
               setState(() {
                 if (rowsPerPage != null) {
                   _rowsPerPage = rowsPerPage;
@@ -223,7 +218,6 @@ class _EmployeesTableWidgetState extends State<EmployeesSuccessWidget> {
         setState(() {
           if (_filterTexts != null && _filterTexts!.isNotEmpty) {
             _filterTexts = _filterTexts;
-            print('filterTexts = $_filterTexts');
           }
         });
       }
