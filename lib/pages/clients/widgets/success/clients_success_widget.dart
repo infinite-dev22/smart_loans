@@ -96,7 +96,6 @@ class _ClientsSuccessWidgetState extends State<ClientsSuccessWidget> {
                 Navigator.pushNamed(context, "/client", arguments: client);
               },
               onSelectRows: (keys) {
-                print('onSelectRows(): count = ${keys.length} keys = $keys');
                 setState(() {
                   _selectedRowKeys = keys;
                 });
@@ -105,18 +104,14 @@ class _ClientsSuccessWidgetState extends State<ClientsSuccessWidget> {
             ),
             horizontalMargin: 100,
             onPageChanged: (offset) {
-              print('onPageChanged(): offset = $offset');
             },
             onSort: (columnName, ascending) {
-              print(
-                  'onSort(): columnName = $columnName, ascending = $ascending');
               setState(() {
                 _sortColumnName = columnName;
                 _sortAscending = ascending;
               });
             },
             onRowsPerPageChanged: (rowsPerPage) {
-              print('onRowsPerPageChanged(): rowsPerPage = $rowsPerPage');
               setState(() {
                 if (rowsPerPage != null) {
                   _rowsPerPage = rowsPerPage;
@@ -239,7 +234,6 @@ class _ClientsSuccessWidgetState extends State<ClientsSuccessWidget> {
         setState(() {
           if (_filterTexts != null && _filterTexts!.isNotEmpty) {
             _filterTexts = _filterTexts;
-            print('filterTexts = $_filterTexts');
           }
         });
       }

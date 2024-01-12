@@ -21,9 +21,6 @@ class LoginDaoImpl extends LoginDao {
         data: jsonEncode(data),
       );
 
-      print(response.statusCode);
-      print(response.data);
-
       if (response.statusCode == 200) {
         return response.data;
       } else {

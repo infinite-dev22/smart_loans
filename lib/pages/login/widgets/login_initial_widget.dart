@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -7,6 +8,7 @@ import 'package:smart_loans/pages/login/bloc/login_bloc.dart';
 import 'package:smart_loans/pages/login/widgets/custom_text_fields.dart';
 import 'package:smart_loans/theme/colors.dart';
 import 'package:smart_loans/theme/light.dart';
+import 'package:smart_loans/widgets/custom_checkbox.dart';
 
 class LoginInitialWidget extends StatefulWidget {
   const LoginInitialWidget({super.key});
@@ -28,8 +30,6 @@ class _LoginInitialWidgetState extends State<LoginInitialWidget> {
         return BlocListener<LogInBloc, LogInState>(
           listener: (context, state) {
             if (state.status == LogInStatus.successfullyLoggedIn) {
-              print("User Logged In");
-              print(currentRoute);
               Navigator.popAndPushNamed(context, currentRoute);
             }
           },
@@ -43,7 +43,6 @@ class _LoginInitialWidgetState extends State<LoginInitialWidget> {
     return Container(
       padding: EdgeInsets.all(padding * 4),
       margin: EdgeInsets.all(padding * 4),
-      height: 60.h,
       width: 500,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(
@@ -59,159 +58,165 @@ class _LoginInitialWidgetState extends State<LoginInitialWidget> {
         ],
         color: AppColor.white,
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: 50,
-            child: AuthTextField(
-              hintText: "Email",
-              enabled: !isAuthingUser,
-              controller: emailController,
-              obscureText: false,
-              isEmail: true,
-              borderSide: const BorderSide(color: AppColor.primary),
-              style: const TextStyle(color: LightAppColor.darker),
-              fillColor: Colors.transparent,
-            ),
-          ),
-          SizedBox(height: 2.h),
-          SizedBox(
-            height: 50,
-            child: AuthPasswordTextField(
-              controller: passwordController,
-              hintText: "Password",
-              enabled: !isAuthingUser,
-              borderSide: const BorderSide(color: AppColor.primary),
-              style: const TextStyle(color: LightAppColor.darker),
-              fillColor: Colors.transparent,
-              iconColor: LightAppColor.darker,
-            ),
-          ),
-          if (Responsive.isDesktop(context) || Responsive.isTablet(context))
-            LayoutBuilder(builder: (context, constraints) {
-              return SizedBox(
-                width: constraints.maxWidth,
-                child: Column(
-                  children: [
-                    SizedBox(height: 2.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: constraints.maxWidth * .6,
-                          child: CheckboxListTile(
-                            value: context.read<LogInBloc>().state.rememberUser,
-                            onChanged: (val) {
-                              if (val == null) {
-                                rememberUser = false;
-                              }
-                              if (val != null) {
-                                rememberUser = val;
-                              }
-                              context
-                                  .read<LogInBloc>()
-                                  .add(RememberUser(rememberUser));
-                            },
-                            title: const Text("Remember Me"),
-                            controlAffinity: ListTileControlAffinity.leading,
-                          ),
-                        ),
-                        MouseRegion(
-                          cursor: SystemMouseCursors.click,
-                          child: GestureDetector(
-                            onTap: () {
-                              print("I see you forgot your password!!!...");
-                            },
-                            child: const Text(
-                              "Forgot Password?",
-                              style: TextStyle(
-                                decoration: TextDecoration.underline,
-                              ),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Image.asset("assets/images/logo.png"),
+            SizedBox(height: 8.h),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 50,
+                  child: AuthTextField(
+                    hintText: "Email",
+                    enabled: !isAuthingUser,
+                    controller: emailController,
+                    obscureText: false,
+                    isEmail: true,
+                    borderSide: const BorderSide(color: AppColor.primary),
+                    style: const TextStyle(color: LightAppColor.darker),
+                    fillColor: Colors.transparent,
+                  ),
+                ),
+                SizedBox(height: 2.h),
+                SizedBox(
+                  height: 50,
+                  child: AuthPasswordTextField(
+                    controller: passwordController,
+                    hintText: "Password",
+                    enabled: !isAuthingUser,
+                    borderSide: const BorderSide(color: AppColor.primary),
+                    style: const TextStyle(color: LightAppColor.darker),
+                    fillColor: Colors.transparent,
+                    iconColor: LightAppColor.darker,
+                  ),
+                ),
+                if (Responsive.isDesktop(context) ||
+                    Responsive.isTablet(context))
+                  LayoutBuilder(builder: (context, constraints) {
+                    return SizedBox(
+                      width: constraints.maxWidth,
+                      child: Column(
+                        children: [
+                          SizedBox(height: 2.h),
+                          if (kIsWeb)
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  width: constraints.maxWidth * .6,
+                                  child: CheckBox(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 5),
+                                    value: context
+                                        .read<LogInBloc>()
+                                        .state
+                                        .rememberUser,
+                                    text: "Remember Me",
+                                    onChanged: (val) {
+                                      rememberUser = !context
+                                          .read<LogInBloc>()
+                                          .state
+                                          .rememberUser!;
+                                      context
+                                          .read<LogInBloc>()
+                                          .add(RememberUser(rememberUser));
+                                    },
+                                    onTap: () {
+                                      rememberUser = !context
+                                          .read<LogInBloc>()
+                                          .state
+                                          .rememberUser!;
+                                      context
+                                          .read<LogInBloc>()
+                                          .add(RememberUser(rememberUser));
+                                    },
+                                  ),
+                                ),
+                                MouseRegion(
+                                  cursor: SystemMouseCursors.click,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      const SnackBar(
+                                        content: Text(
+                                            "I see you forgot your password!!!..."),
+                                      );
+                                    },
+                                    child: const Text(
+                                      "Forgot Password?",
+                                      style: TextStyle(
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
+                        ],
+                      ),
+                    );
+                  }),
+                SizedBox(height: 2.h),
+                SizedBox(
+                  width: double.infinity,
+                  height: 50,
+                  child: FilledButton(
+                    style: ButtonStyle(
+                      textStyle: const MaterialStatePropertyAll(
+                        TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      shape: MaterialStatePropertyAll(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(circularRadius),
                           ),
                         ),
-                      ],
+                      ),
                     ),
-                  ],
-                ),
-              );
-            }),
-          if (Responsive.isMobile(context))
-            LayoutBuilder(builder: (context, constraints) {
-              return SizedBox(
-                width: constraints.maxWidth,
-                child: CheckboxListTile(
-                  value: context.read<LogInBloc>().state.rememberUser,
-                  onChanged: (val) {
-                    if (val == null) {
-                      rememberUser = false;
-                    }
-                    if (val != null) {
-                      rememberUser = val;
-                    }
-                    context.read<LogInBloc>().add(RememberUser(rememberUser));
-                  },
-                  title: const Text("Remember Me"),
-                  controlAffinity: ListTileControlAffinity.leading,
-                ),
-              );
-            }),
-          SizedBox(height: 2.h),
-          SizedBox(
-            width: double.infinity,
-            height: 50,
-            child: FilledButton(
-              style: ButtonStyle(
-                textStyle: const MaterialStatePropertyAll(
-                  TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                    onPressed: () {
+                      if (emailController.text.isNotEmpty &&
+                          passwordController.text.isNotEmpty) {
+                        context.read<LogInBloc>().add(LogInUser(
+                            emailController.text, passwordController.text));
+                      }
+                    },
+                    child: const Text("Log In"),
                   ),
                 ),
-                shape: MaterialStatePropertyAll(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(circularRadius),
+                SizedBox(height: 2.h),
+                if (!kIsWeb)
+                  MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: GestureDetector(
+                      onTap: () {
+                        const SnackBar(
+                          content: Text("I see you forgot your password!!!..."),
+                        );
+                      },
+                      child: const Text(
+                        "Forgot Password?",
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-              onPressed: () {
-                if (emailController.text.isNotEmpty &&
-                    passwordController.text.isNotEmpty) {
-                  context.read<LogInBloc>().add(
-                      LogInUser(emailController.text, passwordController.text));
-                }
-              },
-              child: const Text("Log In"),
-            ),
-          ),
-          SizedBox(height: 2.h),
-          if (Responsive.isMobile(context))
-            MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: GestureDetector(
-                onTap: () {
-                  print("I see you forgot your password!!!...");
-                },
-                child: const Text(
-                  "Forgot Password?",
-                  style: TextStyle(
-                    decoration: TextDecoration.underline,
+                SizedBox(height: 4.h),
+                Text(
+                  '\u00a9 ${DateTime.now().year} SmartLoans Manager',
+                  style: const TextStyle(
+                    color: AppColor.inActiveColor,
+                    fontWeight: FontWeight.w300,
                   ),
                 ),
-              ),
+              ],
             ),
-          SizedBox(height: 4.h),
-          Text(
-            '\u00a9 ${DateTime.now().year} SmartLoans Manager',
-            style: const TextStyle(
-              color: AppColor.inActiveColor,
-              fontWeight: FontWeight.w300,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -30,7 +30,6 @@ class ClientBloc extends Bloc<ClientEvent, ClientState> {
 
   _mapCreateClientEventToState(
       CreateClient event, Emitter<ClientState> emit) async {
-    print("Creating client.....");
     emit(state.copyWith(status: ClientStatus.loading));
     await ClientRepo.post(event.client).then((client) {
       emit(state.copyWith(status: ClientStatus.success, client: client));
@@ -69,7 +68,6 @@ class ClientBloc extends Bloc<ClientEvent, ClientState> {
   _mapSelectClientEventToState(SelectClient event, Emitter<ClientState> emit) {
     emit(state.copyWith(status: ClientStatus.loading));
     try {
-      print("Client: ${event.client.name}");
       emit(state.copyWith(status: ClientStatus.success, client: event.client));
     } catch (e) {
       emit(state.copyWith(status: ClientStatus.error));

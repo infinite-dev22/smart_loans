@@ -57,6 +57,7 @@ dependencies:
   form_bloc: ^0.31.0
   flutter_form_bloc: ^0.31.0
   flutter_spinkit: ^5.2.0
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:
@@ -110,3 +111,7 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+  assets:
+    - assets/images/logo.png
+    - assets/images/logo_dark.png

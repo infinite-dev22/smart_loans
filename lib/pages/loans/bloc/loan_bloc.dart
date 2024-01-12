@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:smart_loans/data_source/models/interest_model.dart';
 import 'package:smart_loans/data_source/models/loan_model.dart';
-import 'package:smart_loans/data_source/repositories/interest_repo.dart';
 import 'package:smart_loans/data_source/repositories/loan_repo.dart';
 
 part 'loan_event.dart';

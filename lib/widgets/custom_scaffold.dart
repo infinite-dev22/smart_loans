@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
+import 'package:smart_loans/global_values.dart';
 import 'package:smart_loans/theme/colors.dart';
 
 class CustomScaffold extends StatelessWidget {
@@ -16,51 +17,51 @@ class CustomScaffold extends StatelessWidget {
     AdminMenuItem(
       title: 'Dashboard',
       route: '/',
-      icon: Icons.dashboard,
+      icon: Icons.dashboard_rounded,
     ),
     AdminMenuItem(
       title: 'Clients',
       route: '/clients',
-      icon: Icons.dashboard,
+      icon: Icons.person,
     ),
     AdminMenuItem(
       title: 'Employees',
       route: '/employees',
-      icon: Icons.dashboard,
+      icon: Icons.people,
     ),
     AdminMenuItem(
       title: 'Loans',
       route: '/loans',
-      icon: Icons.dashboard,
+      icon: Icons.comment_bank_rounded,
     ),
-    AdminMenuItem(
-      title: 'Top Level',
-      icon: Icons.file_copy,
-      children: [
-        AdminMenuItem(
-          title: 'Second Level Item 1',
-          route: '/secondLevelItem1',
-        ),
-        AdminMenuItem(
-          title: 'Second Level Item 2',
-          route: '/secondLevelItem2',
-        ),
-        AdminMenuItem(
-          title: 'Third Level',
-          children: [
-            AdminMenuItem(
-              title: 'Third Level Item 1',
-              route: '/thirdLevelItem1',
-            ),
-            AdminMenuItem(
-              title: 'Third Level Item 2',
-              route: '/thirdLevelItem2',
-              icon: Icons.image,
-            ),
-          ],
-        ),
-      ],
-    ),
+    // AdminMenuItem(
+    //   title: 'Top Level',
+    //   icon: Icons.file_copy,
+    //   children: [
+    //     AdminMenuItem(
+    //       title: 'Second Level Item 1',
+    //       route: '/secondLevelItem1',
+    //     ),
+    //     AdminMenuItem(
+    //       title: 'Second Level Item 2',
+    //       route: '/secondLevelItem2',
+    //     ),
+    //     AdminMenuItem(
+    //       title: 'Third Level',
+    //       children: [
+    //         AdminMenuItem(
+    //           title: 'Third Level Item 1',
+    //           route: '/thirdLevelItem1',
+    //         ),
+    //         AdminMenuItem(
+    //           title: 'Third Level Item 2',
+    //           route: '/thirdLevelItem2',
+    //           icon: Icons.image,
+    //         ),
+    //       ],
+    //     ),
+    //   ],
+    // ),
   ];
 
   final List<AdminMenuItem> _adminMenuItems = const [
@@ -86,10 +87,11 @@ class CustomScaffold extends StatelessWidget {
     return AdminScaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        foregroundColor: Colors.white,
         backgroundColor: AppColor.primary,
         actionsIconTheme: const IconThemeData(color: AppColor.white),
         elevation: 8.0,
-        title: const Text('SmartLoans'),
+        title: Image.asset("assets/images/logo_dark.png"),
         actions: [
           PopupMenuButton<AdminMenuItem>(
             child: const Icon(Icons.account_circle),
@@ -101,7 +103,7 @@ class CustomScaffold extends StatelessWidget {
                     children: [
                       Icon(item.icon),
                       Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
+                        padding: EdgeInsets.only(left: padding, right: padding),
                         child: Text(
                           item.title,
                           style: const TextStyle(
@@ -115,8 +117,6 @@ class CustomScaffold extends StatelessWidget {
               }).toList();
             },
             onSelected: (item) {
-              print(
-                  'actions: onSelected(): title = ${item.title}, route = ${item.route}');
               Navigator.of(context).pushNamed(item.route!);
             },
           ),
@@ -126,10 +126,10 @@ class CustomScaffold extends StatelessWidget {
         backgroundColor: AppColor.sideBarPrimary,
         activeBackgroundColor: Colors.black38,
         borderColor: AppColor.sideBarPrimary,
-        iconColor: Colors.white,
+        iconColor: const Color(0xFF337ab7),
         activeIconColor: Colors.white,
         textStyle: const TextStyle(
-          color: Color(0xFF337ab7),
+          color: Colors.white,
           fontSize: 13,
         ),
         activeTextStyle: const TextStyle(
@@ -139,38 +139,36 @@ class CustomScaffold extends StatelessWidget {
         items: _sideBarItems,
         selectedRoute: route,
         onSelected: (item) {
-          print(
-              'sideBar: onTap(): title = ${item.title}, route = ${item.route}');
           if (item.route != null && item.route != route) {
             Navigator.of(context).pushNamed(item.route!);
           }
         },
-        header: Container(
-          height: 50,
-          width: double.infinity,
-          color: const Color(0xff444444),
-          child: const Center(
-            child: Text(
-              'header',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ),
-        footer: Container(
-          height: 50,
-          width: double.infinity,
-          color: const Color(0xff444444),
-          child: const Center(
-            child: Text(
-              'footer',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ),
+        // header: Container(
+        //   height: 50,
+        //   width: double.infinity,
+        //   color: const Color(0xff444444),
+        //   child: const Center(
+        //     child: Text(
+        //       'header',
+        //       style: TextStyle(
+        //         color: Colors.white,
+        //       ),
+        //     ),
+        //   ),
+        // ),
+        // footer: Container(
+        //   height: 50,
+        //   width: double.infinity,
+        //   color: const Color(0xff444444),
+        //   child: const Center(
+        //     child: Text(
+        //       'footer',
+        //       style: TextStyle(
+        //         color: Colors.white,
+        //       ),
+        //     ),
+        //   ),
+        // ),
       ),
       body: body,
     );

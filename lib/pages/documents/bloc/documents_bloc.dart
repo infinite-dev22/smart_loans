@@ -43,7 +43,6 @@ class DocumentsBloc extends Bloc<DocumentsEvent, DocumentsState> {
       SelectDocuments event, Emitter<DocumentsState> emit) {
     emit(state.copyWith(status: DocumentsStatus.loading));
     try {
-      print("Document: ${event.document.name}");
       emit(state.copyWith(
           status: DocumentsStatus.success, document: event.document));
     } catch (e) {

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_web_data_table/web_data_table.dart';
@@ -111,7 +112,6 @@ class _LoansTableWidgetState extends State<LoansSuccessWidget> {
                 Navigator.pushNamed(context, "/loan", arguments: loan);
               },
               onSelectRows: (keys) {
-                print('onSelectRows(): count = ${keys.length} keys = $keys');
                 setState(() {
                   _selectedRowKeys = keys;
                 });
@@ -120,18 +120,14 @@ class _LoansTableWidgetState extends State<LoansSuccessWidget> {
             ),
             horizontalMargin: 100,
             onPageChanged: (offset) {
-              print('onPageChanged(): offset = $offset');
             },
             onSort: (columnName, ascending) {
-              print(
-                  'onSort(): columnName = $columnName, ascending = $ascending');
               setState(() {
                 _sortColumnName = columnName;
                 _sortAscending = ascending;
               });
             },
             onRowsPerPageChanged: (rowsPerPage) {
-              print('onRowsPerPageChanged(): rowsPerPage = $rowsPerPage');
               setState(() {
                 if (rowsPerPage != null) {
                   _rowsPerPage = rowsPerPage;
@@ -256,7 +252,9 @@ class _LoansTableWidgetState extends State<LoansSuccessWidget> {
         setState(() {
           if (_filterTexts != null && _filterTexts!.isNotEmpty) {
             _filterTexts = _filterTexts;
-            print('filterTexts = $_filterTexts');
+            if (kDebugMode) {
+              print('filterTexts = $_filterTexts');
+            }
           }
         });
       }

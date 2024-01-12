@@ -249,36 +249,15 @@ class _EmployeeDetailsSuccessWidgetState
             header: Container(),
             key: tableKey,
             onRowEdit: (index, row) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text("Row Edited index:$index row:$row"),
-                ),
-              );
               myData[index] = row;
               return true;
             },
             onRowDelete: (index, row) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text("Row Deleted index:$index row:$row"),
-                ),
-              );
               myData.removeAt(index);
               return true;
             },
             onRowSave: (index, old, newValue) {
-              // ScaffoldMessenger.of(context).showSnackBar(
-              //   SnackBar(
-              //     content:
-              //         Text("Row Saved index:$index old:$old new:$newValue"),
-              //   ),
-              // );
               if (newValue[0] == null) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Name cannot be null"),
-                  ),
-                );
                 return null;
               }
 
@@ -306,11 +285,6 @@ class _EmployeeDetailsSuccessWidgetState
               }
               myData[index] = newValue; // Update data
               if (newValue[0] == null) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Name cannot be null"),
-                  ),
-                );
                 return null;
               }
               return newValue;

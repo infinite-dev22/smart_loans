@@ -62,8 +62,8 @@ class _RootState extends State<Root> {
         onPressed: () => setState(() => currentScreen = _screens
             .firstWhere((item) => item["name"] == "dashboard")["widget"]),
         onHold: () => ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text("Dashboard"),
+          const SnackBar(
+            content: Text("Dashboard"),
           ),
         ),
         isSelected: true,
@@ -74,8 +74,8 @@ class _RootState extends State<Root> {
         onPressed: () => setState(() => currentScreen =
             _screens.firstWhere((item) => item["name"] == "clients")["widget"]),
         onHold: () => ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text("Clients"),
+          const SnackBar(
+            content: Text("Clients"),
           ),
         ),
       ),
@@ -85,8 +85,8 @@ class _RootState extends State<Root> {
         onPressed: () => setState(() => currentScreen = _screens
             .firstWhere((item) => item["name"] == "employees")["widget"]),
         onHold: () => ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text("Employees"),
+          const SnackBar(
+            content: Text("Employees"),
           ),
         ),
       ),
@@ -96,8 +96,8 @@ class _RootState extends State<Root> {
         onPressed: () => setState(() => currentScreen =
             _screens.firstWhere((item) => item["name"] == "loans")["widget"]),
         onHold: () => ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text("Loans"),
+          const SnackBar(
+            content: Text("Loans"),
           ),
         ),
       ),

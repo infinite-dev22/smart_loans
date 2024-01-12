@@ -95,7 +95,8 @@ class LoanDurationBloc extends Bloc<LoanDurationEvent, LoanDurationState> {
   _mapDeleteMultipleLoanDurationEventToState(
       DeleteMultipleLoanDuration event, Emitter<LoanDurationState> emit) async {
     emit(state.copyWith(status: LoanDurationStatus.loading));
-    await LoanDurationRepo.deleteMultiple(event.idsSelected).then((loanDuration) {
+    await LoanDurationRepo.deleteMultiple(event.idsSelected)
+        .then((loanDuration) {
       emit(state.copyWith(status: LoanDurationStatus.success));
     }).onError((error, stackTrace) {
       if (kDebugMode) {
