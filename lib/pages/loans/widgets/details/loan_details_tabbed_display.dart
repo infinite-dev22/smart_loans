@@ -83,11 +83,10 @@ class LoanDetailsTabbedDisplay extends StatelessWidget {
   }
 
   Widget _buildLoanScheduleWidgets(BuildContext context) {
-    context.read<LoanScheduleBloc>().add(GetLoanSchedules(loanId));
     return BlocBuilder<LoanScheduleBloc, LoanScheduleState>(
       builder: (context, state) {
         if (state.status == LoanScheduleStatus.initial) {
-          context.read<LoanScheduleBloc>().add(GetLoanSchedules(state.loanId!));
+          context.read<LoanScheduleBloc>().add(GetLoanSchedules(loanId));
         } else if (state.status == LoanScheduleStatus.success) {
           return SingleChildScrollView(
             child: LoanSchedulesTable(),

@@ -7,13 +7,17 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/config/responsive.dart';
 import 'package:smart_loans/data_source/models/client_model.dart';
 import 'package:smart_loans/global_values.dart';
+import 'package:smart_loans/pages/client_types/bloc/client_type_bloc.dart';
 import 'package:smart_loans/pages/clients/bloc/client_bloc/client_bloc.dart';
 import 'package:smart_loans/pages/clients/bloc/clients_bloc/clients_bloc.dart';
+import 'package:smart_loans/pages/clients/bloc/forms/clients/client_add_form_bloc.dart';
 import 'package:smart_loans/pages/clients/widgets/details/widgets/documents/documents_error_widget.dart';
 import 'package:smart_loans/pages/clients/widgets/details/widgets/documents/documents_initial_widget.dart';
 import 'package:smart_loans/pages/clients/widgets/details/widgets/documents/documents_loading_widget.dart';
 import 'package:smart_loans/pages/clients/widgets/details/widgets/documents/documents_success_widget.dart';
-import 'package:smart_loans/pages/clients/widgets/success/forms/client_add_form.dart';
+import 'package:smart_loans/pages/clients/widgets/success/forms/client_form.dart';
+import 'package:smart_loans/pages/industry_types/bloc/industry_type_bloc.dart';
+import 'package:smart_loans/pages/nations/bloc/nation_bloc.dart';
 import 'package:smart_loans/theme/colors.dart';
 import 'package:smart_loans/widgets/subtitle_widget.dart';
 import 'package:smart_loans/widgets/title_widget.dart';
@@ -380,7 +384,26 @@ class RightSideWidget extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(circularRadius),
           ),
-          child: const ClientForm(),
+          child: MultiBlocProvider(providers: [
+            BlocProvider<ClientsBloc>(
+              create: (_) => ClientsBloc(),
+            ),
+            BlocProvider<ClientBloc>(
+              create: (_) => ClientBloc(),
+            ),
+            BlocProvider<ClientAddFormBloc>(
+              create: (_) => ClientAddFormBloc(),
+            ),
+            BlocProvider<ClientTypeBloc>(
+              create: (_) => ClientTypeBloc(),
+            ),
+            BlocProvider<NationBloc>(
+              create: (_) => NationBloc(),
+            ),
+            BlocProvider<IndustryTypeBloc>(
+              create: (_) => IndustryTypeBloc(),
+            ),
+          ], child: const ClientForm()),
         );
       },
     );
