@@ -96,8 +96,7 @@ class _EmployeesTableWidgetState extends State<EmployeesSuccessWidget> {
               primaryKeyName: 'clientNo',
             ),
             horizontalMargin: 100,
-            onPageChanged: (offset) {
-            },
+            onPageChanged: (offset) {},
             onSort: (columnName, ascending) {
               setState(() {
                 _sortColumnName = columnName;
@@ -204,7 +203,7 @@ class _EmployeesTableWidgetState extends State<EmployeesSuccessWidget> {
   void initState() {
     super.initState();
 
-    _sortColumnName = "";
+    _sortColumnName = "*";
     _sortAscending = false;
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (!_willSearch) {

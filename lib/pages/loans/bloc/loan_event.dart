@@ -54,4 +54,17 @@ class SelectLoan extends LoanEvent {
   List<Object?> get props => [idSelected];
 }
 
+class ProcessLoan extends LoanEvent {
+  final int loanId;
+  final LoanProcessModel loanProcess;
+
+  ProcessLoan(this.loanId, this.loanProcess);
+
+  @override
+  List<Object?> get props => [
+        loanId,
+        loanProcess,
+      ];
+}
+
 class Success extends LoanEvent {}

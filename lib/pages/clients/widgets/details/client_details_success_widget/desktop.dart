@@ -1,10 +1,10 @@
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile_photo/profile_photo.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:smart_loans/config/responsive.dart';
 import 'package:smart_loans/data_source/models/client_model.dart';
 import 'package:smart_loans/global_values.dart';
 import 'package:smart_loans/pages/client_types/bloc/client_type_bloc.dart';
@@ -17,13 +17,15 @@ import 'package:smart_loans/pages/clients/widgets/details/widgets/documents/docu
 import 'package:smart_loans/pages/clients/widgets/details/widgets/documents/documents_success_widget.dart';
 import 'package:smart_loans/pages/clients/widgets/success/forms/client_form.dart';
 import 'package:smart_loans/pages/industry_types/bloc/industry_type_bloc.dart';
+import 'package:smart_loans/pages/loans/widgets/details/loan_officer_widget.dart';
 import 'package:smart_loans/pages/nations/bloc/nation_bloc.dart';
 import 'package:smart_loans/theme/colors.dart';
 import 'package:smart_loans/widgets/subtitle_widget.dart';
 import 'package:smart_loans/widgets/title_widget.dart';
+import 'package:smart_loans/widgets/title_with_actions.dart';
 
-class ClientDetailSuccessWidget extends StatefulWidget {
-  const ClientDetailSuccessWidget({
+class ClientDetailSuccessDesktop extends StatefulWidget {
+  const ClientDetailSuccessDesktop({
     super.key,
     required this.client,
   });
@@ -31,11 +33,12 @@ class ClientDetailSuccessWidget extends StatefulWidget {
   final ClientModel client;
 
   @override
-  State<ClientDetailSuccessWidget> createState() =>
-      _ClientDetailSuccessWidgetState();
+  State<ClientDetailSuccessDesktop> createState() =>
+      _ClientDetailSuccessDesktopState();
 }
 
-class _ClientDetailSuccessWidgetState extends State<ClientDetailSuccessWidget> {
+class _ClientDetailSuccessDesktopState
+    extends State<ClientDetailSuccessDesktop> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ClientsBloc, ClientsState>(
@@ -52,16 +55,8 @@ class _ClientDetailSuccessWidgetState extends State<ClientDetailSuccessWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Card(
-              child: SizedBox(
-                width: (Responsive.isDesktop(context))
-                    ? 60.w
-                    : (Responsive.isTablet(context))
-                        ? 75.w
-                        : (Responsive.isMobile(context))
-                            ? 95.w
-                            : 100.w,
-                // Remove in favour of responsiveness.
+            Expanded(
+              child: Card(
                 child: Column(
                   children: [
                     Container(
@@ -72,18 +67,31 @@ class _ClientDetailSuccessWidgetState extends State<ClientDetailSuccessWidget> {
                           topRight: Radius.circular(circularRadius),
                         ),
                       ),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.all(padding),
-                            child: const Text(
-                              "Client Details",
-                              style: TextStyle(
-                                fontSize: 20,
+                      child: TitleBarWithActions(
+                        title: "Client",
+                        actions: [
+                          IconButton(
+                              tooltip: "Edit client",
+                              onPressed: () => _buildAddForm(context),
+                              icon: const Icon(
+                                Icons.edit_rounded,
                                 color: AppColor.white,
-                              ),
+                              )),
+                          IconButton(
+                              onPressed: () {},
+                              tooltip: "Process client",
+                              icon: const Icon(
+                                Icons.recycling_rounded,
+                                color: AppColor.white,
+                              )),
+                          IconButton(
+                            onPressed: () => _buildAddForm(context),
+                            tooltip: "Add client",
+                            icon: const Icon(
+                              Icons.add,
+                              color: AppColor.white,
                             ),
-                          ),
+                          )
                         ],
                       ),
                     ),
@@ -95,12 +103,27 @@ class _ClientDetailSuccessWidgetState extends State<ClientDetailSuccessWidget> {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              ProfilePhoto(
-                                totalWidth: 10.h,
-                                color: AppColor.white45,
-                                name: widget.client.name!,
-                                outlineColor:
-                                    colors[Random().nextInt(colors.length)],
+                              Stack(
+                                children: [
+                                  ProfilePhoto(
+                                    totalWidth: 10.h,
+                                    color: AppColor.white45,
+                                    name: widget.client.name!,
+                                    outlineColor:
+                                        colors[Random().nextInt(colors.length)],
+                                  ),
+                                  if (kDebugMode)
+                                    Positioned(
+                                        right: -5,
+                                        top: -5,
+                                        child: IconButton(
+                                          onPressed: () {},
+                                          icon: const Icon(
+                                            Icons.edit_rounded,
+                                            color: AppColor.white,
+                                          ),
+                                        ))
+                                ],
                               ),
                               SizedBox(width: 1.w),
                               Column(
@@ -130,12 +153,10 @@ class _ClientDetailSuccessWidgetState extends State<ClientDetailSuccessWidget> {
                 ),
               ),
             ),
-            if (Responsive.isDesktop(context)) SizedBox(width: 1.w),
-            if (Responsive.isDesktop(context)) const RightSideWidget(),
+            SizedBox(width: 1.w),
+            const RightSideWidget(),
           ],
         ),
-        if (Responsive.isTablet(context) || Responsive.isMobile(context))
-          const RightSideWidget(),
       ],
     );
   }
@@ -278,102 +299,6 @@ class _ClientDetailSuccessWidgetState extends State<ClientDetailSuccessWidget> {
       },
     );
   }
-}
-
-class RightSideWidget extends StatelessWidget {
-  const RightSideWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Padding(
-          padding: EdgeInsets.all(padding),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              FilledButton(
-                onPressed: () {},
-                child: const Text("Edit Client"),
-              ),
-              SizedBox(width: 1.w),
-              FilledButton(
-                onPressed: () {},
-                child: const Text("List"),
-              ),
-              SizedBox(width: 1.w),
-              FilledButton(
-                onPressed: () {},
-                child: const Text("Convert"),
-              ),
-              SizedBox(width: 1.w),
-              FilledButton(
-                onPressed: () => _buildAddForm(context),
-                child: const Text("Add Client"),
-              ),
-              SizedBox(width: 1.w),
-            ],
-          ),
-        ),
-        Card(
-          child: SizedBox(
-            width: (Responsive.isDesktop(context))
-                ? 25.w
-                : (Responsive.isTablet(context))
-                    ? 75.w
-                    : (Responsive.isMobile(context))
-                        ? 95.w
-                        : 100.w,
-            child: Column(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: AppColor.primary,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(circularRadius),
-                      topRight: Radius.circular(circularRadius),
-                    ),
-                  ),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(padding),
-                        child: const Text(
-                          "Loans Officer",
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: AppColor.white,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(padding),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      ProfilePhoto(
-                        totalWidth: 5.h,
-                        color: AppColor.white45,
-                      ),
-                      SizedBox(width: 1.w),
-                      const Text("Valeria Konarld"),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        if (!Responsive.isDesktop(context)) SizedBox(height: 30.h),
-      ],
-    );
-  }
 
   _buildAddForm(BuildContext context) async {
     return showDialog(
@@ -406,6 +331,20 @@ class RightSideWidget extends StatelessWidget {
           ], child: const ClientForm()),
         );
       },
+    );
+  }
+}
+
+class RightSideWidget extends StatelessWidget {
+  const RightSideWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(right: padding),
+      child: LoanOfficerWidget(width: 16.w),
     );
   }
 }

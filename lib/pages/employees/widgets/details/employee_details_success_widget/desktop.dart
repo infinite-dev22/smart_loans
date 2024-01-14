@@ -9,28 +9,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile_photo/profile_photo.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:smart_loans/config/responsive.dart';
 import 'package:smart_loans/global_values.dart';
 import 'package:smart_loans/pages/clients/bloc/clients_bloc/clients_bloc.dart';
 import 'package:smart_loans/pages/employees/bloc/employee_bloc.dart';
 import 'package:smart_loans/pages/employees/bloc/forms/clients/employee_add_form_bloc.dart';
 import 'package:smart_loans/pages/employees/widgets/success/forms/employee_form.dart';
+import 'package:smart_loans/pages/loans/widgets/details/loan_officer_widget.dart';
 import 'package:smart_loans/theme/colors.dart';
+import 'package:smart_loans/widgets/title_with_actions.dart';
 
-import '../../../../data_source/dummy_employee_data.dart';
-import '../../../../widgets/subtitle_widget.dart';
-import '../../../../widgets/title_widget.dart';
+import '../../../../../data_source/dummy_employee_data.dart';
+import '../../../../../widgets/subtitle_widget.dart';
+import '../../../../../widgets/title_widget.dart';
 
-class EmployeeDetailsSuccessWidget extends StatefulWidget {
-  const EmployeeDetailsSuccessWidget({super.key});
+class EmployeeDetailsSuccessDesktop extends StatefulWidget {
+  const EmployeeDetailsSuccessDesktop({super.key});
 
   @override
-  State<EmployeeDetailsSuccessWidget> createState() =>
-      _EmployeeDetailsSuccessWidgetState();
+  State<EmployeeDetailsSuccessDesktop> createState() =>
+      _EmployeeDetailsSuccessDesktopState();
 }
 
-class _EmployeeDetailsSuccessWidgetState
-    extends State<EmployeeDetailsSuccessWidget> {
+class _EmployeeDetailsSuccessDesktopState
+    extends State<EmployeeDetailsSuccessDesktop> {
   var tableKey = GlobalKey<DynamicTableState>();
   var myData = dummyEmployeeData.toList();
 
@@ -46,16 +47,8 @@ class _EmployeeDetailsSuccessWidgetState
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Card(
-              child: SizedBox(
-                width: (Responsive.isDesktop(context))
-                    ? 60.w
-                    : (Responsive.isTablet(context))
-                        ? 75.w
-                        : (Responsive.isMobile(context))
-                            ? 95.w
-                            : 100.w,
-                // Remove in favour of responsiveness.
+            Expanded(
+              child: Card(
                 child: Column(
                   children: [
                     Container(
@@ -66,18 +59,31 @@ class _EmployeeDetailsSuccessWidgetState
                           topRight: Radius.circular(circularRadius),
                         ),
                       ),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.all(padding),
-                            child: const Text(
-                              "Employee Details",
-                              style: TextStyle(
-                                fontSize: 20,
+                      child: TitleBarWithActions(
+                        title: "Employee",
+                        actions: [
+                          IconButton(
+                              tooltip: "Edit employee details",
+                              onPressed: () => _buildAddForm(context),
+                              icon: const Icon(
+                                Icons.edit_rounded,
                                 color: AppColor.white,
-                              ),
+                              )),
+                          IconButton(
+                              onPressed: () {},
+                              tooltip: "Process employee details",
+                              icon: const Icon(
+                                Icons.recycling_rounded,
+                                color: AppColor.white,
+                              )),
+                          IconButton(
+                            onPressed: () => _buildAddForm(context),
+                            tooltip: "Add Employee details",
+                            icon: const Icon(
+                              Icons.add,
+                              color: AppColor.white,
                             ),
-                          ),
+                          )
                         ],
                       ),
                     ),
@@ -120,12 +126,10 @@ class _EmployeeDetailsSuccessWidgetState
                 ),
               ),
             ),
-            if (Responsive.isDesktop(context)) SizedBox(width: 1.w),
-            if (Responsive.isDesktop(context)) const RightSideWidget(),
+            SizedBox(width: 1.w),
+            const RightSideWidget(),
           ],
         ),
-        if (Responsive.isTablet(context) || Responsive.isMobile(context))
-          const RightSideWidget(),
       ],
     );
   }
@@ -473,102 +477,6 @@ class _EmployeeDetailsSuccessWidgetState
       },
     );
   }
-}
-
-class RightSideWidget extends StatelessWidget {
-  const RightSideWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              FilledButton(
-                onPressed: () {},
-                child: const Text("Edit Client"),
-              ),
-              SizedBox(width: 1.w),
-              FilledButton(
-                onPressed: () {},
-                child: const Text("List"),
-              ),
-              SizedBox(width: 1.w),
-              FilledButton(
-                onPressed: () {},
-                child: const Text("Convert"),
-              ),
-              SizedBox(width: 1.w),
-              FilledButton(
-                onPressed: () => _buildAddForm(context),
-                child: const Text("Add Client"),
-              ),
-              SizedBox(width: 1.w),
-            ],
-          ),
-        ),
-        Card(
-          child: SizedBox(
-            width: (Responsive.isDesktop(context))
-                ? 25.w
-                : (Responsive.isTablet(context))
-                    ? 75.w
-                    : (Responsive.isMobile(context))
-                        ? 95.w
-                        : 100.w,
-            child: Column(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: AppColor.primary,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(circularRadius),
-                      topRight: Radius.circular(circularRadius),
-                    ),
-                  ),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(padding),
-                        child: const Text(
-                          "Loans Officer",
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: AppColor.white,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(padding),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      ProfilePhoto(
-                        totalWidth: 5.h,
-                        color: AppColor.white45,
-                      ),
-                      SizedBox(width: 1.w),
-                      const Text("Valeria Konarld"),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        if (!Responsive.isDesktop(context)) SizedBox(height: 30.h),
-      ],
-    );
-  }
 
   _buildAddForm(BuildContext context) async {
     return showDialog(
@@ -592,6 +500,20 @@ class RightSideWidget extends StatelessWidget {
           ], child: const EmployeeForm()),
         );
       },
+    );
+  }
+}
+
+class RightSideWidget extends StatelessWidget {
+  const RightSideWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(right: padding),
+      child: LoanOfficerWidget(width: 16.w),
     );
   }
 }

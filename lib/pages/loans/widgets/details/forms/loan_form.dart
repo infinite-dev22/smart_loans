@@ -531,7 +531,7 @@ class _LoanFormState extends State<LoanForm> {
               LengthLimitingTextInputFormatter(3),
             ],
             onChanged: (value) {
-              var percentage = int.parse(value) * .001;
+              var percentage = int.parse(value) * .01;
               var interest = loan.principalAmount! * percentage;
               interestController.text = interest.toString();
             },
