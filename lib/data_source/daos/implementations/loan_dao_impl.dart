@@ -213,7 +213,7 @@ class LoanDaoImpl extends LoanDao {
           "Bearer $token"; // Add server auth token here.
       dio.options.followRedirects = false;
 
-      var response = await dio.delete(
+      var response = await dio.post(
         Uri.https(appUrl, 'api/processLoan/$loanId').toString(),
         data: jsonEncode(data),
       );

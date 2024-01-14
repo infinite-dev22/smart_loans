@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:smart_loans/data_source/models/interest_model.dart';
 import 'package:smart_loans/data_source/models/loan_model.dart';
+import 'package:smart_loans/data_source/models/loan_process_model.dart';
 import 'package:smart_loans/data_source/repositories/loan_repo.dart';
 
 part 'loan_event.dart';
@@ -16,6 +17,7 @@ class LoanBloc extends Bloc<LoanEvent, LoanState> {
     on<UpdateLoan>(_mapUpdateLoanEventToState);
     on<DeleteLoan>(_mapDeleteLoanEventToState);
     on<SelectLoan>(_mapSelectLoanEventToState);
+    on<ProcessLoan>(_mapProcessLoanEventToState);
   }
 
   _mapGetLoansEventToState(GetLoans event, Emitter<LoanState> emit) async {
@@ -80,6 +82,20 @@ class LoanBloc extends Bloc<LoanEvent, LoanState> {
     } catch (e) {
       emit(state.copyWith(status: LoanStatus.error));
     }
+  }
+
+  _mapProcessLoanEventToState(
+      ProcessLoan event, Emitter<LoanState> emit) async {
+    emit(state.copyWith(status: LoanStatus.loading));
+    await LoanRepo.process(event.loanProcess, event.loanId).whenComplete(() {
+      emit(state.copyWith(status: LoanStatus.success));
+    }).onError((error, stackTrace) {
+      if (kDebugMode) {
+        print(error);
+        print(stackTrace);
+      }
+      emit(state.copyWith(status: LoanStatus.error));
+    });
   }
 
   @override

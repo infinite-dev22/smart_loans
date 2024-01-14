@@ -103,8 +103,7 @@ class _ClientsSuccessWidgetState extends State<ClientsSuccessWidget> {
               primaryKeyName: 'number',
             ),
             horizontalMargin: 100,
-            onPageChanged: (offset) {
-            },
+            onPageChanged: (offset) {},
             onSort: (columnName, ascending) {
               setState(() {
                 _sortColumnName = columnName;
@@ -220,7 +219,7 @@ class _ClientsSuccessWidgetState extends State<ClientsSuccessWidget> {
   void initState() {
     super.initState();
 
-    _sortColumnName = "";
+    _sortColumnName = "*";
     _sortAscending = false;
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (!_willSearch) {

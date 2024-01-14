@@ -490,7 +490,7 @@ class _InterestFormState extends State<InterestForm> {
                   LengthLimitingTextInputFormatter(3),
                 ],
                 onChanged: (value) {
-                  var percentage = int.parse(value) * .001;
+                  var percentage = int.parse(value) * .01;
                   var interest = widget.loanModel.principalAmount! * percentage;
                   interestController.text = interest.toString();
                 },
