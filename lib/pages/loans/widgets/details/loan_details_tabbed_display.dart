@@ -6,11 +6,15 @@ import 'package:smart_loans/pages/loans/widgets/details/tabs/loan_collaterals_ta
 import 'package:smart_loans/pages/loans/widgets/details/tabs/loan_disbursements_table.dart';
 import 'package:smart_loans/pages/loans/widgets/details/tabs/loan_documents_table.dart';
 import 'package:smart_loans/pages/loans/widgets/details/tabs/loan_guarantors_table.dart';
+import 'package:smart_loans/pages/loans/widgets/details/tabs/loan_payments/loan_payments_error_widget.dart';
+import 'package:smart_loans/pages/loans/widgets/details/tabs/loan_payments/loan_payments_initial_widget.dart';
+import 'package:smart_loans/pages/loans/widgets/details/tabs/loan_payments/loan_payments_loading_widget.dart';
 import 'package:smart_loans/pages/loans/widgets/details/tabs/loan_payments_table.dart';
 import 'package:smart_loans/pages/loans/widgets/details/tabs/loan_schedules/loan_schedules_error_widget.dart';
 import 'package:smart_loans/pages/loans/widgets/details/tabs/loan_schedules/loan_schedules_initial_widget.dart';
 import 'package:smart_loans/pages/loans/widgets/details/tabs/loan_schedules/loan_schedules_loading_widget.dart';
 
+import '../../../loan_payment/bloc/loan_payment_bloc.dart';
 import 'tabs/loan_schedules/loan_schedules_table.dart';
 
 class LoanDetailsTabbedDisplay extends StatelessWidget {
@@ -63,7 +67,7 @@ class LoanDetailsTabbedDisplay extends StatelessWidget {
           child: TabBarView(
             children: [
               _buildLoanScheduleWidgets(context),
-              const LoanPaymentsTable(),
+               _buildLoanPaymentWidgets(context),
               const LoanCollateralsTable(),
               const LoanDocumentsTable(),
               const LoanGuarantorsTable(),
@@ -97,6 +101,25 @@ class LoanDetailsTabbedDisplay extends StatelessWidget {
           return const LoanSchedulesErrorWidget();
         }
         return const LoanSchedulesInitialWidget();
+      },
+    );
+  }
+
+  Widget _buildLoanPaymentWidgets(BuildContext context) {
+    return BlocBuilder<LoanPaymentBloc, LoanPaymentState>(
+      builder: (context, state) {
+        if (state.status == LoanPaymentStatus.initial) {
+          context.read<LoanPaymentBloc>().add(GetLoanPayments(loanId));
+        } else if (state.status == LoanPaymentStatus.success) {
+          return const SingleChildScrollView(
+            child: LoanPaymentsTable(),
+          );
+        } else if (state.status == LoanPaymentStatus.loading) {
+          return const LoanPaymentsLoadingWidget();
+        } else if (state.status == LoanPaymentStatus.error) {
+          return const LoanPaymentsErrorWidget();
+        }
+        return const LoanPaymentsInitialWidget();
       },
     );
   }
