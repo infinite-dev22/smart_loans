@@ -6,11 +6,13 @@ import 'package:dynamic_table/dynamic_table_data_column.dart';
 import 'package:dynamic_table/dynamic_table_data_row.dart';
 import 'package:dynamic_table/dynamic_table_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/global_values.dart';
 import 'package:smart_loans/pages/loans/widgets/details/forms/payment_form.dart';
 
 import '../../../../../data_source/dummy_loan_payments_data.dart';
+import '../../../../loan_payment/bloc/loan_payment_bloc.dart';
 
 class LoanPaymentsTable extends StatefulWidget {
   const LoanPaymentsTable({super.key});
@@ -22,7 +24,7 @@ class LoanPaymentsTable extends StatefulWidget {
 class _LoanPaymentsTableState extends State<LoanPaymentsTable> {
   var tableKey = GlobalKey<DynamicTableState>();
 
-  var myData = dummyLoanPaymentsData.toList();
+  // var myData = dummyLoanPaymentsData.toList();
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +40,11 @@ class _LoanPaymentsTableState extends State<LoanPaymentsTable> {
             header: Container(),
             key: tableKey,
             onRowEdit: (index, row) {
-              myData[index] = row;
+              // myData[index] = row;
               return true;
             },
             onRowDelete: (index, row) {
-              myData.removeAt(index);
+              // myData.removeAt(index);
               return true;
             },
             onRowSave: (index, old, newValue) {
@@ -72,7 +74,7 @@ class _LoanPaymentsTableState extends State<LoanPaymentsTable> {
                     .nextInt(500)
                     .toString(); // to add Unique ID because it is not editable
               }
-              myData[index] = newValue; // Update data
+              // myData[index] = newValue; // Update data
               if (newValue[0] == null) {
                 return null;
               }
@@ -143,8 +145,12 @@ class _LoanPaymentsTableState extends State<LoanPaymentsTable> {
   }
 
   List<DynamicTableDataRow> _buildRows(BuildContext context) {
+    var loanPayments = List.empty(growable: true);
+    context.read<LoanPaymentBloc>().state.loanPayments != []
+        ? loanPayments.addAll(context
+    .read<LoanPaymentBloc>().state.loanPayments!.map((loanPayment) => loanPayment.toList()).toList()): loanPayments;
     return List.generate(
-      myData.length,
+      loanPayments.length,
       (index) => DynamicTableDataRow(
         onSelectChanged: (value) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -157,9 +163,9 @@ class _LoanPaymentsTableState extends State<LoanPaymentsTable> {
         },
         index: index,
         cells: List.generate(
-          myData[index].length,
+          loanPayments[index].length,
           (cellIndex) => DynamicTableDataCell(
-            value: myData[index][cellIndex],
+            value: loanPayments[index][cellIndex],
           ),
         ),
       ),
@@ -215,15 +221,7 @@ class _LoanPaymentsTableState extends State<LoanPaymentsTable> {
         ),
         dynamicTableInputType: DynamicTableInputType.text(),
       ),
-      DynamicTableDataColumn(
-        label: const Text(
-          "Fine",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        dynamicTableInputType: DynamicTableInputType.text(),
-      ),
+
       DynamicTableDataColumn(
         label: const Text(
           "Description",
