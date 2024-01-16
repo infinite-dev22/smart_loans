@@ -23,7 +23,7 @@ class LogInBloc extends Bloc<LoginEvent, LogInState> {
       currentUser = user;
       var prefs = getLocalStorage();
       if (currentUser.token != null) {
-        prefs.setString("authToken", currentUser.token!);
+        prefs.write("authToken", currentUser.token!);
       }
       emit(
           state.copyWith(status: LogInStatus.successfullyLoggedIn, user: user));

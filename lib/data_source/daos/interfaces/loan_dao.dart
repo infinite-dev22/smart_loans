@@ -6,6 +6,8 @@ abstract class LoanDao {
 
   Future<Map<String, dynamic>> fetch(int id);
 
+  Future<Map<String, dynamic>> fetchDetails(int id);
+
   Future<List<dynamic>> fetchAll();
 
   Future<List<Map<String, dynamic>>> search(String search);

@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:smart_loans/data_source/models/loan_detail_model.dart';
+import 'package:smart_loans/data_source/models/loan_model.dart';
 import 'package:smart_loans/global_values.dart';
 import 'package:smart_loans/theme/colors.dart';
 
 class LoanSummaryWidget extends StatelessWidget {
   final double? width;
+  final LoanModel loan;
+  final LoanDetailModel loanDetail;
 
   const LoanSummaryWidget({
     super.key,
     this.width,
+    required this.loan,
+    required this.loanDetail,
   });
 
   @override
   Widget build(BuildContext context) {
+    print(DateFormat("yyyy-MM-dd"));
     return Card(
       child: SizedBox(
         width: width,
@@ -42,10 +50,10 @@ class LoanSummaryWidget extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.all(padding),
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
+                  const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text("Loan No.: "),
@@ -63,43 +71,43 @@ class LoanSummaryWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        "00000011",
-                        style: TextStyle(
+                        loan.loanNumber!,
+                        style: const TextStyle(
                           color: AppColor.red,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
-                        "4.12.2023",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        DateFormat('dd.MM.yyyy').format(loanDetail.createdAt),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        "4.12.2023",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        DateFormat('dd.MM.yyyy').format(loanDetail.releasedAt),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        "4.10.2024",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        "${loanDetail.currency} ${loanDetail.maturity}",
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        "UGX 2,000,000/=",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        "${loanDetail.currency} ${loanDetail.principalAmount}",
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        "UGX 100,000/=",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        "${loanDetail.currency} ${loanDetail.loanInterest}",
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        "UGX 200,000 /=",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        "${loanDetail.currency} ${loanDetail.loanFees}",
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        "UGX 0/=",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        "${loanDetail.currency} ${loanDetail.paidAmount}",
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        "UGX 3,000,000/=",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        "${loanDetail.currency} ${loanDetail.balanceAmount}",
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),

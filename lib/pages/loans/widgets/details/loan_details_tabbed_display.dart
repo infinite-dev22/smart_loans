@@ -67,7 +67,7 @@ class LoanDetailsTabbedDisplay extends StatelessWidget {
           child: TabBarView(
             children: [
               _buildLoanScheduleWidgets(context),
-               _buildLoanPaymentWidgets(context),
+              _buildLoanPaymentWidgets(context),
               const LoanCollateralsTable(),
               const LoanDocumentsTable(),
               const LoanGuarantorsTable(),

@@ -1,6 +1,3 @@
-import 'package:smart_loans/data_source/daos/implementations/loan_schedule_dao_impl.dart';
-import 'package:smart_loans/data_source/models/loan_schedule_model.dart';
-
 import '../daos/implementations/loan_payment_dao_impl.dart';
 import '../models/loan_payment_model.dart';
 
@@ -31,7 +28,7 @@ class LoanPaymentRepo {
   static Future put(LoanPaymentModel loanPayment, int loanPaymentId) async {
     var loanPaymentDao = LoanPaymentDaoImpl();
     var loanPaymentMap =
-    await loanPaymentDao.put(loanPayment.toJson(), loanPaymentId);
+        await loanPaymentDao.put(loanPayment.toJson(), loanPaymentId);
     return LoanPaymentModel.fromJson(loanPaymentMap);
   }
 
@@ -39,7 +36,7 @@ class LoanPaymentRepo {
     var loanPaymentDao = LoanPaymentDaoImpl();
     var responseList = await loanPaymentDao.search(search);
     var loanPayments =
-    responseList.map((doc) => LoanPaymentModel.fromJson(doc)).toList();
+        responseList.map((doc) => LoanPaymentModel.fromJson(doc)).toList();
     return loanPayments;
   }
 
@@ -47,7 +44,7 @@ class LoanPaymentRepo {
     var loanPaymentDao = LoanPaymentDaoImpl();
     var responseList = await loanPaymentDao.delete(loanPaymentId);
     var loanPayments =
-    responseList.map((doc) => LoanPaymentModel.fromJson(doc)).toList();
+        responseList.map((doc) => LoanPaymentModel.fromJson(doc)).toList();
     return loanPayments;
   }
 
@@ -56,7 +53,7 @@ class LoanPaymentRepo {
     var loanPaymentDao = LoanPaymentDaoImpl();
     var responseList = await loanPaymentDao.deleteMultiple(loanPaymentIds);
     var loanPayments =
-    responseList.map((doc) => LoanPaymentModel.fromJson(doc)).toList();
+        responseList.map((doc) => LoanPaymentModel.fromJson(doc)).toList();
     return loanPayments;
   }
 }

@@ -1,4 +1,5 @@
 import 'package:smart_loans/data_source/daos/implementations/loan_dao_impl.dart';
+import 'package:smart_loans/data_source/models/loan_detail_model.dart';
 import 'package:smart_loans/data_source/models/loan_model.dart';
 import 'package:smart_loans/data_source/models/loan_process_model.dart';
 
@@ -7,6 +8,12 @@ class LoanRepo {
     var loanRepo = LoanDaoImpl();
     var loanMap = await loanRepo.fetch(loanId);
     return LoanModel.fromApiJson(loanMap);
+  }
+
+  static Future<LoanDetailModel> fetchDetails(int loanId) async {
+    var loanRepo = LoanDaoImpl();
+    var loanMap = await loanRepo.fetchDetails(loanId);
+    return LoanDetailModel.fromJson(loanMap);
   }
 
   static Future<List<LoanModel>> fetchAll({Map<String, dynamic>? body}) async {

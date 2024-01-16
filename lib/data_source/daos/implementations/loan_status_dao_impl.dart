@@ -11,7 +11,7 @@ class LoanStatusDaoImpl extends SimpleDao {
 
   @override
   Future<Map<String, dynamic>> fetch(int id) async {
-    var token = prefs.get("authToken");
+    var token = prefs.read("authToken");
     Dio dio = Dio(baseOps)
       ..interceptors.add(DioCacheInterceptor(options: options));
 
@@ -38,7 +38,7 @@ class LoanStatusDaoImpl extends SimpleDao {
 
   @override
   Future<List<dynamic>> fetchAll() async {
-    var token = prefs.get("authToken");
+    var token = prefs.read("authToken");
     Dio dio = Dio(baseOps)
       ..interceptors.add(DioCacheInterceptor(options: options));
 
@@ -65,7 +65,7 @@ class LoanStatusDaoImpl extends SimpleDao {
 
   @override
   Future post(Map<String, dynamic> data) async {
-    var token = prefs.get("authToken");
+    var token = prefs.read("authToken");
     Dio dio = Dio(baseOps)
       ..interceptors.add(DioCacheInterceptor(options: options));
 
@@ -93,7 +93,7 @@ class LoanStatusDaoImpl extends SimpleDao {
 
   @override
   Future put(Map<String, dynamic> data, int id) async {
-    var token = prefs.get("authToken");
+    var token = prefs.read("authToken");
     Dio dio = Dio(baseOps)
       ..interceptors.add(DioCacheInterceptor(options: options));
 
@@ -121,7 +121,7 @@ class LoanStatusDaoImpl extends SimpleDao {
 
   @override
   Future<List<Map<String, dynamic>>> search(String search) async {
-    var token = prefs.get("authToken");
+    var token = prefs.read("authToken");
     Dio dio = Dio(baseOps)
       ..interceptors.add(DioCacheInterceptor(options: options));
 
@@ -148,7 +148,7 @@ class LoanStatusDaoImpl extends SimpleDao {
 
   @override
   Future<dynamic> delete(int id) async {
-    var token = prefs.get("authToken");
+    var token = prefs.read("authToken");
     Dio dio = Dio(baseOps)
       ..interceptors.add(DioCacheInterceptor(options: options));
 
@@ -175,7 +175,7 @@ class LoanStatusDaoImpl extends SimpleDao {
 
   @override
   Future<dynamic> deleteMultiple(List<int> ids) async {
-    var token = prefs.get("authToken");
+    var token = prefs.read("authToken");
     Dio dio = Dio(baseOps)
       ..interceptors.add(DioCacheInterceptor(options: options));
 

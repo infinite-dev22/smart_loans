@@ -11,7 +11,7 @@ class LoanDaoImpl extends LoanDao {
 
   @override
   Future<Map<String, dynamic>> fetch(int id) async {
-    var token = prefs.get("authToken");
+    var token = prefs.read("authToken");
     Dio dio = Dio(baseOps)
       ..interceptors.add(DioCacheInterceptor(options: options));
 
@@ -37,8 +37,35 @@ class LoanDaoImpl extends LoanDao {
   }
 
   @override
+  Future<Map<String, dynamic>> fetchDetails(int id) async {
+    var token = prefs.read("authToken");
+    Dio dio = Dio(baseOps)
+      ..interceptors.add(DioCacheInterceptor(options: options));
+
+    try {
+      dio.options.headers['content-Type'] = 'application/json';
+      dio.options.headers['Accept'] = 'application/json';
+      dio.options.headers["authorization"] =
+          "Bearer $token"; // Add server auth token here.
+      dio.options.followRedirects = false;
+
+      var response = await dio.get(
+        Uri.https(appUrl, 'api/loans/show/details/$id').toString(),
+      );
+
+      if (response.statusCode == 200) {
+        return response.data;
+      } else {
+        throw Error();
+      }
+    } finally {
+      dio.close();
+    }
+  }
+
+  @override
   Future<List<dynamic>> fetchAll() async {
-    var token = prefs.get("authToken");
+    var token = prefs.read("authToken");
     Dio dio = Dio(baseOps)
       ..interceptors.add(DioCacheInterceptor(options: options));
 
@@ -65,7 +92,7 @@ class LoanDaoImpl extends LoanDao {
 
   @override
   Future post(Map<String, dynamic> data) async {
-    var token = prefs.get("authToken");
+    var token = prefs.read("authToken");
     Dio dio = Dio(baseOps)
       ..interceptors.add(DioCacheInterceptor(options: options));
 
@@ -93,7 +120,7 @@ class LoanDaoImpl extends LoanDao {
 
   @override
   Future put(Map<String, dynamic> data, int id) async {
-    var token = prefs.get("authToken");
+    var token = prefs.read("authToken");
     Dio dio = Dio(baseOps)
       ..interceptors.add(DioCacheInterceptor(options: options));
 
@@ -121,7 +148,7 @@ class LoanDaoImpl extends LoanDao {
 
   @override
   Future<List<Map<String, dynamic>>> search(String search) async {
-    var token = prefs.get("authToken");
+    var token = prefs.read("authToken");
     Dio dio = Dio(baseOps)
       ..interceptors.add(DioCacheInterceptor(options: options));
 
@@ -148,7 +175,7 @@ class LoanDaoImpl extends LoanDao {
 
   @override
   Future<dynamic> delete(int id) async {
-    var token = prefs.get("authToken");
+    var token = prefs.read("authToken");
     Dio dio = Dio(baseOps)
       ..interceptors.add(DioCacheInterceptor(options: options));
 
@@ -175,7 +202,7 @@ class LoanDaoImpl extends LoanDao {
 
   @override
   Future<dynamic> deleteMultiple(List<int> ids) async {
-    var token = prefs.get("authToken");
+    var token = prefs.read("authToken");
     Dio dio = Dio(baseOps)
       ..interceptors.add(DioCacheInterceptor(options: options));
 
@@ -202,7 +229,7 @@ class LoanDaoImpl extends LoanDao {
 
   @override
   Future<dynamic> process(Map<String, dynamic> data, int loanId) async {
-    var token = prefs.get("authToken");
+    var token = prefs.read("authToken");
     Dio dio = Dio(baseOps)
       ..interceptors.add(DioCacheInterceptor(options: options));
 

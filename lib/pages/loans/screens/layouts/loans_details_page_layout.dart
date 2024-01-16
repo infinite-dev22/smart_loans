@@ -20,13 +20,24 @@ class LoanDetailsPageLayout extends StatelessWidget {
     return BlocBuilder<LoanDetailBloc, LoanDetailState>(
       builder: (context, state) {
         if (state.status == LoanDetailStatus.initial) {
-          context.read<LoanDetailBloc>().add(GetLoan(loan));
+          context.read<LoanDetailBloc>().add(GetLoanDetail(loan.id!));
         } else if (state.status == LoanDetailStatus.success) {
-          return const SingleChildScrollView(
+          var loan = context.read<LoanDetailBloc>().state.loan;
+          var loanDetail = context.read<LoanDetailBloc>().state.loanDetail;
+          return SingleChildScrollView(
             child: Responsive(
-              mobile: LoanDetailSuccessMobile(),
-              tablet: LoanDetailSuccessTablet(),
-              desktop: LoanDetailSuccessDesktop(),
+              mobile: LoanDetailSuccessMobile(
+                loan: loan!,
+                loanDetail: loanDetail!,
+              ),
+              tablet: LoanDetailSuccessTablet(
+                loan: loan,
+                loanDetail: loanDetail,
+              ),
+              desktop: LoanDetailSuccessDesktop(
+                loan: loan,
+                loanDetail: loanDetail,
+              ),
             ),
           );
         } else if (state.status == LoanDetailStatus.loading) {

@@ -1,6 +1,7 @@
 import 'package:smart_loans/data_source/models/branch_model.dart';
 import 'package:smart_loans/data_source/models/client_model.dart';
 import 'package:smart_loans/data_source/models/currency_model.dart';
+import 'package:smart_loans/data_source/models/interest_model.dart';
 import 'package:smart_loans/data_source/models/loan_category_model.dart';
 import 'package:smart_loans/data_source/models/loan_status_model.dart';
 import 'package:smart_loans/data_source/models/loan_type_model.dart';
@@ -33,8 +34,10 @@ class LoanModel {
   LoanCategoryModel? loanCategory;
   CurrencyModel? currency;
   BranchModel? branch;
+  InterestModel? interest;
   LoanStatusModel? loanStatus;
   String? branchName;
+  String? flowType;
 
   LoanModel({
     this.id,
@@ -63,9 +66,11 @@ class LoanModel {
     this.loanCategory,
     this.currency,
     this.branch,
+    this.interest,
     this.loanStatus,
     this.loanStatusName,
     this.currencyName,
+    this.flowType,
   });
 
   LoanModel.fromJson(Map<String, dynamic> json) {
@@ -112,10 +117,10 @@ class LoanModel {
     clientId = json['client_id'];
     clientName = json['client']['name'];
     loanTypeId = json['loan_type_id'];
-    loanTypeName = json['loan_type']['name'];
+    // loanTypeName = json['loan_type']['name'];
     loanCategoryId = json['loan_category_id'];
     currencyId = json['currency_id'];
-    loanCategoryName = json['loan_category']['name'];
+    // loanCategoryName = json['loan_category']['name'];
     branchId = json['branch_id'];
     loanStatusId = json['loan_status_id'];
     createdBy = json['created_by'];
@@ -124,16 +129,19 @@ class LoanModel {
     updatedAt = json['updated_at'];
     organisationId = json['organisation_id'];
     client = ClientModel.fromJson(json['client']);
-    loanType = LoanTypeModel.fromJson(json['loan_type']);
-    loanCategory = LoanCategoryModel.fromJson(json['loan_category']);
-    currency = CurrencyModel.fromJson(json['currency']);
-    branch = BranchModel.fromJson(json['branch']);
-    loanStatus = LoanStatusModel.fromJson(json['loan_status']);
-    branchName = json['branch']['name'];
+    // loanType = LoanTypeModel.fromJson(json['loan_type']);
+    // loanCategory = LoanCategoryModel.fromJson(json['loan_category']);
+    // currency = CurrencyModel.fromJson(json['currency']);
+    // branch = BranchModel.fromJson(json['branch']);
+    interest = json['loan_interest'] != null
+        ? InterestModel.fromJson(json['loan_interest'])
+        : null;
+    // loanStatus = LoanStatusModel.fromJson(json['loan_status']);
     loanStatusId = json['loan_status_id'];
-    loanStatusName = json['loan_status']['name'];
+    // loanStatusName = json['loan_status']['name'];
     currencyId = json['currency_id'];
-    currencyName = json['currency']['name'];
+    // currencyName = json['currency']['name'];
+    flowType = json['flowType']['code'];
   }
 
   LoanModel.fromCreateJson(Map<String, dynamic> json) {

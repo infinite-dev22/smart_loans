@@ -11,7 +11,6 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/global_values.dart';
 import 'package:smart_loans/pages/loans/widgets/details/forms/payment_form.dart';
 
-import '../../../../../data_source/dummy_loan_payments_data.dart';
 import '../../../../loan_payment/bloc/loan_payment_bloc.dart';
 
 class LoanPaymentsTable extends StatefulWidget {
@@ -148,7 +147,12 @@ class _LoanPaymentsTableState extends State<LoanPaymentsTable> {
     var loanPayments = List.empty(growable: true);
     context.read<LoanPaymentBloc>().state.loanPayments != []
         ? loanPayments.addAll(context
-    .read<LoanPaymentBloc>().state.loanPayments!.map((loanPayment) => loanPayment.toList()).toList()): loanPayments;
+            .read<LoanPaymentBloc>()
+            .state
+            .loanPayments!
+            .map((loanPayment) => loanPayment.toList())
+            .toList())
+        : loanPayments;
     return List.generate(
       loanPayments.length,
       (index) => DynamicTableDataRow(
@@ -221,7 +225,6 @@ class _LoanPaymentsTableState extends State<LoanPaymentsTable> {
         ),
         dynamicTableInputType: DynamicTableInputType.text(),
       ),
-
       DynamicTableDataColumn(
         label: const Text(
           "Description",

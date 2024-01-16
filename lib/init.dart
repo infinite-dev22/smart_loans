@@ -1,4 +1,4 @@
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:smart_loans/data_source/models/client_model.dart';
 import 'package:smart_loans/data_source/models/employee_model.dart';
 import 'package:smart_loans/data_source/models/interest_model.dart';
@@ -12,12 +12,8 @@ var loan = LoanModel();
 var loanType = LoanTypeModel();
 var interest = InterestModel();
 var loanProcess = LoanProcessModel();
-late SharedPreferences prefs;
+final box = GetStorage();
 
-Future<void> initLocalStorage() async {
-  prefs = await SharedPreferences.getInstance();
-}
-
-SharedPreferences getLocalStorage() {
-  return prefs;
+GetStorage getLocalStorage() {
+  return box;
 }

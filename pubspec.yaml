@@ -57,8 +57,8 @@ dependencies:
   form_bloc: ^0.31.0
   flutter_form_bloc: ^0.31.0
   flutter_spinkit: ^5.2.0
-  shared_preferences: ^2.2.2
   responsive_framework: ^1.1.1
+  get_storage: ^2.1.1
 
 dev_dependencies:
   flutter_test:

@@ -1,7 +1,14 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+import 'package:smart_loans/data_source/models/branch_model.dart';
+import 'package:smart_loans/data_source/models/currency_model.dart';
+import 'package:smart_loans/data_source/models/loan_category_model.dart';
+import 'package:smart_loans/data_source/models/loan_detail_model.dart';
 import 'package:smart_loans/data_source/models/loan_model.dart';
+import 'package:smart_loans/data_source/models/loan_status_model.dart';
+import 'package:smart_loans/data_source/models/loan_type_model.dart';
+import 'package:smart_loans/data_source/models/repayment_cycle_model.dart';
 import 'package:smart_loans/data_source/repositories/loan_repo.dart';
 
 part 'loan_details_event.dart';
@@ -35,8 +42,22 @@ class LoanDetailBloc extends Bloc<LoanDetailEvent, LoanDetailState> {
   _mapGetLoanDetailEventToState(
       GetLoanDetail event, Emitter<LoanDetailState> emit) async {
     emit(state.copyWith(status: LoanDetailStatus.loading));
-    await LoanRepo.fetch(event.idSelected).then((loan) {
-      emit(state.copyWith(status: LoanDetailStatus.success, loan: loan));
+    await LoanRepo.fetchDetails(event.idSelected).then((loanDetail) async {
+      await LoanRepo.fetch(event.idSelected).then((loan) async {
+        emit(
+          state.copyWith(
+            status: LoanDetailStatus.success,
+            loan: loan,
+            loanDetail: loanDetail,
+          ),
+        );
+      }).onError((error, stackTrace) {
+        if (kDebugMode) {
+          print(error);
+          print(stackTrace);
+        }
+        emit(state.copyWith(status: LoanDetailStatus.error));
+      });
     }).onError((error, stackTrace) {
       if (kDebugMode) {
         print(error);
@@ -45,6 +66,88 @@ class LoanDetailBloc extends Bloc<LoanDetailEvent, LoanDetailState> {
       emit(state.copyWith(status: LoanDetailStatus.error));
     });
   }
+
+  // _mapGetLoanDetailEventToState(
+  //     GetLoanDetail event, Emitter<LoanDetailState> emit) async {
+  //   emit(state.copyWith(status: LoanDetailStatus.loading));
+  //   await LoanRepo.fetch(event.idSelected).then((loan) async {
+  //     print("Loaded Loan");
+  //     await LoanTypeRepo.fetch(loan.loanTypeId!).then((loanType) async {
+  //       print("Loaded Loan Type");
+  //       print(loan.loanCategoryId!);
+  //       await LoanCategoryRepo.fetch(loan.loanCategoryId!)
+  //           .then((loanCategory) async {
+  //         print("Loaded Loan Category ${loan.loanCategoryId!}");
+  //         await LoanStatusRepo.fetch(loan.loanStatusId!)
+  //             .then((loanStatus) async {
+  //           print("Loaded Loan Status");
+  //           await CurrencyRepo.fetch(loan.currencyId!).then((currency) async {
+  //             print("Loaded Currency");
+  //             await BranchRepo.fetch(loan.branchId!).then((branch) async {
+  //               print("Loaded Branch");
+  //               await RepaymentCycleRepo.fetch(loan.interest!.repaymentCycleId!).then((repaymentCycle) {
+  //                 emit(
+  //                   state.copyWith(
+  //                     status: LoanDetailStatus.success,
+  //                     loan: loan,
+  //                     loanType: loanType,
+  //                     loanCategory: loanCategory,
+  //                     loanStatus: loanStatus,
+  //                     currency: currency,
+  //                     branch: branch,
+  //                     repaymentCycle: repaymentCycle,
+  //                   ),
+  //                 );
+  //               }).onError((error, stackTrace) {
+  //                 if (kDebugMode) {
+  //                   print(error);
+  //                   print(stackTrace);
+  //                 }
+  //                 emit(state.copyWith(status: LoanDetailStatus.error));
+  //               });
+  //             }).onError((error, stackTrace) {
+  //               if (kDebugMode) {
+  //                 print(error);
+  //                 print(stackTrace);
+  //               }
+  //               emit(state.copyWith(status: LoanDetailStatus.error));
+  //             });
+  //           }).onError((error, stackTrace) {
+  //             if (kDebugMode) {
+  //               print(error);
+  //               print(stackTrace);
+  //             }
+  //             emit(state.copyWith(status: LoanDetailStatus.error));
+  //           });
+  //         }).onError((error, stackTrace) {
+  //           if (kDebugMode) {
+  //             print(error);
+  //             print(stackTrace);
+  //           }
+  //           emit(state.copyWith(status: LoanDetailStatus.error));
+  //         });
+  //       }).onError((error, stackTrace) {
+  //         if (kDebugMode) {
+  //           print(error);
+  //           print(stackTrace);
+  //         }
+  //         emit(state.copyWith(status: LoanDetailStatus.error));
+  //       });
+  //     }).onError((error, stackTrace) {
+  //       if (kDebugMode) {
+  //         print(error);
+  //         print(stackTrace);
+  //       }
+  //       emit(state.copyWith(status: LoanDetailStatus.error));
+  //     });
+  //   }).onError((error, stackTrace) {
+  //     if (kDebugMode) {
+  //       print(error);
+  //       print(stackTrace);
+  //     }
+  //     emit(state.copyWith(status: LoanDetailStatus.error));
+  //   });
+  // }
 
   _mapGetLoanEventToState(GetLoan event, Emitter<LoanDetailState> emit) async {
     emit(state.copyWith(status: LoanDetailStatus.loading));

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
-import 'package:smart_loans/data_source/models/loan_model.dart';
 
 import '../../../data_source/models/loan_payment_model.dart';
 import '../../../data_source/repositories/loan_payment_repo.dart';
@@ -11,9 +10,8 @@ import '../../../data_source/repositories/loan_payment_repo.dart';
 part 'loan_payment_event.dart';
 part 'loan_payment_state.dart';
 
-
 class LoanPaymentBloc extends Bloc<LoanPaymentEvent, LoanPaymentState> {
-  LoanPaymentBloc() : super( LoanPaymentState()) {
+  LoanPaymentBloc() : super(const LoanPaymentState()) {
     on<GetLoanPayments>(_mapGetLoanPaymentsEventToState);
     on<GetLoanPayment>(_mapGetLoanPaymentEventToState);
     on<CreateLoanPayment>(_mapCreateLoanPaymentCreateClientEventToState);
@@ -68,7 +66,7 @@ class LoanPaymentBloc extends Bloc<LoanPaymentEvent, LoanPaymentState> {
     emit(state.copyWith(status: LoanPaymentStatus.loading));
     try {
       var loanPayment =
-      await LoanPaymentRepo.put(event.loanPayment, event.idSelected);
+          await LoanPaymentRepo.put(event.loanPayment, event.idSelected);
 
       emit(state.copyWith(
           status: LoanPaymentStatus.success, loanPayment: loanPayment));
@@ -91,8 +89,7 @@ class LoanPaymentBloc extends Bloc<LoanPaymentEvent, LoanPaymentState> {
       SelectLoanPayment event, Emitter<LoanPaymentState> emit) {
     emit(state.copyWith(status: LoanPaymentStatus.loading));
     try {
-      emit(
-          state.copyWith(status: LoanPaymentStatus.success, idSelected: null));
+      emit(state.copyWith(status: LoanPaymentStatus.success, idSelected: null));
     } catch (e) {
       emit(state.copyWith(status: LoanPaymentStatus.error));
     }
@@ -115,8 +112,7 @@ class LoanPaymentBloc extends Bloc<LoanPaymentEvent, LoanPaymentState> {
   }
 
   @override
-  void onTransition(
-      Transition<LoanPaymentEvent, LoanPaymentState> transition) {
+  void onTransition(Transition<LoanPaymentEvent, LoanPaymentState> transition) {
     super.onTransition(transition);
     if (kDebugMode) {
       print("Transition: $transition");

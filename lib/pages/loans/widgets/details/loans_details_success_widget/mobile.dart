@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile_photo/profile_photo.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:smart_loans/data_source/models/loan_detail_model.dart';
 import 'package:smart_loans/data_source/models/loan_model.dart';
 import 'package:smart_loans/global_values.dart';
 import 'package:smart_loans/pages/branches/bloc/branch_bloc.dart';
@@ -31,19 +32,21 @@ import '../loan_officer_widget.dart';
 import '../loan_summary_widget.dart';
 
 class LoanDetailSuccessMobile extends StatelessWidget {
-  const LoanDetailSuccessMobile({super.key});
+  final LoanDetailModel loanDetail;
+  final LoanModel loan;
+
+  const LoanDetailSuccessMobile({
+    super.key,
+    required this.loan,
+    required this.loanDetail,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoanDetailBloc, LoanDetailState>(
-      builder: (context, state) {
-        return _buildBody(context);
-      },
-    );
+    return _buildBody(context);
   }
 
   Widget _buildBody(BuildContext context) {
-    var loan = context.read<LoanDetailBloc>().state.loan;
     return Column(
       children: [
         Row(
@@ -97,92 +100,66 @@ class LoanDetailSuccessMobile extends StatelessWidget {
                                   ProfilePhoto(
                                     totalWidth: 10.h,
                                     color: AppColor.white45,
-                                    name: context
-                                        .read<LoanDetailBloc>()
-                                        .state
-                                        .loan!
-                                        .clientName
-                                        .toString(),
+                                    name: loan.clientName.toString(),
                                     outlineColor:
                                         colors[Random().nextInt(colors.length)],
                                   ),
                                   SizedBox(width: 1.w),
-                                  const Column(
+                                  Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text("Loan No.: "),
-                                      Text("Client Name: "),
-                                      Text("Client No.: "),
-                                      Text("Address: "),
-                                      Text("Loan Status: "),
-                                      Text("Flow Type: "),
+                                      if (loan.loanNumber != null)
+                                        const Text("Loan No.: "),
+                                      if (loan.client!.name != null)
+                                        const Text("Client Name: "),
+                                      if (loan.client!.telephone != null)
+                                        const Text("Client No.: "),
+                                      if (loan.client!.address != null)
+                                        const Text("Address: "),
+                                      const Text("Loan Status: "),
+                                      const Text("Flow Type: "),
                                     ],
                                   ),
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        context
-                                            .read<LoanDetailBloc>()
-                                            .state
-                                            .loan!
-                                            .id
-                                            .toString(),
-                                        style: const TextStyle(
-                                          color: AppColor.red,
-                                          fontWeight: FontWeight.bold,
+                                      if (loan.loanNumber != null)
+                                        Text(
+                                          loan.loanNumber.toString(),
+                                          style: const TextStyle(
+                                            color: AppColor.red,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
-                                      ),
-                                      Text(
-                                        context
-                                            .read<LoanDetailBloc>()
-                                            .state
-                                            .loan!
-                                            .client!
-                                            .name
-                                            .toString(),
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(
-                                        context
-                                            .read<LoanDetailBloc>()
-                                            .state
-                                            .loan!
-                                            .client!
-                                            .telephone
-                                            .toString(),
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(
-                                        context
-                                            .read<LoanDetailBloc>()
-                                            .state
-                                            .loan!
-                                            .client!
-                                            .address
-                                            .toString(),
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
+                                      if (loan.client!.name != null)
+                                        Text(
+                                          loan.client!.name.toString(),
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      if (loan.client!.telephone != null)
+                                        Text(
+                                          loan.client!.telephone.toString(),
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      if (loan.client!.address != null)
+                                        Text(
+                                          loan.client!.address.toString(),
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
                                       Text(
                                         // "APPROVED (4.12.2023)",
-                                        context
-                                            .read<LoanDetailBloc>()
-                                            .state
-                                            .loan!
-                                            .loanStatus!
-                                            .name
-                                            .toString(),
+                                        loanDetail.loanStatus.toString(),
                                         style: const TextStyle(
                                             fontWeight: FontWeight.bold),
                                       ),
-                                      const Text(
-                                        "LV2(To Be Added)",
-                                        style: TextStyle(
+                                      Text(
+                                        loanDetail.flowType.toString(),
+                                        style: const TextStyle(
                                             fontWeight: FontWeight.bold),
                                       ),
                                     ],
@@ -192,53 +169,61 @@ class LoanDetailSuccessMobile extends StatelessWidget {
                             ],
                           ),
                           SizedBox(height: 1.h),
-                          const Row(
+                          Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Loan Type: "),
-                                  Text("Principal: "),
-                                  Text("Loan Fee: "),
-                                  Text("Loan Interest: "),
-                                  Text("Loan Duration: "),
-                                  Text("Repayment Cycle: "),
+                                  const Text("Loan Type: "),
+                                  const Text("Principal: "),
+                                  if (loanDetail.loanFees != null)
+                                    const Text("Loan Fee: "),
+                                  if (loanDetail.loanInterest != null)
+                                    const Text("Loan Interest: "),
+                                  if (loanDetail.loanDuration != null)
+                                    const Text("Loan Duration: "),
+                                  if (loanDetail.repaymentCycle != null)
+                                    const Text("Repayment Cycle: "),
                                 ],
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Business",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
+                                    loanDetail.loanType.toString(),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
                                   ),
                                   Text(
-                                    "UGX 2,000,000",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
+                                    loanDetail.principalAmount.toString(),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
                                   ),
-                                  Text(
-                                    "UGX 200,000",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    "UGX 100,000",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    "10 Months",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    "Monthly",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
+                                  if (loanDetail.loanFees != null)
+                                    Text(
+                                      loanDetail.loanFees.toString(),
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  if (loanDetail.loanInterest != null)
+                                    Text(
+                                      loanDetail.loanInterest.toString(),
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  if (loanDetail.loanDuration != null)
+                                    Text(
+                                      "${loanDetail.loanDuration} ${loanDetail.repaymentCycle}",
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  if (loanDetail.repaymentCycle != null)
+                                    Text(
+                                      loanDetail.repaymentCycle.toString(),
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                 ],
                               ),
                             ],
@@ -293,7 +278,10 @@ class LoanDetailSuccessMobile extends StatelessWidget {
             ),
           ],
         ),
-        const RightSideWidget(),
+        RightSideWidget(
+          loanDetail: loanDetail,
+          loan: loan,
+        ),
       ],
     );
   }
@@ -392,16 +380,31 @@ class LoanDetailSuccessMobile extends StatelessWidget {
 }
 
 class RightSideWidget extends StatelessWidget {
-  const RightSideWidget({super.key});
+  final LoanDetailModel loanDetail;
+  final LoanModel loan;
+
+  const RightSideWidget({
+    super.key,
+    required this.loan,
+    required this.loanDetail,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const LoanOfficerWidget(),
-        SizedBox(height: 2.h),
-        const LoanSummaryWidget(),
-      ],
+    return Padding(
+      padding: EdgeInsets.only(right: padding),
+      child: Column(
+        children: [
+          LoanOfficerWidget(width: 16.w),
+          SizedBox(height: 2.h),
+          LoanSummaryWidget(
+            width: 16.w,
+            loan: loan,
+            loanDetail: loanDetail,
+          ),
+          SizedBox(height: 30.h),
+        ],
+      ),
     );
   }
 }

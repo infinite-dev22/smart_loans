@@ -390,7 +390,7 @@ class EmployeeForm extends StatelessWidget {
                             ),
                           ),
                           label: Text("Designations")),
-                      items: [],
+                      items: const [],
                       onChanged: (value) {},
                     ),
                   ),

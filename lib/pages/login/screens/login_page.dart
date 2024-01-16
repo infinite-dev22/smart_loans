@@ -11,7 +11,7 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       body: BlocProvider(
         create: (context) => LogInBloc(),
-        child: const Center(
+        child: Center(
           child: LoginInitialWidget(),
         ),
       ),

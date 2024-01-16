@@ -10,17 +10,15 @@ import 'package:smart_loans/theme/colors.dart';
 import 'package:smart_loans/theme/light.dart';
 import 'package:smart_loans/widgets/custom_checkbox.dart';
 
-class LoginInitialWidget extends StatefulWidget {
-  const LoginInitialWidget({super.key});
+class LoginInitialWidget extends StatelessWidget {
+  LoginInitialWidget({super.key});
 
-  @override
-  State<LoginInitialWidget> createState() => _LoginInitialWidgetState();
-}
-
-class _LoginInitialWidgetState extends State<LoginInitialWidget> {
   var emailController = TextEditingController();
+
   var passwordController = TextEditingController();
+
   bool isAuthingUser = false;
+
   bool rememberUser = false;
 
   @override
@@ -33,17 +31,21 @@ class _LoginInitialWidgetState extends State<LoginInitialWidget> {
               Navigator.popAndPushNamed(context, currentRoute);
             }
           },
-          child: _buildBody(),
+          child: _buildBody(context),
         );
       },
     );
   }
 
-  Widget _buildBody() {
+  Widget _buildBody(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(padding * 4),
       margin: EdgeInsets.all(padding * 4),
-      width: 500,
+      width: Responsive.isMobile(context)
+          ? 125
+          : Responsive.isTablet(context)
+              ? 500
+              : 500,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(
           Radius.circular(20),
@@ -178,6 +180,8 @@ class _LoginInitialWidgetState extends State<LoginInitialWidget> {
                       ),
                     ),
                     onPressed: () {
+                      print(
+                          "Logging you in ${emailController.text} ${passwordController.text}");
                       if (emailController.text.isNotEmpty &&
                           passwordController.text.isNotEmpty) {
                         context.read<LogInBloc>().add(LogInUser(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/global_values.dart';
 import 'package:smart_loans/pages/clients/bloc/client_bloc/client_bloc.dart';
@@ -22,10 +23,8 @@ import 'package:smart_loans/pages/loans/screens/loans_page.dart';
 import 'package:smart_loans/pages/login/screens/login_page.dart';
 import 'package:smart_loans/theme/colors.dart';
 
-import 'init.dart';
-
-void main() {
-  initLocalStorage();
+Future<void> main() async {
+  await GetStorage.init();
   runApp(const SmartLoansApp());
 }
 

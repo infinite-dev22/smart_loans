@@ -17,29 +17,69 @@ extension LoanDetailStatusX on LoanDetailStatus {
 class LoanDetailState extends Equatable {
   final List<LoanModel>? loans;
   final LoanModel? loan;
+  final LoanTypeModel? loanType;
+  final LoanCategoryModel? loanCategory;
+  final LoanStatusModel? loanStatus;
+  final CurrencyModel? currency;
+  final BranchModel? branch;
   final LoanDetailStatus status;
+  final RepaymentCycleModel? repaymentCycle;
+  final LoanDetailModel? loanDetail;
   final int? idSelected;
 
   const LoanDetailState({
     List<LoanModel>? loans,
     this.loan,
+    this.loanType,
+    this.loanCategory,
+    this.loanStatus,
+    this.currency,
+    this.branch,
+    this.repaymentCycle,
+    this.loanDetail,
     this.status = LoanDetailStatus.initial,
     this.idSelected = 0,
   }) : loans = loans ?? const [];
 
   @override
-  List<Object?> get props => [loans, loan, status, idSelected];
+  List<Object?> get props => [
+        loans,
+        loan,
+        loanType,
+        loanCategory,
+        loanStatus,
+        currency,
+        branch,
+        repaymentCycle,
+        loanDetail,
+        status,
+        idSelected,
+      ];
 
   // Copy state.
   LoanDetailState copyWith({
     List<LoanModel>? loans,
     LoanModel? loan,
+    LoanTypeModel? loanType,
+    LoanCategoryModel? loanCategory,
+    LoanStatusModel? loanStatus,
+    CurrencyModel? currency,
+    BranchModel? branch,
+    RepaymentCycleModel? repaymentCycle,
+    LoanDetailModel? loanDetail,
     LoanDetailStatus? status,
     int? idSelected,
   }) {
     return LoanDetailState(
       loans: loans ?? this.loans,
       loan: loan ?? this.loan,
+      loanType: loanType ?? this.loanType,
+      loanCategory: loanCategory ?? this.loanCategory,
+      loanStatus: loanStatus ?? this.loanStatus,
+      currency: currency ?? this.currency,
+      branch: branch ?? this.branch,
+      repaymentCycle: repaymentCycle ?? this.repaymentCycle,
+      loanDetail: loanDetail ?? this.loanDetail,
       status: status ?? this.status,
       idSelected: idSelected ?? this.idSelected,
     );
