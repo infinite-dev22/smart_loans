@@ -228,28 +228,31 @@ class LoanDetailSuccessMobile extends StatelessWidget {
                               ),
                             ],
                           ),
-                          Column(
-                            children: [
-                              SizedBox(height: 2.h),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  FilledButton(
-                                    onPressed: () =>
-                                        _buildInterestForm(context, loan),
-                                    child: const Text("Edit Interest"),
-                                  ),
-                                  SizedBox(width: 1.w),
-                                  FilledButton(
-                                    onPressed: () =>
-                                        _buildProcessDialog(context, loan),
-                                    child: const Text("Process"),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 2.h),
-                            ],
-                          ),
+                          if (loanDetail.loanStatus.toUpperCase() !=
+                              "DISBURSED")
+                            Column(
+                              children: [
+                                SizedBox(height: 2.h),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    FilledButton(
+                                      onPressed: () =>
+                                          _buildInterestForm(context, loan),
+                                      child: Text(
+                                          '${(loanDetail.loanStatus.toUpperCase() == "OPENED") ? 'Add' : 'Edit'} Interest'),
+                                    ),
+                                    SizedBox(width: 1.w),
+                                    FilledButton(
+                                      onPressed: () =>
+                                          _buildProcessDialog(context),
+                                      child: const Text("Process"),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 2.h),
+                              ],
+                            ),
                         ],
                       ),
                     ),
@@ -323,7 +326,7 @@ class LoanDetailSuccessMobile extends StatelessWidget {
     );
   }
 
-  _buildProcessDialog(BuildContext context, LoanModel? loan) async {
+  _buildProcessDialog(BuildContext context) async {
     return showDialog(
       context: context,
       barrierDismissible: true,
@@ -334,7 +337,7 @@ class LoanDetailSuccessMobile extends StatelessWidget {
           ),
           child: BlocProvider(
             create: (context) => LoanBloc(),
-            child: LoanProcessForm(loanId: loan!.id!),
+            child: LoanProcessForm(loanDetail: loanDetail),
           ),
         );
       },
@@ -395,10 +398,9 @@ class RightSideWidget extends StatelessWidget {
       padding: EdgeInsets.only(right: padding),
       child: Column(
         children: [
-          LoanOfficerWidget(width: 16.w),
+          const LoanOfficerWidget(),
           SizedBox(height: 2.h),
           LoanSummaryWidget(
-            width: 16.w,
             loan: loan,
             loanDetail: loanDetail,
           ),

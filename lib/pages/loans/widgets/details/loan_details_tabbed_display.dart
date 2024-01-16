@@ -92,9 +92,14 @@ class LoanDetailsTabbedDisplay extends StatelessWidget {
         if (state.status == LoanScheduleStatus.initial) {
           context.read<LoanScheduleBloc>().add(GetLoanSchedules(loanId));
         } else if (state.status == LoanScheduleStatus.success) {
-          return SingleChildScrollView(
-            child: LoanSchedulesTable(),
-          );
+          if (state.loanSchedules!.isNotEmpty) {
+            return SingleChildScrollView(
+              child: LoanSchedulesTable(),
+            );
+          }
+          if (state.loanSchedules!.isEmpty) {
+            return const LoanSchedulesInitialWidget();
+          }
         } else if (state.status == LoanScheduleStatus.loading) {
           return const LoanSchedulesLoadingWidget();
         } else if (state.status == LoanScheduleStatus.error) {

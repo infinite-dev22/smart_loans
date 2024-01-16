@@ -97,70 +97,144 @@ class LoanDetailSuccessTablet extends StatelessWidget {
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  ProfilePhoto(
-                                    totalWidth: 10.h,
-                                    color: AppColor.white45,
-                                    name: loan.clientName.toString(),
-                                    outlineColor:
-                                        colors[Random().nextInt(colors.length)],
-                                  ),
-                                  SizedBox(width: 1.w),
-                                  Column(
+                                  Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      if (loan.loanNumber != null)
-                                        const Text("Loan No.: "),
-                                      if (loan.client!.name != null)
-                                        const Text("Client Name: "),
-                                      if (loan.client!.telephone != null)
-                                        const Text("Client No.: "),
-                                      if (loan.client!.address != null)
-                                        const Text("Address: "),
-                                      const Text("Loan Status: "),
-                                      const Text("Flow Type: "),
-                                    ],
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      if (loan.loanNumber != null)
-                                        Text(
-                                          loan.loanNumber.toString(),
-                                          style: const TextStyle(
-                                            color: AppColor.red,
-                                            fontWeight: FontWeight.bold,
+                                      ProfilePhoto(
+                                        totalWidth: 10.h,
+                                        color: AppColor.white45,
+                                        name: loan.clientName.toString(),
+                                        outlineColor: colors[
+                                            Random().nextInt(colors.length)],
+                                      ),
+                                      SizedBox(width: 1.w),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          if (loan.loanNumber != null)
+                                            const Text("Loan No.: "),
+                                          if (loan.client!.name != null)
+                                            const Text("Client Name: "),
+                                          if (loan.client!.telephone != null)
+                                            const Text("Client No.: "),
+                                          if (loan.client!.address != null)
+                                            const Text("Address: "),
+                                          const Text("Loan Status: "),
+                                          const Text("Flow Type: "),
+                                        ],
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          if (loan.loanNumber != null)
+                                            Text(
+                                              loan.loanNumber.toString(),
+                                              style: const TextStyle(
+                                                color: AppColor.red,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          if (loan.client!.name != null)
+                                            Text(
+                                              loan.client!.name.toString(),
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          if (loan.client!.telephone != null)
+                                            Text(
+                                              loan.client!.telephone.toString(),
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          if (loan.client!.address != null)
+                                            Text(
+                                              loan.client!.address.toString(),
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          Text(
+                                            // "APPROVED (4.12.2023)",
+                                            loanDetail.loanStatus.toString(),
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold),
                                           ),
-                                        ),
-                                      if (loan.client!.name != null)
-                                        Text(
-                                          loan.client!.name.toString(),
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      if (loan.client!.telephone != null)
-                                        Text(
-                                          loan.client!.telephone.toString(),
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      if (loan.client!.address != null)
-                                        Text(
-                                          loan.client!.address.toString(),
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      Text(
-                                        // "APPROVED (4.12.2023)",
-                                        loanDetail.loanStatus.toString(),
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold),
+                                          Text(
+                                            loanDetail.flowType.toString(),
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
                                       ),
-                                      Text(
-                                        loanDetail.flowType.toString(),
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    width: 1.w,
+                                  ),
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const Text("Loan Type: "),
+                                          const Text("Principal: "),
+                                          if (loanDetail.loanFees != null)
+                                            const Text("Loan Fee: "),
+                                          if (loanDetail.loanInterest != null)
+                                            const Text("Loan Interest: "),
+                                          if (loanDetail.loanDuration != null)
+                                            const Text("Loan Duration: "),
+                                          if (loanDetail.repaymentCycle != null)
+                                            const Text("Repayment Cycle: "),
+                                        ],
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            loanDetail.loanType.toString(),
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text(
+                                            loanDetail.principalAmount
+                                                .toString(),
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          if (loanDetail.loanFees != null)
+                                            Text(
+                                              loanDetail.loanFees.toString(),
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          if (loanDetail.loanInterest != null)
+                                            Text(
+                                              loanDetail.loanInterest
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          if (loanDetail.loanDuration != null)
+                                            Text(
+                                              "${loanDetail.loanDuration} ${loanDetail.repaymentCycle}",
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          if (loanDetail.repaymentCycle != null)
+                                            Text(
+                                              loanDetail.repaymentCycle
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                        ],
                                       ),
                                     ],
                                   ),
@@ -169,85 +243,24 @@ class LoanDetailSuccessTablet extends StatelessWidget {
                               SizedBox(
                                 width: 1.w,
                               ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Text("Loan Type: "),
-                                      const Text("Principal: "),
-                                      if (loanDetail.loanFees != null)
-                                        const Text("Loan Fee: "),
-                                      if (loanDetail.loanInterest != null)
-                                        const Text("Loan Interest: "),
-                                      if (loanDetail.loanDuration != null)
-                                        const Text("Loan Duration: "),
-                                      if (loanDetail.repaymentCycle != null)
-                                        const Text("Repayment Cycle: "),
-                                    ],
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        loanDetail.loanType.toString(),
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(
-                                        loanDetail.principalAmount.toString(),
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      if (loanDetail.loanFees != null)
-                                        Text(
-                                          loanDetail.loanFees.toString(),
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      if (loanDetail.loanInterest != null)
-                                        Text(
-                                          loanDetail.loanInterest.toString(),
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      if (loanDetail.loanDuration != null)
-                                        Text(
-                                          "${loanDetail.loanDuration} ${loanDetail.repaymentCycle}",
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      if (loanDetail.repaymentCycle != null)
-                                        Text(
-                                          loanDetail.repaymentCycle.toString(),
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                width: 1.w,
-                              ),
-                              Column(
-                                children: [
-                                  FilledButton(
-                                    onPressed: () =>
-                                        _buildProcessDialog(context, loan),
-                                    child: const Text("Process"),
-                                  ),
-                                  SizedBox(width: 2.h),
-                                  FilledButton(
-                                    onPressed: () =>
-                                        _buildInterestForm(context, loan),
-                                    child: const Text("Edit Interest"),
-                                  ),
-                                ],
-                              ),
+                              if (loanDetail.loanStatus.toUpperCase() !=
+                                  "DISBURSED")
+                                Column(
+                                  children: [
+                                    FilledButton(
+                                      onPressed: () =>
+                                          _buildProcessDialog(context),
+                                      child: const Text("Process"),
+                                    ),
+                                    SizedBox(width: 2.h),
+                                    FilledButton(
+                                      onPressed: () =>
+                                          _buildInterestForm(context, loan),
+                                      child: Text(
+                                          '${(loanDetail.loanStatus.toUpperCase() == "OPENED") ? 'Add' : 'Edit'} Interest'),
+                                    ),
+                                  ],
+                                ),
                             ],
                           ),
                         ],
@@ -323,7 +336,7 @@ class LoanDetailSuccessTablet extends StatelessWidget {
     );
   }
 
-  _buildProcessDialog(BuildContext context, LoanModel? loan) async {
+  _buildProcessDialog(BuildContext context) async {
     return showDialog(
       context: context,
       barrierDismissible: true,
@@ -334,7 +347,7 @@ class LoanDetailSuccessTablet extends StatelessWidget {
           ),
           child: BlocProvider(
             create: (context) => LoanBloc(),
-            child: LoanProcessForm(loanId: loan!.id!),
+            child: LoanProcessForm(loanDetail: loanDetail),
           ),
         );
       },
@@ -395,10 +408,9 @@ class RightSideWidget extends StatelessWidget {
       padding: EdgeInsets.only(right: padding),
       child: Column(
         children: [
-          LoanOfficerWidget(width: 16.w),
+          const LoanOfficerWidget(),
           SizedBox(height: 2.h),
           LoanSummaryWidget(
-            width: 16.w,
             loan: loan,
             loanDetail: loanDetail,
           ),

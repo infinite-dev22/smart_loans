@@ -53,18 +53,23 @@ class LoanSummaryWidget extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Loan No.: "),
-                      Text("Created: "),
-                      Text("Released: "),
-                      Text("Maturity: "),
-                      Text("Principal: "),
-                      Text("Loan Rate: "),
-                      Text("Loan Fees: "),
-                      Text("Paid: "),
-                      Text("Balance: "),
+                      const Text("Loan No.: "),
+                      if (loanDetail.createdAt != null) const Text("Created: "),
+                      if (loanDetail.releasedAt != null)
+                        const Text("Released: "),
+                      if (loanDetail.maturity != null) const Text("Maturity: "),
+                      if (loanDetail.principalAmount != null)
+                        const Text("Principal: "),
+                      if (loanDetail.loanInterest != null)
+                        const Text("Loan Rate: "),
+                      if (loanDetail.loanFees != null)
+                        const Text("Loan Fees: "),
+                      if (loanDetail.paidAmount != null) const Text("Paid: "),
+                      if (loanDetail.balanceAmount != null)
+                        const Text("Balance: "),
                     ],
                   ),
                   Column(
@@ -77,38 +82,47 @@ class LoanSummaryWidget extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Text(
-                        DateFormat('dd.MM.yyyy').format(loanDetail.createdAt),
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        DateFormat('dd.MM.yyyy').format(loanDetail.releasedAt),
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        "${loanDetail.currency} ${loanDetail.maturity}",
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        "${loanDetail.currency} ${loanDetail.principalAmount}",
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        "${loanDetail.currency} ${loanDetail.loanInterest}",
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        "${loanDetail.currency} ${loanDetail.loanFees}",
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        "${loanDetail.currency} ${loanDetail.paidAmount}",
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        "${loanDetail.currency} ${loanDetail.balanceAmount}",
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
+                      if (loanDetail.createdAt != null)
+                        Text(
+                          DateFormat('dd.MM.yyyy').format(loanDetail.createdAt),
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      if (loanDetail.releasedAt != null)
+                        Text(
+                          DateFormat('dd.MM.yyyy')
+                              .format(loanDetail.releasedAt),
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      if (loanDetail.maturity != null)
+                        Text(
+                          "${loanDetail.currency} ${loanDetail.maturity}",
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      if (loanDetail.principalAmount != null)
+                        Text(
+                          "${loanDetail.currency} ${loanDetail.principalAmount}",
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      if (loanDetail.loanInterest != null)
+                        Text(
+                          "${loanDetail.currency} ${loanDetail.loanInterest}",
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      if (loanDetail.loanFees != null)
+                        Text(
+                          "${loanDetail.currency} ${loanDetail.loanFees}",
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      if (loanDetail.paidAmount != null)
+                        Text(
+                          "${loanDetail.currency} ${loanDetail.paidAmount}",
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      if (loanDetail.balanceAmount != null)
+                        Text(
+                          "${loanDetail.currency} ${loanDetail.balanceAmount}",
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
                     ],
                   ),
                 ],

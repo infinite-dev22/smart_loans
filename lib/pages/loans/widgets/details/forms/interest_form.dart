@@ -451,6 +451,9 @@ class _InterestFormState extends State<InterestForm> {
                           child: const Text('Submit'),
                           onPressed: () {
                             interest.loanId = widget.loanModel.id;
+                            if (interest.percentage != null) {
+                              interest.interestAmount = interestController.text;
+                            }
                             context.read<InterestFormBloc>().add(
                                 PostInterest(widget.loanModel.id!, interest));
                             Navigator.of(context).pop();
@@ -490,9 +493,11 @@ class _InterestFormState extends State<InterestForm> {
                   LengthLimitingTextInputFormatter(3),
                 ],
                 onChanged: (value) {
+                  interest.percentage = value;
                   var percentage = int.parse(value) * .01;
-                  var interest = widget.loanModel.principalAmount! * percentage;
-                  interestController.text = interest.toString();
+                  var interest2 =
+                      widget.loanModel.principalAmount! * percentage;
+                  interestController.text = interest2.toString();
                 },
               ),
             ),
@@ -510,9 +515,7 @@ class _InterestFormState extends State<InterestForm> {
                       borderSide:
                           const BorderSide(color: LightAppColor.darker)),
                 ),
-                onChanged: (value) {
-                  interest.interestAmount = value;
-                },
+                onChanged: (value) {},
               ),
             ),
           ],

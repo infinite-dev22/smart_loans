@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 class LoanDetailModel {
   int id;
   dynamic loanNumber;
-  int principalAmount;
+  dynamic principalAmount;
   dynamic loanFees;
   dynamic loansFeesType;
   dynamic description;
@@ -13,12 +13,12 @@ class LoanDetailModel {
   dynamic currency;
   dynamic branch;
   dynamic loanStatus;
-  DateTime createdAt;
+  dynamic createdAt;
   dynamic flowType;
   dynamic repaymentCycle;
   dynamic loanDuration;
   dynamic actionCreatedAt;
-  DateTime releasedAt;
+  dynamic releasedAt;
   dynamic maturity;
   dynamic loanInterest;
   dynamic paidAmount;
@@ -65,12 +65,16 @@ class LoanDetailModel {
       currency: json['currency'],
       branch: json['branch'],
       loanStatus: json['loan_status'],
-      createdAt: DateFormat("yyyy-MM-dd").parse(json['created_at']),
+      createdAt: json['created_at'] != null
+          ? DateFormat("yyyy-MM-dd").parse(json['created_at'])
+          : null,
       flowType: json['flowType'],
       repaymentCycle: json['repayment_cycle'],
       loanDuration: json['loan_duration'],
       actionCreatedAt: json['actionCreatedAt'],
-      releasedAt: DateFormat("yyyy-MM-dd").parse(json['releasedAt']),
+      releasedAt: json['releasedAt'] != null
+          ? DateFormat("yyyy-MM-dd").parse(json['releasedAt'])
+          : null,
       maturity: json['maturity'],
       loanInterest: json['loanInterest'],
       paidAmount: json['paidAmount'],
