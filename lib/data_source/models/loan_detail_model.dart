@@ -2,19 +2,19 @@ import 'package:intl/intl.dart';
 
 class LoanDetailModel {
   int id;
-  String loanNumber;
+  dynamic loanNumber;
   int principalAmount;
   dynamic loanFees;
   dynamic loansFeesType;
-  String description;
-  String client;
-  String loanType;
-  String loanCategory;
-  String currency;
-  String branch;
-  String loanStatus;
+  dynamic description;
+  dynamic client;
+  dynamic loanType;
+  dynamic loanCategory;
+  dynamic currency;
+  dynamic branch;
+  dynamic loanStatus;
   DateTime createdAt;
-  String flowType;
+  dynamic flowType;
   dynamic repaymentCycle;
   dynamic loanDuration;
   dynamic actionCreatedAt;
