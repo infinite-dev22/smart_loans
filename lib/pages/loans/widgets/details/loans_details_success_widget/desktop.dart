@@ -157,7 +157,7 @@ class LoanDetailSuccessDesktop extends StatelessWidget {
                                             ),
                                           Text(
                                             // "APPROVED (4.12.2023)",
-                                            loanDetail.loanStatus.toString(),
+                                            loanDetail.loanStatusName.toString(),
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -238,7 +238,7 @@ class LoanDetailSuccessDesktop extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              if (loanDetail.loanStatus != null && loanDetail.loanStatus.toUpperCase() !=
+                              if (loanDetail.loanStatusCode != null && loanDetail.loanStatusCode.toUpperCase() !=
                                   "DISBURSED")
                                 Row(
                                   children: [
@@ -246,7 +246,7 @@ class LoanDetailSuccessDesktop extends StatelessWidget {
                                       onPressed: () =>
                                           _buildInterestForm(context, loan),
                                       child: Text(
-                                          '${(loanDetail.loanStatus.toUpperCase() == "OPENED") ? 'Add' : 'Edit'} Interest'),
+                                          '${(loanDetail.loanStatusCode.toUpperCase() == "OPENED") ? 'Add' : 'Edit'} Interest'),
                                     ),
                                     SizedBox(width: 1.w),
                                     FilledButton(

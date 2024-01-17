@@ -157,7 +157,8 @@ class LoanDetailSuccessTablet extends StatelessWidget {
                                             ),
                                           Text(
                                             // "APPROVED (4.12.2023)",
-                                            loanDetail.loanStatus.toString(),
+                                            loanDetail.loanStatusName
+                                                .toString(),
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -240,11 +241,10 @@ class LoanDetailSuccessTablet extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              SizedBox(
-                                width: 1.w,
-                              ),
-                              if (loanDetail.loanStatus != null && loanDetail.loanStatus.toUpperCase() !=
-                                  "DISBURSED")
+                              SizedBox(width: 1.w),
+                              if (loanDetail.loanStatusCode != null &&
+                                  loanDetail.loanStatusCode.toUpperCase() !=
+                                      "DISBURSED")
                                 Column(
                                   children: [
                                     FilledButton(
@@ -257,7 +257,7 @@ class LoanDetailSuccessTablet extends StatelessWidget {
                                       onPressed: () =>
                                           _buildInterestForm(context, loan),
                                       child: Text(
-                                          '${(loanDetail.loanStatus.toUpperCase() == "OPENED") ? 'Add' : 'Edit'} Interest'),
+                                          '${(loanDetail.loanStatusCode.toUpperCase() == "OPENED") ? 'Add' : 'Edit'} Interest'),
                                     ),
                                   ],
                                 ),

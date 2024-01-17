@@ -51,6 +51,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     emit(state.copyWith(status: EmployeeStatus.loading));
     await EmployeeRepo.post(event.employee).then((employee) {
       emit(state.copyWith(status: EmployeeStatus.success, employee: employee));
+      add(GetEmployees());
     }).onError((error, stackTrace) {
       if (kDebugMode) {
         print(error);
@@ -63,13 +64,16 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
   Future<FutureOr<void>> _mapUpdateEmployeeEventToState(
       UpdateEmployee event, Emitter<EmployeeState> emit) async {
     emit(state.copyWith(status: EmployeeStatus.loading));
-    try {
-      var employee = await EmployeeRepo.put(event.employee, event.idSelected);
-
+    await EmployeeRepo.put(event.employee, event.idSelected).then((employee) {
       emit(state.copyWith(status: EmployeeStatus.success, employee: employee));
-    } catch (e) {
+      add(GetEmployees());
+    }).onError((error, stackTrace) {
+      if (kDebugMode) {
+        print(error);
+        print(stackTrace);
+      }
       emit(state.copyWith(status: EmployeeStatus.error));
-    }
+    });
   }
 
   FutureOr<void> _mapDeleteEmployeeEventToState(
@@ -77,6 +81,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     emit(state.copyWith(status: EmployeeStatus.loading));
     try {
       emit(state.copyWith(status: EmployeeStatus.success));
+      add(GetEmployees());
     } catch (e) {
       emit(state.copyWith(status: EmployeeStatus.error));
     }

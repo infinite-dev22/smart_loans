@@ -16,7 +16,6 @@ class LoanProcessForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(loanDetail.loanStatus.toUpperCase());
     return SingleChildScrollView(
       child: SizedBox(
         width: (Responsive.isDesktop(context)) ? 25.w : 40.w,
@@ -48,7 +47,7 @@ class LoanProcessForm extends StatelessWidget {
                         ? MainAxisAlignment.end
                         : MainAxisAlignment.spaceBetween,
                     children: [
-                      if (loanDetail.loanStatus.toUpperCase() == "OPENED")
+                      if (loanDetail.loanStatusCode.toUpperCase() == "OPENED")
                         OutlinedButton(
                           style: const ButtonStyle(
                             foregroundColor:
@@ -68,7 +67,7 @@ class LoanProcessForm extends StatelessWidget {
                         ),
                       SizedBox(width: 1.w),
                       if (loanDetail.flowType.toUpperCase() == "LV1")
-                        if (loanDetail.loanStatus.toUpperCase() == "OPENED")
+                        if (loanDetail.loanStatusCode.toUpperCase() == "OPENED")
                           FilledButton(
                             child: const Text('Approve'),
                             onPressed: () {
@@ -82,7 +81,7 @@ class LoanProcessForm extends StatelessWidget {
                         else
                           Container()
                       else if (loanDetail.flowType.toUpperCase() == "LV2")
-                        if (loanDetail.loanStatus.toUpperCase() == "OPENED")
+                        if (loanDetail.loanStatusCode.toUpperCase() == "OPENED")
                           FilledButton(
                             child: const Text('Pre-Approve'),
                             onPressed: () {
@@ -93,7 +92,7 @@ class LoanProcessForm extends StatelessWidget {
                               Navigator.of(context).pop();
                             },
                           )
-                        else if (loanDetail.loanStatus.toUpperCase() ==
+                        else if (loanDetail.loanStatusCode.toUpperCase() ==
                             "PRIMARILY APPROVED")
                           FilledButton(
                             child: const Text('Approve'),
@@ -106,8 +105,9 @@ class LoanProcessForm extends StatelessWidget {
                             },
                           ),
                       SizedBox(width: 1.w),
-                      if (loanDetail.loanStatus.toUpperCase() == "APPROVED" ||
-                          loanDetail.loanStatus.toUpperCase() ==
+                      if (loanDetail.loanStatusCode.toUpperCase() ==
+                              "APPROVED" ||
+                          loanDetail.loanStatusCode.toUpperCase() ==
                               "SECONDARILY_APPROVED")
                         FilledButton(
                           style: const ButtonStyle(

@@ -19,7 +19,6 @@ class ClientsBloc extends Bloc<ClientsEvent, ClientsState> {
   }
 
   final ClientBloc? clientBloc;
-  StreamSubscription? clientSubscription;
 
   _mapGetClientsEventToState(
       GetClients event, Emitter<ClientsState> emit) async {
@@ -56,7 +55,7 @@ class ClientsBloc extends Bloc<ClientsEvent, ClientsState> {
   }
 
   void listenToClientBloc() {
-    clientSubscription ??= clientBloc!.stream.listen((state) {
+    clientBloc!.stream.listen((state) {
       if (state.status == ClientStatus.success) {
         add(GetClients());
       }

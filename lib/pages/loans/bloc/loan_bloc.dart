@@ -35,18 +35,22 @@ class LoanBloc extends Bloc<LoanEvent, LoanState> {
 
   _mapGetLoanEventToState(GetLoan event, Emitter<LoanState> emit) async {
     emit(state.copyWith(status: LoanStatus.loading));
-    try {
-      var loan = await LoanRepo.fetch(event.idSelected);
+    await LoanRepo.fetch(event.idSelected).then((loan) {
       emit(state.copyWith(status: LoanStatus.success, loan: loan));
-    } catch (e) {
+    }).onError((error, stackTrace) {
+      if (kDebugMode) {
+        print(error);
+        print(stackTrace);
+      }
       emit(state.copyWith(status: LoanStatus.error));
-    }
+    });
   }
 
   _mapCreateLoanEventToState(CreateLoan event, Emitter<LoanState> emit) async {
     emit(state.copyWith(status: LoanStatus.loading));
     await LoanRepo.post(event.loan).then((loan) {
       emit(state.copyWith(status: LoanStatus.success, loan: loan));
+      add(GetLoans());
     }).onError((error, stackTrace) {
       if (kDebugMode) {
         print(error);
@@ -58,12 +62,16 @@ class LoanBloc extends Bloc<LoanEvent, LoanState> {
 
   _mapUpdateLoanEventToState(UpdateLoan event, Emitter<LoanState> emit) async {
     emit(state.copyWith(status: LoanStatus.loading));
-    try {
-      var loan = await LoanRepo.put(event.loan, event.idSelected);
+    await LoanRepo.put(event.loan, event.idSelected).then((loan) {
       emit(state.copyWith(status: LoanStatus.success, loan: loan));
-    } catch (e) {
+      add(GetLoans());
+    }).onError((error, stackTrace) {
+      if (kDebugMode) {
+        print(error);
+        print(stackTrace);
+      }
       emit(state.copyWith(status: LoanStatus.error));
-    }
+    });
   }
 
   _mapDeleteLoanEventToState(DeleteLoan event, Emitter<LoanState> emit) {

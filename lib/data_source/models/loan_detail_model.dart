@@ -12,7 +12,8 @@ class LoanDetailModel {
   dynamic loanCategory;
   dynamic currency;
   dynamic branch;
-  dynamic loanStatus;
+  dynamic loanStatusName;
+  dynamic loanStatusCode;
   dynamic createdAt;
   dynamic flowType;
   dynamic repaymentCycle;
@@ -37,7 +38,8 @@ class LoanDetailModel {
     required this.loanCategory,
     required this.currency,
     required this.branch,
-    required this.loanStatus,
+    required this.loanStatusName,
+    required this.loanStatusCode,
     required this.createdAt,
     required this.flowType,
     required this.repaymentCycle,
@@ -64,7 +66,8 @@ class LoanDetailModel {
       loanCategory: json['loan_category'],
       currency: json['currency'],
       branch: json['branch'],
-      loanStatus: json['loan_status'],
+      loanStatusName: json['loan_status_name'],
+      loanStatusCode: json['loan_status_code'],
       createdAt: json['created_at'] != null
           ? DateFormat("yyyy-MM-dd").parse(json['created_at'])
           : null,
@@ -96,7 +99,8 @@ class LoanDetailModel {
       'loan_category': loanCategory,
       'currency': currency,
       'branch': branch,
-      'loan_status': loanStatus,
+      'loan_status_name': loanStatusName,
+      'loan_status_code': loanStatusCode,
       'created_at': createdAt,
       'flowType': flowType,
       'repayment_cycle': repaymentCycle,
