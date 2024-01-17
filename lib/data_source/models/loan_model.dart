@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:smart_loans/data_source/models/branch_model.dart';
 import 'package:smart_loans/data_source/models/client_model.dart';
 import 'package:smart_loans/data_source/models/currency_model.dart';
@@ -22,7 +23,6 @@ class LoanModel {
   int? loanStatusId;
   String? loanStatusName;
   int? currencyId;
-  String? currencyName;
   int? branchId;
   int? createdBy;
   int? updatedBy;
@@ -69,7 +69,6 @@ class LoanModel {
     this.interest,
     this.loanStatus,
     this.loanStatusName,
-    this.currencyName,
     this.flowType,
   });
 
@@ -104,7 +103,26 @@ class LoanModel {
     loanStatusId = json['loan_status_id'];
     loanStatusName = json['loan_status']['name'];
     currencyId = json['currency_id'];
-    currencyName = json['currency']['name'];
+  }
+
+  LoanModel.fromJsonToView(Map<String, dynamic> json) {
+    id = json['id'];
+    loanNumber = json['loan_number'];
+    loansFeesType = json['loans_fees_type'];
+    description = json['description'];
+    clientId = json['client_id'];
+    loanTypeId = json['loan_type_id'];
+    loanCategoryId = json['loan_category_id'];
+    currencyId = json['currency_id'];
+    branchId = json['branch_id'];
+    loanStatusId = json['loan_status_id'];
+    createdBy = json['created_by'];
+    updatedBy = json['updated_by'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    organisationId = json['organisation_id'];
+    loanStatusId = json['loan_status_id'];
+    currencyId = json['currency_id'];
   }
 
   LoanModel.fromApiJson(Map<String, dynamic> json) {
@@ -183,22 +201,20 @@ class LoanModel {
   }
 
   Map<String, dynamic> toViewJson() {
+    var format = NumberFormat("###,###.##");
     return {
       'id': id,
       'loan_number': loanNumber,
-      'principal': principalAmount,
-      'fees': loanFees,
-      'client_id': clientId,
+      'client_name': clientName,
+      'principal_amount':
+          "${principalAmount != null ? "${currency!.code!} " : ""}${principalAmount != null ? format.format(principalAmount) : principalAmount}",
+      'loan_fees':
+          "${loanFees != null ? "${currency!.code!} " : ""}${loanFees != null ? format.format(loanFees) : loanFees}",
       'client': clientName,
-      'loan_type_id': loanTypeId,
-      'loanType': loanTypeName,
-      'loan_category_id': loanCategoryId,
-      'loanCategory': loanCategoryName,
-      'branch_id': branchId,
-      'branch': branchName,
-      'loanStatus': loanStatusName,
-      'currency_id': currencyId,
-      'currency': currencyName,
+      'loan_type_name': loanTypeName,
+      'loan_category_name': loanCategoryName,
+      'branch_name': branchName,
+      'loan_status_name': loanStatusName,
     };
   }
 }

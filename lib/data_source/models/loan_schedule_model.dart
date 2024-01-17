@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class LoanScheduleModel {
   int? id;
   String? scheduleDate;
@@ -52,15 +54,18 @@ class LoanScheduleModel {
         'organisation_id': organisationId,
       };
 
-  List<dynamic> toList() => [
-        // id,
-        scheduleDate,
-        description,
-        principalAmount,
-        loanInterest,
-        penaltyAmount,
-        due,
-        paid,
-        balance,
-      ];
+  List<dynamic> toList() {
+    var formatter = NumberFormat("###,###.##");
+    return [
+      // id,
+      scheduleDate,
+      description,
+      formatter.format(double.parse(principalAmount!)),
+      formatter.format(double.parse(loanInterest!)),
+      formatter.format(double.parse(penaltyAmount!)),
+      formatter.format(double.parse(due!)),
+      formatter.format(double.parse(paid!)),
+      formatter.format(double.parse(balance!)),
+    ];
+  }
 }

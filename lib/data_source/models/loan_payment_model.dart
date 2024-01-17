@@ -28,12 +28,20 @@ class LoanPaymentModel {
   factory LoanPaymentModel.fromJson(Map<String, dynamic> json) =>
       LoanPaymentModel(
         id: json["id"],
-        dateReceived: DateTime.parse(json["date_received"]),
-        nextPaymentDate: DateTime.parse(json["next_payment_date"]),
-        principalAmount: json["principal_amount"],
-        loanInterest: json["loan_interest"],
-        feesAmount: json["fees_amount"],
-        penaltyAmount: json["penalty_amount"],
+        dateReceived: json["date_received"] != null
+            ? DateTime.parse(json["date_received"])
+            : null,
+        nextPaymentDate: json["next_payment_date"] != null
+            ? DateTime.parse(json["next_payment_date"])
+            : null,
+        principalAmount: json["date_received"] != null
+            ? json["principal_amount"] : "0",
+        loanInterest: json["date_received"] != null
+            ? json["loan_interest"] : "0",
+        feesAmount: json["date_received"] != null
+            ? json["fees_amount"] : "0",
+        penaltyAmount: json["date_received"] != null
+            ? json["penalty_amount"] : "0",
         loanId: json["loan_id"],
         description: json["description"],
         loanScheduleId: json["loan_schedule_id"],
@@ -52,13 +60,16 @@ class LoanPaymentModel {
         "loan_schedule_id": loanScheduleId,
       };
 
-  List<dynamic> toList() => [
-        // id,
-        dateReceived,
-        principalAmount,
-        loanInterest,
-        penaltyAmount,
-        description,
-        nextPaymentDate,
-      ];
+  List<dynamic> toList() {
+    var formatter = NumberFormat("###,###.##");
+    return [
+      // id,
+      dateReceived,
+      formatter.format(double.parse(principalAmount ?? "0")),
+      formatter.format(double.parse(loanInterest ?? "0")),
+      formatter.format(double.parse(penaltyAmount ?? "0")),
+      description,
+      nextPaymentDate,
+    ];
+  }
 }

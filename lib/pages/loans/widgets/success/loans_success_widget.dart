@@ -88,11 +88,6 @@ class _LoansTableWidgetState extends State<LoansSuccessWidget> {
                   dataCell: (value) => DataCell(Text('$value')),
                 ),
                 WebDataColumn(
-                  name: 'currency_name',
-                  label: const Text('Currency'),
-                  dataCell: (value) => DataCell(Text('$value')),
-                ),
-                WebDataColumn(
                   name: 'branch_name',
                   label: const Text('Branch'),
                   dataCell: (value) => DataCell(Text('$value')),
@@ -107,12 +102,12 @@ class _LoansTableWidgetState extends State<LoansSuccessWidget> {
                   .read<LoanBloc>()
                   .state
                   .loans!
-                  .map((e) => e.toJson())
+                  .map((e) => e.toViewJson())
                   .toList(),
               selectedRowKeys: _selectedRowKeys,
               onTapRow: (rows, index) {
-                var loan = LoanModel.fromJson(rows[index]);
-                Navigator.pushNamed(context, "/loan", arguments: loan);
+                var loan = LoanModel.fromJsonToView(rows[index]);
+                Navigator.pushNamed(context, "/loan", arguments: loan.id);
               },
               onSelectRows: (keys) {
                 setState(() {

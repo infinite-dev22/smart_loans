@@ -54,11 +54,12 @@ class LoanDetailModel {
   });
 
   factory LoanDetailModel.fromJson(Map<String, dynamic> json) {
+    var formatter = NumberFormat("###,###.##");
     return LoanDetailModel(
       id: json['id'],
       loanNumber: json['loan_number'],
-      principalAmount: json['principal_amount'],
-      loanFees: json['loan_fees'],
+      principalAmount: formatter.format(json['principal_amount']),
+      loanFees: formatter.format(json['loan_fees']),
       loansFeesType: json['loans_fees_type'],
       description: json['description'],
       client: json['client'],
@@ -78,11 +79,11 @@ class LoanDetailModel {
       releasedAt: json['releasedAt'] != null
           ? DateFormat("yyyy-MM-dd").parse(json['releasedAt'])
           : null,
-      maturity: json['maturity'],
-      loanInterest: json['loanInterest'],
-      paidAmount: json['paidAmount'],
-      balanceAmount: json['balanceAmount'],
-      dueAmount: json['dueAmount'],
+      maturity: formatter.format(json['maturity']),
+      loanInterest: formatter.format(double.parse(json['loanInterest'])),
+      paidAmount: formatter.format(double.parse(json['paidAmount'])),
+      balanceAmount: formatter.format(json['balanceAmount']),
+      dueAmount: formatter.format(double.parse(json['dueAmount'])),
     );
   }
 

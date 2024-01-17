@@ -11,16 +11,16 @@ import 'package:smart_loans/pages/loans/widgets/initial/loan_details_initial_wid
 import 'package:smart_loans/pages/loans/widgets/loading/loan_details_loading_widget.dart';
 
 class LoanDetailsPageLayout extends StatelessWidget {
-  const LoanDetailsPageLayout({super.key, required this.loan});
+  const LoanDetailsPageLayout({super.key, required this.loanId});
 
-  final LoanModel loan;
+  final int loanId;
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoanDetailBloc, LoanDetailState>(
       builder: (context, state) {
         if (state.status == LoanDetailStatus.initial) {
-          context.read<LoanDetailBloc>().add(GetLoanDetail(loan.id!));
+          context.read<LoanDetailBloc>().add(GetLoanDetail(loanId!));
         } else if (state.status == LoanDetailStatus.success) {
           var loan = context.read<LoanDetailBloc>().state.loan;
           var loanDetail = context.read<LoanDetailBloc>().state.loanDetail;

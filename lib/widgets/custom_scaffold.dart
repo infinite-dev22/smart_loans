@@ -63,7 +63,7 @@ class CustomScaffold extends StatelessWidget {
         backgroundColor: AppColor.primary,
         actionsIconTheme: const IconThemeData(color: AppColor.white),
         elevation: 8.0,
-        title: Image.asset("assets/images/logo_dark.png"),
+        title: Image.asset("assets/images/logo-dark.png"),
         actions: [
           PopupMenuButton<AdminMenuItem>(
             child: const Icon(Icons.account_circle),

@@ -63,8 +63,8 @@ class LoginInitialWidget extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            Image.asset("assets/images/logo.png"),
-            SizedBox(height: 8.h),
+            Image.asset("assets/images/logo-light.png"),
+            SizedBox(height: 4.h),
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [

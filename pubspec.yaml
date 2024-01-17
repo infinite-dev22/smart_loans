@@ -114,5 +114,5 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
 
   assets:
-    - assets/images/logo.png
-    - assets/images/logo_dark.png
+    - assets/images/logo-light.png
+    - assets/images/logo-dark.png
