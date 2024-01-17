@@ -123,7 +123,7 @@ class EmployeeModel {
       'middleName': middleName,
       'secondName': lastName,
       'gender': gender,
-      'department_id': departmentId,
+      'department_id': null/*departmentId*/,
       'date_of_birth': dateOfBirth?.toIso8601String(),
       'code': code,
       'id_number': idNumber,
