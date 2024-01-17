@@ -51,6 +51,7 @@ class _ClientsSuccessWidgetState extends State<ClientsSuccessWidget> {
           child: WebDataTable(
             header: const Text('Clients'),
             actions: _buildActions,
+            columnSpacing: 0,
             source: WebDataTableSource(
               sortColumnName: _sortColumnName,
               sortAscending: _sortAscending,
@@ -102,7 +103,7 @@ class _ClientsSuccessWidgetState extends State<ClientsSuccessWidget> {
               },
               primaryKeyName: 'number',
             ),
-            horizontalMargin: 100,
+            horizontalMargin: 10,
             onPageChanged: (offset) {},
             onSort: (columnName, ascending) {
               setState(() {
@@ -127,7 +128,8 @@ class _ClientsSuccessWidgetState extends State<ClientsSuccessWidget> {
   List<Widget> get _buildActions {
     return [
       SizedBox(
-        width: 40.w,
+        width: 30.w,
+        height: 50,
         child: TextFormField(
           decoration: InputDecoration(
             prefixIcon: const Icon(Icons.search),
@@ -177,6 +179,7 @@ class _ClientsSuccessWidgetState extends State<ClientsSuccessWidget> {
   }
 
   _buildAddForm() async {
+    final clientBloc = ClientBloc();
     return showDialog(
       context: context,
       barrierDismissible: true,
@@ -187,10 +190,10 @@ class _ClientsSuccessWidgetState extends State<ClientsSuccessWidget> {
           ),
           child: MultiBlocProvider(providers: [
             BlocProvider<ClientsBloc>(
-              create: (_) => ClientsBloc(),
+              create: (_) => ClientsBloc(clientBloc: clientBloc),
             ),
             BlocProvider<ClientBloc>(
-              create: (_) => ClientBloc(),
+              create: (_) => clientBloc,
             ),
             BlocProvider<ClientAddFormBloc>(
               create: (_) => ClientAddFormBloc(),

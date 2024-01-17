@@ -6,10 +6,11 @@ import 'package:flutter_web_data_table/web_data_table.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/config/responsive.dart';
 import 'package:smart_loans/global_values.dart';
-import 'package:smart_loans/pages/clients/bloc/clients_bloc/clients_bloc.dart';
+import 'package:smart_loans/pages/clients/bloc/client_bloc/client_bloc.dart';
 import 'package:smart_loans/pages/employees/bloc/employee_bloc.dart';
 import 'package:smart_loans/pages/employees/bloc/forms/clients/employee_add_form_bloc.dart';
 import 'package:smart_loans/pages/employees/widgets/success/forms/employee_form.dart';
+import 'package:smart_loans/pages/nations/bloc/nation_bloc.dart';
 
 class EmployeesSuccessWidget extends StatefulWidget {
   const EmployeesSuccessWidget({super.key});
@@ -47,6 +48,7 @@ class _EmployeesTableWidgetState extends State<EmployeesSuccessWidget> {
           child: WebDataTable(
             header: const Text('Employees'),
             actions: _buildActions,
+            columnSpacing: 0,
             source: WebDataTableSource(
               sortColumnName: _sortColumnName,
               sortAscending: _sortAscending,
@@ -95,7 +97,7 @@ class _EmployeesTableWidgetState extends State<EmployeesSuccessWidget> {
               },
               primaryKeyName: 'clientNo',
             ),
-            horizontalMargin: 100,
+            horizontalMargin: 10,
             onPageChanged: (offset) {},
             onSort: (columnName, ascending) {
               setState(() {
@@ -120,7 +122,8 @@ class _EmployeesTableWidgetState extends State<EmployeesSuccessWidget> {
   List<Widget> get _buildActions {
     return [
       SizedBox(
-        width: 40.w,
+        width: 30.w,
+        height: 50,
         child: TextFormField(
           decoration: InputDecoration(
             prefixIcon: const Icon(Icons.search),
@@ -179,8 +182,11 @@ class _EmployeesTableWidgetState extends State<EmployeesSuccessWidget> {
             borderRadius: BorderRadius.circular(circularRadius),
           ),
           child: MultiBlocProvider(providers: [
-            BlocProvider<ClientsBloc>(
-              create: (_) => ClientsBloc(),
+            BlocProvider<ClientBloc>(
+              create: (_) => ClientBloc(),
+            ),
+            BlocProvider<NationBloc>(
+              create: (_) => NationBloc(),
             ),
             BlocProvider<EmployeeBloc>(
               create: (_) => EmployeeBloc(),

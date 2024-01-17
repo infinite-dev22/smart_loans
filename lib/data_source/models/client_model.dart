@@ -100,7 +100,7 @@ class ClientModel {
       'in_charge': inCharge,
       'nation_id': nationId,
       'business_industry_id': businessIndustryId,
-      'nation': nation!.toJson(),
+      'nationality': nation!.name,
       'client_profile': clientProfile,
       'documents': documents!.map((doc) => doc.toJson()).toList(),
       'client_type': clientType!.toJson(),

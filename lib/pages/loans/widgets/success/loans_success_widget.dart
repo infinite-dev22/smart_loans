@@ -54,6 +54,9 @@ class _LoansTableWidgetState extends State<LoansSuccessWidget> {
           child: WebDataTable(
             header: const Text('Loans'),
             actions: _buildActions,
+            dataRowHeight: 40,
+            headingRowHeight: 50,
+            columnSpacing: 0,
             source: WebDataTableSource(
               sortColumnName: _sortColumnName,
               sortAscending: _sortAscending,
@@ -118,7 +121,7 @@ class _LoansTableWidgetState extends State<LoansSuccessWidget> {
               },
               primaryKeyName: 'client_id',
             ),
-            horizontalMargin: 100,
+            horizontalMargin: 10,
             onPageChanged: (offset) {},
             onSort: (columnName, ascending) {
               setState(() {
@@ -143,7 +146,8 @@ class _LoansTableWidgetState extends State<LoansSuccessWidget> {
   List<Widget> get _buildActions {
     return [
       SizedBox(
-        width: 40.w,
+        width: 30.w,
+        height: 50,
         child: TextFormField(
           decoration: InputDecoration(
             prefixIcon: const Icon(Icons.search),

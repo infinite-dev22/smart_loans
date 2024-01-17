@@ -108,7 +108,7 @@ class LoanDaoImpl extends LoanDao {
         data: jsonEncode(data),
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         return response.data;
       } else {
         throw Error();

@@ -301,6 +301,7 @@ class _ClientDetailSuccessDesktopState
   }
 
   _buildAddForm(BuildContext context) async {
+    final clientBloc = ClientBloc();
     return showDialog(
       context: context,
       barrierDismissible: true,
@@ -311,10 +312,10 @@ class _ClientDetailSuccessDesktopState
           ),
           child: MultiBlocProvider(providers: [
             BlocProvider<ClientsBloc>(
-              create: (_) => ClientsBloc(),
+              create: (_) => ClientsBloc(clientBloc: clientBloc),
             ),
             BlocProvider<ClientBloc>(
-              create: (_) => ClientBloc(),
+              create: (_) => clientBloc,
             ),
             BlocProvider<ClientAddFormBloc>(
               create: (_) => ClientAddFormBloc(),

@@ -238,7 +238,7 @@ class LoanDetailSuccessDesktop extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              if (loanDetail.loanStatus.toUpperCase() !=
+                              if (loanDetail.loanStatus != null && loanDetail.loanStatus.toUpperCase() !=
                                   "DISBURSED")
                                 Row(
                                   children: [

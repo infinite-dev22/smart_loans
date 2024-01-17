@@ -10,11 +10,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile_photo/profile_photo.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/global_values.dart';
-import 'package:smart_loans/pages/clients/bloc/clients_bloc/clients_bloc.dart';
+import 'package:smart_loans/pages/clients/bloc/client_bloc/client_bloc.dart';
 import 'package:smart_loans/pages/employees/bloc/employee_bloc.dart';
 import 'package:smart_loans/pages/employees/bloc/forms/clients/employee_add_form_bloc.dart';
 import 'package:smart_loans/pages/employees/widgets/success/forms/employee_form.dart';
 import 'package:smart_loans/pages/loans/widgets/details/loan_officer_widget.dart';
+import 'package:smart_loans/pages/nations/bloc/nation_bloc.dart';
 import 'package:smart_loans/theme/colors.dart';
 import 'package:smart_loans/widgets/title_with_actions.dart';
 
@@ -456,8 +457,11 @@ class _EmployeeDetailsSuccessMobileState
             borderRadius: BorderRadius.circular(circularRadius),
           ),
           child: MultiBlocProvider(providers: [
-            BlocProvider<ClientsBloc>(
-              create: (_) => ClientsBloc(),
+            BlocProvider<ClientBloc>(
+              create: (_) => ClientBloc(),
+            ),
+            BlocProvider<NationBloc>(
+              create: (_) => NationBloc(),
             ),
             BlocProvider<EmployeeBloc>(
               create: (_) => EmployeeBloc(),
@@ -481,8 +485,11 @@ class _EmployeeDetailsSuccessMobileState
             borderRadius: BorderRadius.circular(circularRadius),
           ),
           child: MultiBlocProvider(providers: [
-            BlocProvider<ClientsBloc>(
-              create: (_) => ClientsBloc(),
+            BlocProvider<ClientBloc>(
+              create: (_) => ClientBloc(),
+            ),
+            BlocProvider<NationBloc>(
+              create: (_) => NationBloc(),
             ),
             BlocProvider<EmployeeBloc>(
               create: (_) => EmployeeBloc(),

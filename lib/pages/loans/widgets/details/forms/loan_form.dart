@@ -29,7 +29,14 @@ class _LoanFormState extends State<LoanForm> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return BlocListener<LoanBloc, LoanState>(
+  listener: (context, state) {
+    if (state.status == LoanStatus.success) {
+      BlocProvider.of<LoanBloc>(context).add(GetLoans());
+      Navigator.of(context).pop();
+    }
+  },
+  child: SingleChildScrollView(
       child: SizedBox(
         width: (Responsive.isDesktop(context)) ? 25.w : 40.w,
         child: Column(
@@ -39,7 +46,8 @@ class _LoanFormState extends State<LoanForm> {
           ],
         ),
       ),
-    );
+    ),
+);
   }
 
   Widget _buildAddForm(BuildContext context) {
@@ -502,7 +510,6 @@ class _LoanFormState extends State<LoanForm> {
                 child: const Text('Submit'),
                 onPressed: () {
                   context.read<LoanBloc>().add(CreateLoan(loan));
-                  Navigator.of(context).pop();
                 },
               ),
             ],
@@ -531,7 +538,7 @@ class _LoanFormState extends State<LoanForm> {
               LengthLimitingTextInputFormatter(3),
             ],
             onChanged: (value) {
-              var percentage = int.parse(value) * .01;
+              var percentage = double.parse(value) * .01;
               var interest = loan.principalAmount! * percentage;
               interestController.text = interest.toString();
             },

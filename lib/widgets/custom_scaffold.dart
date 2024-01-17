@@ -34,34 +34,6 @@ class CustomScaffold extends StatelessWidget {
       route: '/loans',
       icon: Icons.comment_bank_rounded,
     ),
-    // AdminMenuItem(
-    //   title: 'Top Level',
-    //   icon: Icons.file_copy,
-    //   children: [
-    //     AdminMenuItem(
-    //       title: 'Second Level Item 1',
-    //       route: '/secondLevelItem1',
-    //     ),
-    //     AdminMenuItem(
-    //       title: 'Second Level Item 2',
-    //       route: '/secondLevelItem2',
-    //     ),
-    //     AdminMenuItem(
-    //       title: 'Third Level',
-    //       children: [
-    //         AdminMenuItem(
-    //           title: 'Third Level Item 1',
-    //           route: '/thirdLevelItem1',
-    //         ),
-    //         AdminMenuItem(
-    //           title: 'Third Level Item 2',
-    //           route: '/thirdLevelItem2',
-    //           icon: Icons.image,
-    //         ),
-    //       ],
-    //     ),
-    //   ],
-    // ),
   ];
 
   final List<AdminMenuItem> _adminMenuItems = const [
@@ -143,32 +115,6 @@ class CustomScaffold extends StatelessWidget {
             Navigator.of(context).pushNamed(item.route!);
           }
         },
-        // header: Container(
-        //   height: 50,
-        //   width: double.infinity,
-        //   color: const Color(0xff444444),
-        //   child: const Center(
-        //     child: Text(
-        //       'header',
-        //       style: TextStyle(
-        //         color: Colors.white,
-        //       ),
-        //     ),
-        //   ),
-        // ),
-        // footer: Container(
-        //   height: 50,
-        //   width: double.infinity,
-        //   color: const Color(0xff444444),
-        //   child: const Center(
-        //     child: Text(
-        //       'footer',
-        //       style: TextStyle(
-        //         color: Colors.white,
-        //       ),
-        //     ),
-        //   ),
-        // ),
       ),
       body: body,
     );

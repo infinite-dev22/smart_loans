@@ -8,7 +8,7 @@ class EmployeesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const CustomScaffold(
-      route: "employees",
+      route: "/employees",
       body: EmployeesPageLayout(),
     );
   }

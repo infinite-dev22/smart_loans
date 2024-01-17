@@ -9,6 +9,7 @@ class EmployeeModel {
   int? departmentId;
   String? code;
   String? idNumber;
+  String? department;
   String? nssfNumber;
   String? tinNumber;
   double? height;
@@ -22,6 +23,7 @@ class EmployeeModel {
   int? userId;
   int? salutationId;
   int? maritalStatusId;
+  int? nationId;
   DateTime? createdAt;
 
   EmployeeModel({
@@ -33,6 +35,7 @@ class EmployeeModel {
     this.dateOfBirth,
     this.gender,
     this.departmentId,
+    this.department,
     this.code,
     this.idNumber,
     this.nssfNumber,
@@ -48,37 +51,39 @@ class EmployeeModel {
     this.userId,
     this.salutationId,
     this.maritalStatusId,
+    this.nationId,
     this.createdAt,
   });
 
   factory EmployeeModel.fromJson(Map<String, dynamic> json) {
     return EmployeeModel(
-      id: json['id'] as int,
-      firstName: json['first_name'] as String,
-      middleName: json['middle_name'] as String,
-      lastName: json['last_name'] as String,
-      telephone: json['telephone'] as String,
+      id: json['id'],
+      firstName: json['first_name'],
+      middleName: json['middle_name'],
+      lastName: json['last_name'],
+      telephone: json['telephone'],
       dateOfBirth: json['date_of_birth'] != null
-          ? DateTime.parse(json['date_of_birth'] as String)
+          ? DateTime.parse(json['date_of_birth'])
           : null,
-      gender: json['gender'] as int,
-      departmentId: json['department_id'] as int,
-      code: json['code'] as String,
-      idNumber: json['id_number'] as String,
-      nssfNumber: json['nssf_number'] as String,
-      tinNumber: json['tin_number'] as String,
-      height: json['height'] != null ? json['height'] as double : null,
-      bloodGroup: json['blood_group'] as String,
-      personalEmail: json['personal_email'] as String,
-      permanentAddress: json['permanent_address'] as String?,
-      presentAddress: json['present_address'] as String?,
-      isAddressSame: json['is_address_same'] as bool?,
-      officeNumber: json['office_number'] as String?,
-      mobileNumber: json['mobile_number'] as String?,
-      userId: json['user_id'] as int,
-      salutationId: json['salutation_id'] as int?,
-      maritalStatusId: json['marital_status_id'] as int,
-      createdAt: DateTime.parse(json['created_at'] as String),
+      gender: json['gender'],
+      departmentId: json['department_id'],
+      department: json['department_name'],
+      code: json['code'],
+      idNumber: json['id_number'],
+      nssfNumber: json['nssf_number'],
+      tinNumber: json['tin_number'],
+      height: json['height'] != null ? json['height'] : null,
+      bloodGroup: json['blood_group'],
+      personalEmail: json['personal_email'],
+      permanentAddress: json['permanent_address'],
+      presentAddress: json['present_address'],
+      isAddressSame: json['is_address_same'],
+      officeNumber: json['office_number'],
+      mobileNumber: json['mobile_number'],
+      userId: json['user_id'],
+      salutationId: json['salutation_id'],
+      maritalStatusId: json['marital_status_id'],
+      createdAt: DateTime.parse(json['created_at']),
     );
   }
 
@@ -92,7 +97,7 @@ class EmployeeModel {
       'telephone': telephone,
       'date_of_birth': dateOfBirth?.toIso8601String(),
       'gender': gender,
-      'department_id': departmentId,
+      'role': department,
       'code': code,
       'id_number': idNumber,
       'nssf_number': nssfNumber,
@@ -109,6 +114,34 @@ class EmployeeModel {
       'salutation_id': salutationId,
       'marital_status_id': maritalStatusId,
       'created_at': createdAt,
+    };
+  }
+
+  Map<String, dynamic> toApiJson() {
+    return {
+      'firstName': firstName,
+      'middleName': middleName,
+      'secondName': lastName,
+      'gender': gender,
+      'department_id': departmentId,
+      'date_of_birth': dateOfBirth?.toIso8601String(),
+      'code': code,
+      'id_number': idNumber,
+      'nssf_number': nssfNumber,
+      'tin_number': tinNumber,
+      'blood_group': bloodGroup,
+      'personal_email': personalEmail,
+      'permanent_address': permanentAddress,
+      'present_address': presentAddress,
+      'is_address_same': isAddressSame,
+      'office_number': officeNumber,
+      'mobile_number': mobileNumber,
+      'height': height,
+      "address": "Kampala",
+      "countryOfOrigin": nationId,
+      "marital_status_id": maritalStatusId,
+      "email": personalEmail,
+      "telephone":telephone,
     };
   }
 

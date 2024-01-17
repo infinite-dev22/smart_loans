@@ -243,7 +243,7 @@ class LoanDetailSuccessTablet extends StatelessWidget {
                               SizedBox(
                                 width: 1.w,
                               ),
-                              if (loanDetail.loanStatus.toUpperCase() !=
+                              if (loanDetail.loanStatus != null && loanDetail.loanStatus.toUpperCase() !=
                                   "DISBURSED")
                                 Column(
                                   children: [

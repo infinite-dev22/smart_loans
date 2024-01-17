@@ -76,12 +76,14 @@ class EmployeeDaoImpl extends SimpleDao {
           "Bearer $token"; // Add server auth token here.
       dio.options.followRedirects = false;
 
+      print("EMPLOYEE: ${jsonEncode(data)}");
+
       var response = await dio.post(
         Uri.https(appUrl, 'api/employees/create').toString(),
         data: jsonEncode(data),
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         return response.data;
       } else {
         throw Error();

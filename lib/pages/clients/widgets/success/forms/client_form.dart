@@ -20,7 +20,15 @@ class ClientForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _buildSuccessBody(context);
+    return BlocListener<ClientBloc, ClientState>(
+      listener: (context, state) {
+        if(state.status == ClientStatus.success) {
+          BlocProvider.of<ClientsBloc>(context).add(GetClients());
+          Navigator.of(context).pop();
+        }
+      },
+      child: _buildSuccessBody(context),
+    );
   }
 
   Widget _buildSuccessBody(BuildContext context) {
@@ -68,10 +76,11 @@ class ClientForm extends StatelessWidget {
                                   .read<ClientTypeBloc>()
                                   .state
                                   .types
-                                  ?.map((clientType) => DropdownMenuItem(
-                                        value: clientType.id,
-                                        child: Text(clientType.name!),
-                                      ))
+                                  ?.map((clientType) =>
+                                  DropdownMenuItem(
+                                    value: clientType.id,
+                                    child: Text(clientType.name!),
+                                  ))
                                   .toList(),
                               onChanged: (value) {
                                 client.clientTypeId = value;
@@ -176,10 +185,11 @@ class ClientForm extends StatelessWidget {
                                   .read<NationBloc>()
                                   .state
                                   .nations
-                                  ?.map((clientType) => DropdownMenuItem(
-                                        value: clientType.id,
-                                        child: Text(clientType.name!),
-                                      ))
+                                  ?.map((clientType) =>
+                                  DropdownMenuItem(
+                                    value: clientType.id,
+                                    child: Text(clientType.name!),
+                                  ))
                                   .toList(),
                               onChanged: (value) => client.nationId = value,
                             ),
@@ -225,8 +235,6 @@ class ClientForm extends StatelessWidget {
                       child: const Text('Submit'),
                       onPressed: () {
                         context.read<ClientBloc>().add(CreateClient(client));
-                        context.read<ClientsBloc>().add(GetClients());
-                        Navigator.of(context).pop();
                       },
                     ),
                   ],
@@ -239,10 +247,8 @@ class ClientForm extends StatelessWidget {
     );
   }
 
-  Widget _buildIndividualBody(
-    BuildContext context,
-    BoxConstraints constraints,
-  ) {
+  Widget _buildIndividualBody(BuildContext context,
+      BoxConstraints constraints,) {
     return Column(
       children: [
         SizedBox(height: 2.h),
@@ -260,10 +266,11 @@ class ClientForm extends StatelessWidget {
                 .read<ClientAddFormBloc>()
                 .state
                 .roles
-                ?.map((role) => DropdownMenuItem(
-                      value: role.id,
-                      child: Text(role.name),
-                    ))
+                ?.map((role) =>
+                DropdownMenuItem(
+                  value: role.id,
+                  child: Text(role.name),
+                ))
                 .toList(),
             onChanged: (value) {},
           ),
@@ -384,10 +391,8 @@ class ClientForm extends StatelessWidget {
     );
   }
 
-  Widget _buildCompanyBody(
-    BuildContext context,
-    BoxConstraints constraints,
-  ) {
+  Widget _buildCompanyBody(BuildContext context,
+      BoxConstraints constraints,) {
     return Column(
       children: [
         SizedBox(height: 2.h),
@@ -435,10 +440,11 @@ class ClientForm extends StatelessWidget {
                       .read<IndustryTypeBloc>()
                       .state
                       .types
-                      ?.map((industryType) => DropdownMenuItem(
-                            value: industryType.id,
-                            child: Text(industryType.name!),
-                          ))
+                      ?.map((industryType) =>
+                      DropdownMenuItem(
+                        value: industryType.id,
+                        child: Text(industryType.name!),
+                      ))
                       .toList(),
                   onChanged: (value) => client.businessIndustryId = value,
                 ),

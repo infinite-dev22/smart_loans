@@ -25,13 +25,13 @@ class EmployeeRepo {
 
   static Future post(EmployeeModel employee) async {
     var employeeRepo = EmployeeDaoImpl();
-    var employeeMap = await employeeRepo.post(employee.toJson());
+    var employeeMap = await employeeRepo.post(employee.toApiJson());
     return EmployeeModel.fromJson(employeeMap);
   }
 
   static Future put(EmployeeModel employee, int employeeId) async {
     var employeeRepo = EmployeeDaoImpl();
-    var employeeMap = await employeeRepo.put(employee.toJson(), employeeId);
+    var employeeMap = await employeeRepo.put(employee.toApiJson(), employeeId);
     return EmployeeModel.fromJson(employeeMap);
   }
 
