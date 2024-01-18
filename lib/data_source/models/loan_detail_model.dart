@@ -58,8 +58,12 @@ class LoanDetailModel {
     return LoanDetailModel(
       id: json['id'],
       loanNumber: json['loan_number'],
-      principalAmount: formatter.format(json['principal_amount']),
-      loanFees: formatter.format(json['loan_fees']),
+      principalAmount: json['principal_amount'] != null
+          ? formatter.format(json['principal_amount'])
+          : 0,
+      loanFees: json['loan_fees'] != null
+          ? formatter.format(json['loan_fees'] ?? "0")
+          : 0,
       loansFeesType: json['loans_fees_type'],
       description: json['description'],
       client: json['client'],
@@ -79,11 +83,20 @@ class LoanDetailModel {
       releasedAt: json['releasedAt'] != null
           ? DateFormat("yyyy-MM-dd").parse(json['releasedAt'])
           : null,
-      maturity: formatter.format(json['maturity']),
-      loanInterest: formatter.format(double.parse(json['loanInterest'])),
-      paidAmount: formatter.format(double.parse(json['paidAmount'])),
-      balanceAmount: formatter.format(json['balanceAmount']),
-      dueAmount: formatter.format(double.parse(json['dueAmount'])),
+      maturity:
+          json['maturity'] != null ? formatter.format(json['maturity']) : "0",
+      loanInterest: json['loanInterest'] != null
+          ? formatter.format(double.parse(json['loanInterest']))
+          : "0",
+      paidAmount: json['paidAmount'] != null
+          ? formatter.format(double.parse(json['paidAmount']))
+          : "0",
+      balanceAmount: json['balanceAmount'] != null
+          ? formatter.format(json['balanceAmount'])
+          : "0",
+      dueAmount: json['dueAmount'] != null
+          ? formatter.format(double.parse(json['dueAmount']))
+          : "0",
     );
   }
 
