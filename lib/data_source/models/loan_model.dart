@@ -10,7 +10,7 @@ import 'package:smart_loans/data_source/models/loan_type_model.dart';
 class LoanModel {
   int? id;
   String? loanNumber;
-  int? principalAmount; // should be double but api returns int.
+  dynamic principalAmount; // should be double but api returns int.
   int? loanFees; // should be double but api returns int.
   int? loansFeesType;
   String? description;
@@ -197,6 +197,18 @@ class LoanModel {
     data['currency_name'] = currency?.name;
     data['branch_name'] = branch?.name;
     data['loan_status_name'] = loanStatus?.name;
+    return data;
+  }
+
+  Map<String, dynamic> toApiJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['principal_amount'] = principalAmount;
+    data['description'] = description;
+    data['client_id'] = clientId;
+    data['loan_type_id'] = loanTypeId;
+    data['loan_category_id'] = loanCategoryId;
+    data['currency_id'] = currencyId;
+    data['branch_id'] = branchId;
     return data;
   }
 

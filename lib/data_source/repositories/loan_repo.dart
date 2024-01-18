@@ -29,7 +29,7 @@ class LoanRepo {
 
   static Future post(LoanModel loan) async {
     var loanRepo = LoanDaoImpl();
-    var loanMap = await loanRepo.post(loan.toJson());
+    var loanMap = await loanRepo.post(loan.toApiJson());
     return LoanModel.fromCreateJson(loanMap);
   }
 

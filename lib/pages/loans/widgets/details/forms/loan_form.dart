@@ -15,6 +15,7 @@ import 'package:smart_loans/pages/loan_type/bloc/loan_type_bloc.dart';
 import 'package:smart_loans/pages/loans/bloc/forms/loans/loan_form_bloc.dart';
 import 'package:smart_loans/pages/loans/bloc/loan_bloc.dart';
 import 'package:smart_loans/theme/light.dart';
+import 'package:smart_loans/widgets/custom_form_inputs/custom_currency_text_field.dart';
 import 'package:smart_loans/widgets/dialog_title_wdiget.dart';
 
 class LoanForm extends StatefulWidget {
@@ -26,28 +27,31 @@ class LoanForm extends StatefulWidget {
 
 class _LoanFormState extends State<LoanForm> {
   var interestController = TextEditingController();
+  var principalAmountController = TextEditingController();
+  final FilteringTextInputFormatter _formatNumerals =
+      FilteringTextInputFormatter(RegExp(r'[^0-9.]'), allow: false);
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<LoanBloc, LoanState>(
-  listener: (context, state) {
-    if (state.status == LoanStatus.success) {
-      BlocProvider.of<LoanBloc>(context).add(GetLoans());
-      Navigator.of(context).pop();
-    }
-  },
-  child: SingleChildScrollView(
-      child: SizedBox(
-        width: (Responsive.isDesktop(context)) ? 25.w : 40.w,
-        child: Column(
-          children: [
-            const DialogTitleWidget(text: 'Loan Form'),
-            _buildAddForm(context),
-          ],
+      listener: (context, state) {
+        if (state.status == LoanStatus.success) {
+          BlocProvider.of<LoanBloc>(context).add(GetLoans());
+          Navigator.of(context).pop();
+        }
+      },
+      child: SingleChildScrollView(
+        child: SizedBox(
+          width: (Responsive.isDesktop(context)) ? 25.w : 40.w,
+          child: Column(
+            children: [
+              const DialogTitleWidget(text: 'Loan Form'),
+              _buildAddForm(context),
+            ],
+          ),
         ),
       ),
-    ),
-);
+    );
   }
 
   Widget _buildAddForm(BuildContext context) {
@@ -433,15 +437,14 @@ class _LoanFormState extends State<LoanForm> {
                   SizedBox(
                     height: 55,
                     width: constraints.maxWidth * .45,
-                    child: TextFormField(
+                    child: CustomCurrencyTextField(
                       decoration: InputDecoration(
                         label: const Text("Amount"),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(circularRadius),
                         ),
                       ),
-                      onChanged: (value) =>
-                          loan.principalAmount = int.parse(value),
+                      controller: principalAmountController,
                     ),
                   ),
                 ],
@@ -509,6 +512,9 @@ class _LoanFormState extends State<LoanForm> {
                 ),
                 child: const Text('Submit'),
                 onPressed: () {
+                  interest.interestAmount = interestController.text;
+                  loan.principalAmount = double.parse(
+                      principalAmountController.text.replaceAll(",", ""));
                   context.read<LoanBloc>().add(CreateLoan(loan));
                 },
               ),
@@ -535,11 +541,14 @@ class _LoanFormState extends State<LoanForm> {
               ),
             ),
             inputFormatters: [
-              LengthLimitingTextInputFormatter(3),
+              // _formatNumerals,
+              LengthLimitingTextInputFormatter(4),
             ],
             onChanged: (value) {
-              var percentage = double.parse(value) * .01;
-              var interest = loan.principalAmount! * percentage;
+              var percentage = value.isNotEmpty ? double.parse(value) * .01 : 0;
+              var interest = double.parse(
+                      principalAmountController.text.replaceAll(",", "")) *
+                  percentage;
               interestController.text = interest.toString();
             },
           ),
@@ -547,7 +556,7 @@ class _LoanFormState extends State<LoanForm> {
         SizedBox(
           height: 50,
           width: 25.h,
-          child: TextFormField(
+          child: CustomCurrencyTextField(
             readOnly: true,
             controller: interestController,
             decoration: InputDecoration(
@@ -557,9 +566,6 @@ class _LoanFormState extends State<LoanForm> {
                 borderRadius: BorderRadius.circular(circularRadius),
               ),
             ),
-            onChanged: (value) {
-              interest.interestAmount = value;
-            },
           ),
         ),
       ],
@@ -569,7 +575,7 @@ class _LoanFormState extends State<LoanForm> {
   Widget _buildFixedRateBody(BuildContext context, BoxConstraints constraints) {
     return SizedBox(
       height: 50,
-      child: TextFormField(
+      child: CustomCurrencyTextField(
         decoration: InputDecoration(
           label: Text(
               "Interest${loan.currency != null ? '(${loan.currency!.code})' : ''}"),
@@ -577,6 +583,7 @@ class _LoanFormState extends State<LoanForm> {
             borderRadius: BorderRadius.circular(circularRadius),
           ),
         ),
+        controller: interestController,
       ),
     );
   }
