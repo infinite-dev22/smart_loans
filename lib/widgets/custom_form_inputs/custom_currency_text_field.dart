@@ -21,7 +21,7 @@ class CustomCurrencyTextField extends StatelessWidget {
 
   _buildBody() {
     FilteringTextInputFormatter formatNumerals =
-        FilteringTextInputFormatter(RegExp(r'[^0-9]'), allow: false);
+        FilteringTextInputFormatter(RegExp(r'[\d.]'), allow: true);
     return TextFormField(
       readOnly: readOnly,
       controller: controller,
@@ -31,7 +31,11 @@ class CustomCurrencyTextField extends StatelessWidget {
             TextSelection(baseOffset: 0, extentOffset: controller.text.length);
       },
       keyboardType: const TextInputType.numberWithOptions(),
-      inputFormatters: [formatNumerals, CustomNumberInputFormatter()],
+      inputFormatters: [
+        formatNumerals,
+        CustomNumberInputFormatter(),
+        LengthLimitingTextInputFormatter(16),
+      ],
     );
   }
 }
