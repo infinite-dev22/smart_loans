@@ -14,6 +14,9 @@ import 'package:smart_loans/pages/clients/widgets/details/widgets/documents/docu
 import 'package:smart_loans/pages/clients/widgets/details/widgets/documents/documents_initial_widget.dart';
 import 'package:smart_loans/pages/clients/widgets/details/widgets/documents/documents_loading_widget.dart';
 import 'package:smart_loans/pages/clients/widgets/details/widgets/documents/documents_success_widget.dart';
+import 'package:smart_loans/pages/clients/widgets/error/clients_error_widget.dart';
+import 'package:smart_loans/pages/clients/widgets/initial/client_initial_widget.dart';
+import 'package:smart_loans/pages/clients/widgets/loading/clients_loading_widget.dart';
 import 'package:smart_loans/pages/clients/widgets/success/forms/client_form.dart';
 import 'package:smart_loans/pages/industry_types/bloc/industry_type_bloc.dart';
 import 'package:smart_loans/pages/loans/widgets/details/loan_officer_widget.dart';
@@ -23,30 +26,35 @@ import 'package:smart_loans/widgets/subtitle_widget.dart';
 import 'package:smart_loans/widgets/title_widget.dart';
 import 'package:smart_loans/widgets/title_with_actions.dart';
 
-class ClientDetailSuccessTablet extends StatefulWidget {
+class ClientDetailSuccessTablet extends StatelessWidget {
   const ClientDetailSuccessTablet({
     super.key,
-    required this.client,
+    required this.clientId,
   });
 
-  final ClientModel client;
+  final int clientId;
 
-  @override
-  State<ClientDetailSuccessTablet> createState() =>
-      _ClientDetailSuccessTabletState();
-}
-
-class _ClientDetailSuccessTabletState extends State<ClientDetailSuccessTablet> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ClientsBloc, ClientsState>(
+    var client;
+    return BlocBuilder<ClientBloc, ClientState>(
       builder: (context, state) {
-        return _buildBody();
+        if (state.status == ClientStatus.initial) {
+          context.read<ClientBloc>().add(GetClient(clientId));
+        } else if (state.status == ClientStatus.success) {
+          client = context.read<ClientBloc>().state.client;
+          return _buildBody(context, client);
+        } else if (state.status == ClientStatus.loading) {
+          return const ClientsLoadingWidget();
+        } else if (state.status == ClientStatus.error) {
+          return const ClientsErrorWidget();
+        }
+        return const ClientsInitialWidget();
       },
     );
   }
 
-  Widget _buildBody() {
+  Widget _buildBody(BuildContext context, ClientModel client) {
     return Column(
       children: [
         Row(
@@ -104,7 +112,7 @@ class _ClientDetailSuccessTabletState extends State<ClientDetailSuccessTablet> {
                               ProfilePhoto(
                                 totalWidth: 10.h,
                                 color: AppColor.white45,
-                                name: widget.client.name!,
+                                name: client.name!,
                                 outlineColor:
                                     colors[Random().nextInt(colors.length)],
                               ),
@@ -112,11 +120,11 @@ class _ClientDetailSuccessTabletState extends State<ClientDetailSuccessTablet> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  TitleWidget(text: widget.client.name!),
+                                  TitleWidget(text: client.name!),
                                   SubTitleWidget(
-                                      text: widget.client.clientType!.name!),
-                                  Text(widget.client.number!),
-                                  Text(widget.client.telephone!),
+                                      text: client.clientType!.name!),
+                                  Text(client.number!),
+                                  Text(client.telephone!),
                                 ],
                               ),
                             ],
@@ -130,7 +138,7 @@ class _ClientDetailSuccessTabletState extends State<ClientDetailSuccessTablet> {
                     ),
                     DefaultTabController(
                       length: 5,
-                      child: _buildTabs(),
+                      child: _buildTabs(client),
                     ),
                   ],
                 ),
@@ -143,7 +151,7 @@ class _ClientDetailSuccessTabletState extends State<ClientDetailSuccessTablet> {
     );
   }
 
-  Widget _buildTabs() {
+  Widget _buildTabs(client) {
     return Column(
       children: [
         const TabBar(
@@ -172,7 +180,7 @@ class _ClientDetailSuccessTabletState extends State<ClientDetailSuccessTablet> {
             child: TabBarView(
               children: [
                 _buildClientMoreDetails(),
-                _buildClientLoanDocumentDetails(),
+                _buildClientLoanDocumentDetails(client),
                 const Icon(Icons.directions_bike),
                 const Icon(Icons.directions_bike),
                 const Icon(Icons.directions_bike),
@@ -257,19 +265,18 @@ class _ClientDetailSuccessTabletState extends State<ClientDetailSuccessTablet> {
     );
   }
 
-  Widget _buildClientLoanDocumentDetails() {
+  Widget _buildClientLoanDocumentDetails(client) {
     return BlocBuilder<ClientBloc, ClientState>(
       builder: (context, state) {
         if (state.status == ClientStatus.initial) {
-          context.read<ClientBloc>().add(GetClientDocuments(widget
-              .client)); // TODO: Remove when api gets end points for documents.
+          context.read<ClientBloc>().add(GetClientDocuments(
+              client)); // TODO: Remove when api gets end points for documents.
         }
         if (state.status == ClientStatus.success) {
-          if (widget.client.documents!.isEmpty) {
+          if (client.documents!.isEmpty) {
             return const DocumentsInitialWidget();
           }
-          return LoanDocumentsSuccessWidget(
-              documents: widget.client.documents!);
+          return LoanDocumentsSuccessWidget(documents: client.documents!);
         }
         if (state.status == ClientStatus.loading) {
           return const DocumentsLoadingWidget();

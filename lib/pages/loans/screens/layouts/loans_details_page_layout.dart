@@ -20,7 +20,7 @@ class LoanDetailsPageLayout extends StatelessWidget {
     return BlocBuilder<LoanDetailBloc, LoanDetailState>(
       builder: (context, state) {
         if (state.status == LoanDetailStatus.initial) {
-          context.read<LoanDetailBloc>().add(GetLoanDetail(loanId!));
+          context.read<LoanDetailBloc>().add(GetLoanDetail(loanId));
         } else if (state.status == LoanDetailStatus.success) {
           var loan = context.read<LoanDetailBloc>().state.loan;
           var loanDetail = context.read<LoanDetailBloc>().state.loanDetail;

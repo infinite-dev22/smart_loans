@@ -8,12 +8,12 @@ abstract class ClientEvent extends Equatable {
 }
 
 class GetClient extends ClientEvent {
-  GetClient(this.idSelected);
+  GetClient(this.clientId);
 
-  final int idSelected;
+  final int clientId;
 
   @override
-  List<Object?> get props => [idSelected];
+  List<Object?> get props => [clientId];
 }
 
 class CreateClient extends ClientEvent {
@@ -26,22 +26,22 @@ class CreateClient extends ClientEvent {
 }
 
 class UpdateClient extends ClientEvent {
-  UpdateClient(this.idSelected, this.client);
+  UpdateClient(this.clientId, this.client);
 
-  final int idSelected;
+  final int clientId;
   final ClientModel client;
 
   @override
-  List<Object?> get props => [idSelected, client];
+  List<Object?> get props => [clientId, client];
 }
 
 class DeleteClient extends ClientEvent {
-  DeleteClient(this.idSelected);
+  DeleteClient(this.clientId);
 
-  final int idSelected;
+  final int clientId;
 
   @override
-  List<Object?> get props => [idSelected];
+  List<Object?> get props => [clientId];
 }
 
 class SelectClient extends ClientEvent {
@@ -63,12 +63,12 @@ class GetClientDocuments extends ClientEvent {
 }
 
 class GetClientDocument extends ClientEvent {
-  GetClientDocument(this.idSelected);
+  GetClientDocument(this.clientId);
 
-  final int idSelected;
+  final int clientId;
 
   @override
-  List<Object?> get props => [idSelected];
+  List<Object?> get props => [clientId];
 }
 
 class DeleteClientDocuments extends ClientEvent {
@@ -81,12 +81,12 @@ class DeleteClientDocuments extends ClientEvent {
 }
 
 class DeleteClientDocument extends ClientEvent {
-  DeleteClientDocument(this.idSelected);
+  DeleteClientDocument(this.clientId);
 
-  final int idSelected;
+  final int clientId;
 
   @override
-  List<Object?> get props => [idSelected];
+  List<Object?> get props => [clientId];
 }
 
 class UpdateClientDocument extends ClientEvent {

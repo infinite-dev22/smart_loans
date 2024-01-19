@@ -93,8 +93,7 @@ class _ClientsSuccessWidgetState extends State<ClientsSuccessWidget> {
               selectedRowKeys: _selectedRowKeys,
               onTapRow: (rows, index) {
                 var client = ClientModel.fromJson(rows[index]);
-                context.read<ClientBloc>().add(SelectClient(client));
-                Navigator.pushNamed(context, "/client", arguments: client);
+                Navigator.pushNamed(context, "/client", arguments: client.id);
               },
               onSelectRows: (keys) {
                 setState(() {

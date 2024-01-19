@@ -6,8 +6,8 @@ abstract class ClientAddFormEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class GetClient extends ClientAddFormEvent {
-  GetClient(this.idSelected);
+class GetFormClient extends ClientAddFormEvent {
+  GetFormClient(this.idSelected);
 
   final int idSelected;
 

@@ -11,7 +11,7 @@ part 'client_add_form_state.dart';
 
 class ClientAddFormBloc extends Bloc<ClientAddFormEvent, ClientAddFormState> {
   ClientAddFormBloc() : super(const ClientAddFormState()) {
-    on<GetClient>(_mapLoadClientAddFormEventToState);
+    on<GetFormClient>(_mapLoadClientAddFormEventToState);
     on<PostClient>(_mapPostClientAddFormEventToState);
     on<PutClient>(_mapPutClientAddFormEventToState);
     on<SetIndividual>(_mapSetIndividualEventToState);
@@ -19,7 +19,7 @@ class ClientAddFormBloc extends Bloc<ClientAddFormEvent, ClientAddFormState> {
   }
 
   _mapLoadClientAddFormEventToState(
-      GetClient event, Emitter<ClientAddFormState> emit) async {
+      GetFormClient event, Emitter<ClientAddFormState> emit) async {
     emit(state.copyWith(status: ClientAddFormStatus.loading));
     await RoleRepo.fetchAll().then((roles) {
       emit(state.copyWith(status: ClientAddFormStatus.success, roles: roles));

@@ -20,12 +20,15 @@ class ClientBloc extends Bloc<ClientEvent, ClientState> {
 
   _mapGetClientEventToState(GetClient event, Emitter<ClientState> emit) async {
     emit(state.copyWith(status: ClientStatus.loading));
-    try {
-      var client = await ClientRepo.fetch(event.idSelected);
+    await ClientRepo.fetch(event.clientId).then((client) {
       emit(state.copyWith(status: ClientStatus.success, client: client));
-    } catch (e) {
+    }).onError((error, stackTrace) {
+      if (kDebugMode) {
+        print(error);
+        print(stackTrace);
+      }
       emit(state.copyWith(status: ClientStatus.error));
-    }
+    });
   }
 
   _mapCreateClientEventToState(
@@ -45,7 +48,7 @@ class ClientBloc extends Bloc<ClientEvent, ClientState> {
   _mapUpdateClientEventToState(
       UpdateClient event, Emitter<ClientState> emit) async {
     emit(state.copyWith(status: ClientStatus.loading));
-    await ClientRepo.put(event.client, event.idSelected).then((client) {
+    await ClientRepo.put(event.client, event.clientId).then((client) {
       emit(state.copyWith(status: ClientStatus.success, client: client));
     }).onError((error, stackTrace) {
       if (kDebugMode) {
