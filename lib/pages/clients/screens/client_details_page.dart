@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smart_loans/config/responsive.dart';
 import 'package:smart_loans/init.dart';
-import 'package:smart_loans/pages/clients/widgets/details/client_details_success_widget/desktop.dart';
-import 'package:smart_loans/pages/clients/widgets/details/client_details_success_widget/mobile.dart';
-import 'package:smart_loans/pages/clients/widgets/details/client_details_success_widget/tablet.dart';
+import 'package:smart_loans/pages/clients/screens/layouts/client_details_page_layout.dart';
 import 'package:smart_loans/widgets/custom_scaffold.dart';
 
 class ClientDetailsPage extends StatelessWidget {
@@ -20,13 +17,7 @@ class ClientDetailsPage extends StatelessWidget {
     }
     return CustomScaffold(
       route: "/client",
-      body: SingleChildScrollView(
-        child: Responsive(
-          mobile: ClientDetailSuccessMobile(clientId: clientId!),
-          tablet: ClientDetailSuccessTablet(clientId: clientId),
-          desktop: ClientDetailSuccessDesktop(clientId: clientId),
-        ),
-      ),
+      body: ClientDetailsPageLayout(clientId: clientId!),
     );
   }
 }

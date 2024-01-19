@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/config/responsive.dart';
+import 'package:smart_loans/data_source/models/client_model.dart';
 import 'package:smart_loans/global_values.dart';
 import 'package:smart_loans/init.dart';
 import 'package:smart_loans/pages/client_types/bloc/client_type_bloc.dart';
@@ -16,22 +17,131 @@ import 'package:smart_loans/theme/light.dart';
 import 'package:smart_loans/widgets/dialog_title_wdiget.dart';
 
 class ClientForm extends StatelessWidget {
-  const ClientForm({super.key});
+  final int? clientId;
+
+  const ClientForm({super.key, this.clientId});
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<ClientBloc, ClientState>(
       listener: (context, state) {
-        if(state.status == ClientStatus.success) {
-          BlocProvider.of<ClientsBloc>(context).add(GetClients());
+        if (state.status == ClientStatus.success) {
+          context.read<ClientsBloc>().add(GetClients());
           Navigator.of(context).pop();
         }
       },
-      child: _buildSuccessBody(context),
+      child: BlocBuilder<ClientFormBloc, ClientFormState>(
+        builder: (context, state) {
+          if (clientId != null) {
+            if (state.status == ClientFormStatus.initial) {
+              context.read<ClientFormBloc>().add(GetFormClient(clientId!));
+            } else if (state.status == ClientFormStatus.success) {
+              client = context.read<ClientFormBloc>().state.client!;
+              return _buildBody(context, oldClient: client);
+            } else if (state.status == ClientFormStatus.loading) {
+              return _buildLoadingBody(context);
+            } else if (state.status == ClientFormStatus.error) {
+              return _buildErrorBody(context);
+            }
+          }
+          return _buildBody(context);
+        },
+      ),
     );
   }
 
-  Widget _buildSuccessBody(BuildContext context) {
+  Widget _buildLoadingBody(BuildContext context) {
+    return SingleChildScrollView(
+      child: SizedBox(
+        width: (Responsive.isDesktop(context)) ? 30.w : 40.w,
+        child: LayoutBuilder(builder: (context, constraints) {
+          return Column(
+            children: [
+              const DialogTitleWidget(text: 'Client Form'),
+              Padding(
+                padding: EdgeInsets.all(padding),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      height: 55,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(8.0),
+                        ),
+                        border:
+                            Border.all(width: 1, color: LightAppColor.darker),
+                      ),
+                      child: const CupertinoActivityIndicator(),
+                    ),
+                    Container(
+                      height: 55,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(8.0),
+                        ),
+                        border:
+                            Border.all(width: 1, color: LightAppColor.darker),
+                      ),
+                      child: const CupertinoActivityIndicator(),
+                    ),
+                    Container(
+                      height: 55,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(8.0),
+                        ),
+                        border:
+                            Border.all(width: 1, color: LightAppColor.darker),
+                      ),
+                      child: const CupertinoActivityIndicator(),
+                    ),
+                    SizedBox(height: 3.h),
+                    Container(
+                      height: 55,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(8.0),
+                        ),
+                        border:
+                            Border.all(width: 1, color: LightAppColor.darker),
+                      ),
+                      child: const CupertinoActivityIndicator(),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        }),
+      ),
+    );
+  }
+
+  Widget _buildErrorBody(BuildContext context) {
+    return SingleChildScrollView(
+      child: SizedBox(
+        width: (Responsive.isDesktop(context)) ? 30.w : 40.w,
+        child: Container(
+          height: 55,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(8.0),
+            ),
+            border: Border.all(width: 1, color: LightAppColor.darker),
+          ),
+          child: const Text("An error occurred"),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBody(BuildContext context, {ClientModel? oldClient}) {
     return SingleChildScrollView(
       child: SizedBox(
         width: (Responsive.isDesktop(context)) ? 30.w : 40.w,
@@ -65,6 +175,7 @@ class ClientForm extends StatelessWidget {
                           return SizedBox(
                             height: 50,
                             child: DropdownButtonFormField2(
+                              value: oldClient?.clientTypeId,
                               decoration: const InputDecoration(
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
@@ -76,21 +187,20 @@ class ClientForm extends StatelessWidget {
                                   .read<ClientTypeBloc>()
                                   .state
                                   .types
-                                  ?.map((clientType) =>
-                                  DropdownMenuItem(
-                                    value: clientType.id,
-                                    child: Text(clientType.name!),
-                                  ))
+                                  ?.map((clientType) => DropdownMenuItem(
+                                        value: clientType.id,
+                                        child: Text(clientType.name!),
+                                      ))
                                   .toList(),
                               onChanged: (value) {
                                 client.clientTypeId = value;
                                 if (value == 1) {
                                   context
-                                      .read<ClientAddFormBloc>()
+                                      .read<ClientFormBloc>()
                                       .add(SetIndividual());
                                 } else {
                                   context
-                                      .read<ClientAddFormBloc>()
+                                      .read<ClientFormBloc>()
                                       .add(SetCompany());
                                 }
                               },
@@ -127,27 +237,34 @@ class ClientForm extends StatelessWidget {
                         );
                       },
                     ),
-                    BlocBuilder<ClientAddFormBloc, ClientAddFormState>(
+                    BlocBuilder<ClientFormBloc, ClientFormState>(
                       builder: (context, state) {
-                        if (state.status == ClientAddFormStatus.initial) {
-                          context
-                              .read<ClientAddFormBloc>()
-                              .add(SetIndividual());
+                        if (state.status == ClientFormStatus.initial) {
+                          context.read<ClientFormBloc>().add(SetIndividual());
                         }
                         if (client.clientTypeId == 1) {
-                          context
-                              .read<ClientAddFormBloc>()
-                              .add(SetIndividual());
+                          context.read<ClientFormBloc>().add(SetIndividual());
                         } else {
-                          context.read<ClientAddFormBloc>().add(SetCompany());
+                          context.read<ClientFormBloc>().add(SetCompany());
                         }
-                        if (state.status == ClientAddFormStatus.individual) {
-                          return _buildIndividualBody(context, constraints);
-                        } else if (state.status ==
-                            ClientAddFormStatus.company) {
-                          return _buildCompanyBody(context, constraints);
+                        if (state.status == ClientFormStatus.individual) {
+                          return _buildIndividualBody(
+                            context,
+                            constraints,
+                            oldClient: oldClient,
+                          );
+                        } else if (state.status == ClientFormStatus.company) {
+                          return _buildCompanyBody(
+                            context,
+                            constraints,
+                            oldClient: oldClient,
+                          );
                         } else {
-                          return _buildIndividualBody(context, constraints);
+                          return _buildIndividualBody(
+                            context,
+                            constraints,
+                            oldClient: oldClient,
+                          );
                         }
                       },
                     ),
@@ -172,6 +289,7 @@ class ClientForm extends StatelessWidget {
                           return SizedBox(
                             height: 50,
                             child: DropdownButtonFormField2(
+                              value: oldClient?.nationId,
                               decoration: const InputDecoration(
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
@@ -185,11 +303,10 @@ class ClientForm extends StatelessWidget {
                                   .read<NationBloc>()
                                   .state
                                   .nations
-                                  ?.map((clientType) =>
-                                  DropdownMenuItem(
-                                    value: clientType.id,
-                                    child: Text(clientType.name!),
-                                  ))
+                                  ?.map((clientType) => DropdownMenuItem(
+                                        value: clientType.id,
+                                        child: Text(clientType.name!),
+                                      ))
                                   .toList(),
                               onChanged: (value) => client.nationId = value,
                             ),
@@ -247,8 +364,8 @@ class ClientForm extends StatelessWidget {
     );
   }
 
-  Widget _buildIndividualBody(BuildContext context,
-      BoxConstraints constraints,) {
+  Widget _buildIndividualBody(BuildContext context, BoxConstraints constraints,
+      {ClientModel? oldClient}) {
     return Column(
       children: [
         SizedBox(height: 2.h),
@@ -263,14 +380,13 @@ class ClientForm extends StatelessWidget {
                 ),
                 label: Text("Salutation")),
             items: context
-                .read<ClientAddFormBloc>()
+                .read<ClientFormBloc>()
                 .state
                 .roles
-                ?.map((role) =>
-                DropdownMenuItem(
-                  value: role.id,
-                  child: Text(role.name),
-                ))
+                ?.map((role) => DropdownMenuItem(
+                      value: role.id,
+                      child: Text(role.name),
+                    ))
                 .toList(),
             onChanged: (value) {},
           ),
@@ -285,6 +401,7 @@ class ClientForm extends StatelessWidget {
                 width: constraints.maxWidth * .31,
                 height: 50,
                 child: TextFormField(
+                  controller: TextEditingController(text: oldClient?.firstName),
                   decoration: InputDecoration(
                     label: const Text("First Name"),
                     border: OutlineInputBorder(
@@ -299,6 +416,7 @@ class ClientForm extends StatelessWidget {
                 width: constraints.maxWidth * .31,
                 height: 50,
                 child: TextFormField(
+                  controller: TextEditingController(text: oldClient?.lastName),
                   decoration: InputDecoration(
                     label: const Text("Last Name"),
                     border: OutlineInputBorder(
@@ -313,6 +431,7 @@ class ClientForm extends StatelessWidget {
                 width: constraints.maxWidth * .31,
                 height: 50,
                 child: TextFormField(
+                  controller: TextEditingController(text: oldClient?.otherName),
                   decoration: InputDecoration(
                     label: const Text("Other Name"),
                     border: OutlineInputBorder(
@@ -334,6 +453,7 @@ class ClientForm extends StatelessWidget {
                 width: constraints.maxWidth * .475,
                 height: 50,
                 child: TextFormField(
+                  controller: TextEditingController(text: oldClient?.telephone),
                   decoration: InputDecoration(
                     label: const Text("Telephone"),
                     border: OutlineInputBorder(
@@ -348,6 +468,7 @@ class ClientForm extends StatelessWidget {
                 width: constraints.maxWidth * .475,
                 height: 50,
                 child: TextFormField(
+                  controller: TextEditingController(text: oldClient?.email),
                   decoration: InputDecoration(
                     label: const Text("Email"),
                     border: OutlineInputBorder(
@@ -364,6 +485,7 @@ class ClientForm extends StatelessWidget {
         SizedBox(
           height: 50,
           child: TextFormField(
+            controller: TextEditingController(text: oldClient?.occupation),
             decoration: InputDecoration(
               label: const Text("Occupation"),
               border: OutlineInputBorder(
@@ -377,6 +499,7 @@ class ClientForm extends StatelessWidget {
         SizedBox(
           height: 50,
           child: TextFormField(
+            controller: TextEditingController(text: oldClient?.address),
             decoration: InputDecoration(
               label: const Text("Address"),
               border: OutlineInputBorder(
@@ -391,14 +514,15 @@ class ClientForm extends StatelessWidget {
     );
   }
 
-  Widget _buildCompanyBody(BuildContext context,
-      BoxConstraints constraints,) {
+  Widget _buildCompanyBody(BuildContext context, BoxConstraints constraints,
+      {ClientModel? oldClient}) {
     return Column(
       children: [
         SizedBox(height: 2.h),
         SizedBox(
           height: 50,
           child: TextFormField(
+            controller: TextEditingController(text: oldClient?.name),
             decoration: InputDecoration(
               label: const Text("Company Name"),
               border: OutlineInputBorder(
@@ -429,6 +553,7 @@ class ClientForm extends StatelessWidget {
               return SizedBox(
                 height: 50,
                 child: DropdownButtonFormField2(
+                  value: oldClient?.businessIndustryId,
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(
@@ -440,11 +565,10 @@ class ClientForm extends StatelessWidget {
                       .read<IndustryTypeBloc>()
                       .state
                       .types
-                      ?.map((industryType) =>
-                      DropdownMenuItem(
-                        value: industryType.id,
-                        child: Text(industryType.name!),
-                      ))
+                      ?.map((industryType) => DropdownMenuItem(
+                            value: industryType.id,
+                            child: Text(industryType.name!),
+                          ))
                       .toList(),
                   onChanged: (value) => client.businessIndustryId = value,
                 ),
@@ -487,6 +611,7 @@ class ClientForm extends StatelessWidget {
                 width: constraints.maxWidth * .475,
                 height: 50,
                 child: TextFormField(
+                  controller: TextEditingController(text: oldClient?.telephone),
                   decoration: InputDecoration(
                     label: const Text("Telephone"),
                     border: OutlineInputBorder(
@@ -517,6 +642,7 @@ class ClientForm extends StatelessWidget {
         SizedBox(
           height: 50,
           child: TextFormField(
+            controller: TextEditingController(text: oldClient?.tin),
             decoration: InputDecoration(
               label: const Text("Tin"),
               border: OutlineInputBorder(
@@ -530,6 +656,7 @@ class ClientForm extends StatelessWidget {
         SizedBox(
           height: 50,
           child: TextFormField(
+            controller: TextEditingController(text: oldClient?.address),
             decoration: InputDecoration(
               label: const Text("Address"),
               border: OutlineInputBorder(

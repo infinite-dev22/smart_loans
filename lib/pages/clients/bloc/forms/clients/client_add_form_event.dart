@@ -1,21 +1,21 @@
 part of 'client_add_form_bloc.dart';
 
 @immutable
-abstract class ClientAddFormEvent extends Equatable {
+abstract class ClientFormEvent extends Equatable {
   @override
   List<Object?> get props => [];
 }
 
-class GetFormClient extends ClientAddFormEvent {
-  GetFormClient(this.idSelected);
+class GetFormClient extends ClientFormEvent {
+  GetFormClient(this.clientId);
 
-  final int idSelected;
+  final int clientId;
 
   @override
-  List<Object?> get props => [idSelected];
+  List<Object?> get props => [clientId];
 }
 
-class PutClient extends ClientAddFormEvent {
+class PutClient extends ClientFormEvent {
   PutClient(this.client, this.idSelected);
 
   final int idSelected;
@@ -28,7 +28,7 @@ class PutClient extends ClientAddFormEvent {
       ];
 }
 
-class PostClient extends ClientAddFormEvent {
+class PostClient extends ClientFormEvent {
   PostClient(this.client);
 
   final ClientModel client;
@@ -37,8 +37,8 @@ class PostClient extends ClientAddFormEvent {
   List<Object?> get props => [client];
 }
 
-class Success extends ClientAddFormEvent {}
+class Success extends ClientFormEvent {}
 
-class SetIndividual extends ClientAddFormEvent {}
+class SetIndividual extends ClientFormEvent {}
 
-class SetCompany extends ClientAddFormEvent {}
+class SetCompany extends ClientFormEvent {}

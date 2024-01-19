@@ -194,8 +194,8 @@ class _ClientsSuccessWidgetState extends State<ClientsSuccessWidget> {
             BlocProvider<ClientBloc>(
               create: (_) => clientBloc,
             ),
-            BlocProvider<ClientAddFormBloc>(
-              create: (_) => ClientAddFormBloc(),
+            BlocProvider<ClientFormBloc>(
+              create: (_) => ClientFormBloc(),
             ),
             BlocProvider<ClientTypeBloc>(
               create: (_) => ClientTypeBloc(),

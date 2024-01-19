@@ -43,7 +43,7 @@ class ClientDetailSuccessMobile extends StatelessWidget {
           context.read<ClientBloc>().add(GetClient(clientId));
         } else if (state.status == ClientStatus.success) {
           client = context.read<ClientBloc>().state.client;
-          return _buildBody(context, client);
+          return SingleChildScrollView(child: _buildBody(context, client));
         } else if (state.status == ClientStatus.loading) {
           return const ClientsLoadingWidget();
         } else if (state.status == ClientStatus.error) {
@@ -306,8 +306,8 @@ class ClientDetailSuccessMobile extends StatelessWidget {
             BlocProvider<ClientBloc>(
               create: (_) => clientBloc,
             ),
-            BlocProvider<ClientAddFormBloc>(
-              create: (_) => ClientAddFormBloc(),
+            BlocProvider<ClientFormBloc>(
+              create: (_) => ClientFormBloc(),
             ),
             BlocProvider<ClientTypeBloc>(
               create: (_) => ClientTypeBloc(),

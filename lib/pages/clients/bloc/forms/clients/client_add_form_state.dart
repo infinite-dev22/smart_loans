@@ -1,6 +1,6 @@
 part of 'client_add_form_bloc.dart';
 
-enum ClientAddFormStatus {
+enum ClientFormStatus {
   initial,
   success,
   error,
@@ -11,34 +11,34 @@ enum ClientAddFormStatus {
   company
 }
 
-extension ClientAddFormStatusX on ClientAddFormStatus {
-  bool get isInitial => this == ClientAddFormStatus.initial;
+extension ClientFormStatusX on ClientFormStatus {
+  bool get isInitial => this == ClientFormStatus.initial;
 
-  bool get isSuccess => this == ClientAddFormStatus.success;
+  bool get isSuccess => this == ClientFormStatus.success;
 
-  bool get isError => this == ClientAddFormStatus.error;
+  bool get isError => this == ClientFormStatus.error;
 
-  bool get isLoading => this == ClientAddFormStatus.loading;
+  bool get isLoading => this == ClientFormStatus.loading;
 
-  bool get isSelected => this == ClientAddFormStatus.selected;
+  bool get isSelected => this == ClientFormStatus.selected;
 
-  bool get showIndividual => this == ClientAddFormStatus.initial;
+  bool get showIndividual => this == ClientFormStatus.initial;
 
-  bool get showCompany => this == ClientAddFormStatus.company;
+  bool get showCompany => this == ClientFormStatus.company;
 }
 
 //
 @immutable
-class ClientAddFormState extends Equatable {
+class ClientFormState extends Equatable {
   final ClientModel? client;
   final List<RoleModel>? roles;
-  final ClientAddFormStatus status;
+  final ClientFormStatus status;
   final int? idSelected;
 
-  const ClientAddFormState({
+  const ClientFormState({
     this.client,
     this.roles,
-    this.status = ClientAddFormStatus.initial,
+    this.status = ClientFormStatus.initial,
     this.idSelected,
   });
 
@@ -46,13 +46,13 @@ class ClientAddFormState extends Equatable {
   List<Object?> get props => [client, roles, status, idSelected];
 
   // Copy state.
-  ClientAddFormState copyWith({
+  ClientFormState copyWith({
     ClientModel? client,
     final List<RoleModel>? roles,
-    ClientAddFormStatus? status,
+    ClientFormStatus? status,
     int? idSelected,
   }) {
-    return ClientAddFormState(
+    return ClientFormState(
       client: client ?? this.client,
       roles: roles ?? this.roles,
       status: status ?? this.status,
@@ -61,21 +61,21 @@ class ClientAddFormState extends Equatable {
   }
 }
 
-class ClientInitial extends ClientAddFormState {}
+class ClientInitial extends ClientFormState {}
 
-class ClientLoading extends ClientAddFormState {}
+class ClientLoading extends ClientFormState {}
 
-class ClientSuccess extends ClientAddFormState {
+class ClientSuccess extends ClientFormState {
   const ClientSuccess(client);
 
   @override
   List<Object?> get props => [client];
 }
 
-class ClientError extends ClientAddFormState {}
+class ClientError extends ClientFormState {}
 
-class ClientNoData extends ClientAddFormState {}
+class ClientNoData extends ClientFormState {}
 
-class ShowCompany extends ClientAddFormState {}
+class ShowCompany extends ClientFormState {}
 
-class ShowIndividual extends ClientAddFormState {}
+class ShowIndividual extends ClientFormState {}

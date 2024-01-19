@@ -11,8 +11,6 @@ extension ClientStatusX on ClientStatus {
   bool get isError => this == ClientStatus.error;
 
   bool get isLoading => this == ClientStatus.loading;
-
-  bool get isSelected => this == ClientStatus.selected;
 }
 
 //

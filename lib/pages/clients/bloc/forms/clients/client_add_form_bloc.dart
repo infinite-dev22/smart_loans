@@ -9,69 +9,68 @@ import 'package:smart_loans/data_source/repositories/roles_repo.dart';
 part 'client_add_form_event.dart';
 part 'client_add_form_state.dart';
 
-class ClientAddFormBloc extends Bloc<ClientAddFormEvent, ClientAddFormState> {
-  ClientAddFormBloc() : super(const ClientAddFormState()) {
-    on<GetFormClient>(_mapLoadClientAddFormEventToState);
+class ClientFormBloc extends Bloc<ClientFormEvent, ClientFormState> {
+  ClientFormBloc() : super(const ClientFormState()) {
+    on<GetFormClient>(_mapGetClientEventToState);
     on<PostClient>(_mapPostClientAddFormEventToState);
     on<PutClient>(_mapPutClientAddFormEventToState);
     on<SetIndividual>(_mapSetIndividualEventToState);
     on<SetCompany>(_mapSetCompanyEventToState);
   }
 
-  _mapLoadClientAddFormEventToState(
-      GetFormClient event, Emitter<ClientAddFormState> emit) async {
-    emit(state.copyWith(status: ClientAddFormStatus.loading));
-    await RoleRepo.fetchAll().then((roles) {
-      emit(state.copyWith(status: ClientAddFormStatus.success, roles: roles));
+  _mapGetClientEventToState(GetFormClient event, Emitter<ClientFormState> emit) async {
+    emit(state.copyWith(status: ClientFormStatus.loading));
+    await ClientRepo.fetch(event.clientId).then((client) {
+      emit(state.copyWith(status: ClientFormStatus.success, client: client));
     }).onError((error, stackTrace) {
       if (kDebugMode) {
         print(error);
         print(stackTrace);
       }
-      emit(state.copyWith(status: ClientAddFormStatus.error));
+      emit(state.copyWith(status: ClientFormStatus.error));
     });
   }
 
   _mapPostClientAddFormEventToState(
-      PostClient event, Emitter<ClientAddFormState> emit) async {
-    emit(state.copyWith(status: ClientAddFormStatus.loading));
+      PostClient event, Emitter<ClientFormState> emit) async {
+    emit(state.copyWith(status: ClientFormStatus.loading));
     await ClientRepo.post(event.client).then((client) {
-      emit(state.copyWith(status: ClientAddFormStatus.success, client: client));
+      emit(state.copyWith(status: ClientFormStatus.success, client: client));
     }).onError((error, stackTrace) {
       if (kDebugMode) {
         print(error);
         print(stackTrace);
       }
-      emit(state.copyWith(status: ClientAddFormStatus.error));
+      emit(state.copyWith(status: ClientFormStatus.error));
     });
   }
 
   _mapPutClientAddFormEventToState(
-      PutClient event, Emitter<ClientAddFormState> emit) async {
-    emit(state.copyWith(status: ClientAddFormStatus.loading));
+      PutClient event, Emitter<ClientFormState> emit) async {
+    emit(state.copyWith(status: ClientFormStatus.loading));
     await ClientRepo.put(event.client, event.idSelected).then((client) {
-      emit(state.copyWith(status: ClientAddFormStatus.success, client: client));
+      emit(state.copyWith(status: ClientFormStatus.success, client: client));
     }).onError((error, stackTrace) {
       if (kDebugMode) {
         print(error);
         print(stackTrace);
       }
-      emit(state.copyWith(status: ClientAddFormStatus.error));
+      emit(state.copyWith(status: ClientFormStatus.error));
     });
   }
 
   _mapSetIndividualEventToState(
-      SetIndividual event, Emitter<ClientAddFormState> emit) async {
-    emit(state.copyWith(status: ClientAddFormStatus.individual));
+      SetIndividual event, Emitter<ClientFormState> emit) async {
+    emit(state.copyWith(status: ClientFormStatus.individual));
   }
 
   _mapSetCompanyEventToState(
-      SetCompany event, Emitter<ClientAddFormState> emit) async {
-    emit(state.copyWith(status: ClientAddFormStatus.company));
+      SetCompany event, Emitter<ClientFormState> emit) async {
+    emit(state.copyWith(status: ClientFormStatus.company));
   }
 
   @override
-  void onChange(Change<ClientAddFormState> change) {
+  void onChange(Change<ClientFormState> change) {
     super.onChange(change);
     if (kDebugMode) {
       print("Change: $change");
@@ -79,7 +78,7 @@ class ClientAddFormBloc extends Bloc<ClientAddFormEvent, ClientAddFormState> {
   }
 
   @override
-  void onEvent(ClientAddFormEvent event) {
+  void onEvent(ClientFormEvent event) {
     super.onEvent(event);
     if (kDebugMode) {
       print("Event: $event");
@@ -88,7 +87,7 @@ class ClientAddFormBloc extends Bloc<ClientAddFormEvent, ClientAddFormState> {
 
   @override
   void onTransition(
-      Transition<ClientAddFormEvent, ClientAddFormState> transition) {
+      Transition<ClientFormEvent, ClientFormState> transition) {
     super.onTransition(transition);
     if (kDebugMode) {
       print("Transition: $transition");
