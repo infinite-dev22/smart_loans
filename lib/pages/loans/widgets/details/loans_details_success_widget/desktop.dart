@@ -157,7 +157,8 @@ class LoanDetailSuccessDesktop extends StatelessWidget {
                                             ),
                                           Text(
                                             // "APPROVED (4.12.2023)",
-                                            loanDetail.loanStatusName.toString(),
+                                            loanDetail.loanStatusName
+                                                .toString(),
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -238,8 +239,9 @@ class LoanDetailSuccessDesktop extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              if (loanDetail.loanStatusCode != null && loanDetail.loanStatusCode.toUpperCase() !=
-                                  "DISBURSED")
+                              if (loanDetail.loanStatusCode != null &&
+                                  loanDetail.loanStatusCode.toUpperCase() !=
+                                      "DISBURSED")
                                 Row(
                                   children: [
                                     FilledButton(
@@ -348,9 +350,9 @@ class LoanDetailSuccessDesktop extends StatelessWidget {
     );
   }
 
-  _buildLoanAddDialog(BuildContext context) async {
+  _buildLoanAddDialog(BuildContext parentContext) async {
     return showDialog(
-      context: context,
+      context: parentContext,
       barrierDismissible: true,
       builder: (BuildContext context) {
         return Dialog(
@@ -379,7 +381,7 @@ class LoanDetailSuccessDesktop extends StatelessWidget {
             BlocProvider<CurrencyBloc>(
               create: (_) => CurrencyBloc(),
             ),
-          ], child: const LoanForm()),
+          ], child: LoanForm(parentContext: parentContext)),
         );
       },
     );

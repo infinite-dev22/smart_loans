@@ -156,7 +156,7 @@ class _EmployeesTableWidgetState extends State<EmployeesSuccessWidget> {
       _buildButton("Export", () {}),
       if (!Responsive.isMobile(context)) _buildButton("Filter", () {}),
       _buildButton("Add", () async {
-        _buildAddForm();
+        _buildAddForm(context);
       }),
     ];
   }
@@ -172,7 +172,7 @@ class _EmployeesTableWidgetState extends State<EmployeesSuccessWidget> {
     );
   }
 
-  _buildAddForm() async {
+  _buildAddForm(BuildContext parentContext) async {
     return showDialog(
       context: context,
       barrierDismissible: true,
@@ -194,7 +194,7 @@ class _EmployeesTableWidgetState extends State<EmployeesSuccessWidget> {
             BlocProvider<EmployeeAddFormBloc>(
               create: (_) => EmployeeAddFormBloc(),
             ),
-          ], child: const EmployeeForm()),
+          ], child: EmployeeForm(parentContext: parentContext)),
         );
       },
     );

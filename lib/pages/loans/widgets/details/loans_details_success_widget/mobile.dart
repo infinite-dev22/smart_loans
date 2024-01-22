@@ -228,8 +228,9 @@ class LoanDetailSuccessMobile extends StatelessWidget {
                               ),
                             ],
                           ),
-                          if (loanDetail.loanStatusCode != null && loanDetail.loanStatusCode.toUpperCase() !=
-                              "DISBURSED")
+                          if (loanDetail.loanStatusCode != null &&
+                              loanDetail.loanStatusCode.toUpperCase() !=
+                                  "DISBURSED")
                             Column(
                               children: [
                                 SizedBox(height: 2.h),
@@ -344,9 +345,9 @@ class LoanDetailSuccessMobile extends StatelessWidget {
     );
   }
 
-  _buildLoanAddDialog(BuildContext context) async {
+  _buildLoanAddDialog(BuildContext parentContext) async {
     return showDialog(
-      context: context,
+      context: parentContext,
       barrierDismissible: true,
       builder: (BuildContext context) {
         return Dialog(
@@ -375,7 +376,7 @@ class LoanDetailSuccessMobile extends StatelessWidget {
             BlocProvider<CurrencyBloc>(
               create: (_) => CurrencyBloc(),
             ),
-          ], child: const LoanForm()),
+          ], child: LoanForm(parentContext: parentContext)),
         );
       },
     );

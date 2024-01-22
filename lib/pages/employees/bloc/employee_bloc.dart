@@ -51,7 +51,6 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     emit(state.copyWith(status: EmployeeStatus.loading));
     await EmployeeRepo.post(event.employee).then((employee) {
       emit(state.copyWith(status: EmployeeStatus.success, employee: employee));
-      add(GetEmployees());
     }).onError((error, stackTrace) {
       if (kDebugMode) {
         print(error);
@@ -66,7 +65,6 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     emit(state.copyWith(status: EmployeeStatus.loading));
     await EmployeeRepo.put(event.employee, event.idSelected).then((employee) {
       emit(state.copyWith(status: EmployeeStatus.success, employee: employee));
-      add(GetEmployees());
     }).onError((error, stackTrace) {
       if (kDebugMode) {
         print(error);
@@ -81,7 +79,6 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     emit(state.copyWith(status: EmployeeStatus.loading));
     try {
       emit(state.copyWith(status: EmployeeStatus.success));
-      add(GetEmployees());
     } catch (e) {
       emit(state.copyWith(status: EmployeeStatus.error));
     }

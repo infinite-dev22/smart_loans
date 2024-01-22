@@ -359,7 +359,7 @@ class _EmployeeDetailsSuccessTabletState
       SizedBox(width: 10.w),
       // Show only when an item(s) (has/have) been selected.
       _buildButton("Delete", () {}),
-      _buildButton("Add", _buildAddDocumentDialog),
+      _buildButton("Add", () => _buildAddDocumentDialog(context)),
     ];
   }
 
@@ -453,9 +453,9 @@ class _EmployeeDetailsSuccessTabletState
     );
   }
 
-  _buildAddDocumentDialog() async {
+  _buildAddDocumentDialog(BuildContext parentContext) async {
     return showDialog(
-      context: context,
+      context: parentContext,
       barrierDismissible: true,
       builder: (BuildContext context) {
         return Dialog(
@@ -475,15 +475,15 @@ class _EmployeeDetailsSuccessTabletState
             BlocProvider<EmployeeAddFormBloc>(
               create: (_) => EmployeeAddFormBloc(),
             ),
-          ], child: const EmployeeForm()),
+          ], child: EmployeeForm(parentContext: parentContext)),
         );
       },
     );
   }
 
-  _buildAddForm(BuildContext context) async {
+  _buildAddForm(BuildContext parentContext) async {
     return showDialog(
-      context: context,
+      context: parentContext,
       barrierDismissible: true,
       builder: (BuildContext context) {
         return Dialog(
@@ -503,7 +503,7 @@ class _EmployeeDetailsSuccessTabletState
             BlocProvider<EmployeeAddFormBloc>(
               create: (_) => EmployeeAddFormBloc(),
             ),
-          ], child: const EmployeeForm()),
+          ], child: EmployeeForm(parentContext: parentContext)),
         );
       },
     );

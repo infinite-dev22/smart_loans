@@ -158,7 +158,9 @@ class _ClientsSuccessWidgetState extends State<ClientsSuccessWidget> {
         ),
       if (!Responsive.isMobile(context) && !Responsive.isTablet(context))
         _buildButton("Copy", () {}),
-      _buildButton("Export", () {}),
+      _buildButton("Export(Refresh)", () {
+        context.read<ClientsBloc>().add(GetClients());
+      }),
       if (!Responsive.isMobile(context)) _buildButton("Filter", () {}),
       _buildButton("Add", () async {
         _buildAddForm();
@@ -178,21 +180,20 @@ class _ClientsSuccessWidgetState extends State<ClientsSuccessWidget> {
   }
 
   _buildAddForm() async {
-    final clientBloc = ClientBloc();
     return showDialog(
       context: context,
       barrierDismissible: true,
-      builder: (BuildContext context) {
+      builder: (BuildContext childContext) {
         return Dialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(circularRadius),
           ),
           child: MultiBlocProvider(providers: [
             BlocProvider<ClientsBloc>(
-              create: (_) => ClientsBloc(clientBloc: clientBloc),
+              create: (_) => ClientsBloc(),
             ),
             BlocProvider<ClientBloc>(
-              create: (_) => clientBloc,
+              create: (_) => ClientBloc(),
             ),
             BlocProvider<ClientFormBloc>(
               create: (_) => ClientFormBloc(),
@@ -206,7 +207,7 @@ class _ClientsSuccessWidgetState extends State<ClientsSuccessWidget> {
             BlocProvider<IndustryTypeBloc>(
               create: (_) => IndustryTypeBloc(),
             ),
-          ], child: const ClientForm()),
+          ], child: ClientForm(parentContext: context)),
         );
       },
     );

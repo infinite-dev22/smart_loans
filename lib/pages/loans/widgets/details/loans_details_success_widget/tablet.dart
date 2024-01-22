@@ -354,9 +354,9 @@ class LoanDetailSuccessTablet extends StatelessWidget {
     );
   }
 
-  _buildLoanAddDialog(BuildContext context) async {
+  _buildLoanAddDialog(BuildContext parentContext) async {
     return showDialog(
-      context: context,
+      context: parentContext,
       barrierDismissible: true,
       builder: (BuildContext context) {
         return Dialog(
@@ -385,7 +385,7 @@ class LoanDetailSuccessTablet extends StatelessWidget {
             BlocProvider<CurrencyBloc>(
               create: (_) => CurrencyBloc(),
             ),
-          ], child: const LoanForm()),
+          ], child: LoanForm(parentContext: parentContext)),
         );
       },
     );

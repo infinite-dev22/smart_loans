@@ -18,25 +18,19 @@ import 'package:smart_loans/theme/light.dart';
 import 'package:smart_loans/widgets/custom_form_inputs/custom_currency_text_field.dart';
 import 'package:smart_loans/widgets/dialog_title_wdiget.dart';
 
-class LoanForm extends StatefulWidget {
-  const LoanForm({super.key});
+class LoanForm extends StatelessWidget {
+  final BuildContext? parentContext;
 
-  @override
-  State<LoanForm> createState() => _LoanFormState();
-}
-
-class _LoanFormState extends State<LoanForm> {
-  var interestController = TextEditingController();
-  var principalAmountController = TextEditingController();
-  final FilteringTextInputFormatter _formatNumerals =
-      FilteringTextInputFormatter(RegExp(r'[^0-9.]'), allow: false);
+  const LoanForm({super.key, this.parentContext});
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<LoanBloc, LoanState>(
       listener: (context, state) {
         if (state.status == LoanStatus.success) {
-          BlocProvider.of<LoanBloc>(context).add(GetLoans());
+          if (parentContext != null) {
+            BlocProvider.of<LoanBloc>(parentContext!).add(GetLoans());
+          }
           Navigator.of(context).pop();
         }
       },

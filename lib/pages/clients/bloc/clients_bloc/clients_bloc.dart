@@ -5,20 +5,16 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:smart_loans/data_source/models/client_model.dart';
 import 'package:smart_loans/data_source/repositories/client_repo.dart';
-import 'package:smart_loans/pages/clients/bloc/client_bloc/client_bloc.dart';
 
 part 'clients_event.dart';
 part 'clients_state.dart';
 
 class ClientsBloc extends Bloc<ClientsEvent, ClientsState> {
-  ClientsBloc({this.clientBloc}) : super(const ClientsState()) {
+  ClientsBloc() : super(const ClientsState()) {
     on<GetClients>(_mapGetClientsEventToState);
     on<DeleteClients>(_mapDeleteClientsEventToState);
     on<SelectClients>(_mapSelectClientsEventToState);
-    if (clientBloc != null) listenToClientBloc();
   }
-
-  final ClientBloc? clientBloc;
 
   _mapGetClientsEventToState(
       GetClients event, Emitter<ClientsState> emit) async {
@@ -52,14 +48,6 @@ class ClientsBloc extends Bloc<ClientsEvent, ClientsState> {
     } catch (e) {
       emit(state.copyWith(status: ClientsStatus.error));
     }
-  }
-
-  void listenToClientBloc() {
-    clientBloc!.stream.listen((state) {
-      if (state.status == ClientStatus.success) {
-        add(GetClients());
-      }
-    });
   }
 
   @override

@@ -194,7 +194,7 @@ class _LoansTableWidgetState extends State<LoansSuccessWidget> {
     return showDialog(
       context: context,
       barrierDismissible: true,
-      builder: (BuildContext context) {
+      builder: (BuildContext childContext) {
         return Dialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(circularRadius),
@@ -221,7 +221,7 @@ class _LoansTableWidgetState extends State<LoansSuccessWidget> {
             BlocProvider<CurrencyBloc>(
               create: (_) => CurrencyBloc(),
             ),
-          ], child: const LoanForm()),
+          ], child: LoanForm(parentContext: context)),
         );
       },
     );

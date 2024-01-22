@@ -15,22 +15,19 @@ import 'package:smart_loans/theme/light.dart';
 import 'package:smart_loans/widgets/custom_accordion.dart';
 import 'package:smart_loans/widgets/dialog_title_wdiget.dart';
 
-class EmployeeForm extends StatefulWidget {
-  const EmployeeForm({super.key});
+class EmployeeForm extends StatelessWidget {
+  final BuildContext? parentContext;
 
-  @override
-  State<EmployeeForm> createState() => _EmployeeFormState();
-}
-
-class _EmployeeFormState extends State<EmployeeForm> {
-  var dateController = TextEditingController();
+  const EmployeeForm({super.key, this.parentContext});
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<EmployeeBloc, EmployeeState>(
       listener: (context, state) {
         if (state.status == EmployeeStatus.success) {
-          BlocProvider.of<EmployeeBloc>(context).add(GetEmployees());
+          if (parentContext != null) {
+            BlocProvider.of<EmployeeBloc>(parentContext!).add(GetEmployees());
+          }
           Navigator.of(context).pop();
         }
       },

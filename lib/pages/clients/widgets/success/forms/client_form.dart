@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/config/responsive.dart';
 import 'package:smart_loans/data_source/models/client_model.dart';
+import 'package:smart_loans/data_source/models/client_type_model.dart';
 import 'package:smart_loans/global_values.dart';
 import 'package:smart_loans/init.dart';
 import 'package:smart_loans/pages/client_types/bloc/client_type_bloc.dart';
@@ -18,15 +19,18 @@ import 'package:smart_loans/widgets/dialog_title_wdiget.dart';
 
 class ClientForm extends StatelessWidget {
   final int? clientId;
+  final BuildContext? parentContext;
 
-  const ClientForm({super.key, this.clientId});
+  const ClientForm({super.key, this.clientId, this.parentContext});
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<ClientBloc, ClientState>(
       listener: (context, state) {
         if (state.status == ClientStatus.success) {
-          context.read<ClientsBloc>().add(GetClients());
+          if (parentContext != null) {
+            BlocProvider.of<ClientsBloc>(parentContext!).add(GetClients());
+          }
           Navigator.of(context).pop();
         }
       },
@@ -142,6 +146,7 @@ class ClientForm extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context, {ClientModel? oldClient}) {
+    print("CLIENT: ${oldClient?.toApiJson()}");
     return SingleChildScrollView(
       child: SizedBox(
         width: (Responsive.isDesktop(context)) ? 30.w : 40.w,
@@ -172,10 +177,27 @@ class ClientForm extends StatelessWidget {
                           );
                         }
                         if (state.status == ClientTypeStatus.success) {
+                          var clientTypes =
+                              context.read<ClientTypeBloc>().state.types;
                           return SizedBox(
                             height: 50,
-                            child: DropdownButtonFormField2(
-                              value: oldClient?.clientTypeId,
+                            child: DropdownButtonFormField2<ClientTypeModel>(
+                              alignment: Alignment.centerLeft,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              value: clientTypes != null && oldClient != null
+                                  ? clientTypes
+                                      .where((type) =>
+                                          type.id == oldClient.clientTypeId)
+                                      .first
+                                  : null,
+                              isExpanded: true,
+                              validator: (value) {
+                                if (value == null) {
+                                  return 'Please select a client type';
+                                }
+                                return null;
+                              },
                               decoration: const InputDecoration(
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
@@ -183,18 +205,26 @@ class ClientForm extends StatelessWidget {
                                     ),
                                   ),
                                   label: Text("Client Type")),
+                              dropdownStyleData: DropdownStyleData(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                              ),
+                              menuItemStyleData: const MenuItemStyleData(
+                                padding: EdgeInsets.symmetric(horizontal: 16),
+                              ),
                               items: context
                                   .read<ClientTypeBloc>()
                                   .state
-                                  .types
-                                  ?.map((clientType) => DropdownMenuItem(
-                                        value: clientType.id,
+                                  .types!
+                                  .map((clientType) => DropdownMenuItem(
+                                        value: clientType,
                                         child: Text(clientType.name!),
                                       ))
                                   .toList(),
                               onChanged: (value) {
-                                client.clientTypeId = value;
-                                if (value == 1) {
+                                client.clientTypeId = value?.id;
+                                if (value?.id == 1) {
                                   context
                                       .read<ClientFormBloc>()
                                       .add(SetIndividual());

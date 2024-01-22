@@ -458,33 +458,37 @@ class _EmployeeDetailsSuccessDesktopState
     return showDialog(
       context: context,
       barrierDismissible: true,
-      builder: (BuildContext context) {
+      builder: (BuildContext childContext) {
         return Dialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(circularRadius),
           ),
-          child: MultiBlocProvider(providers: [
-            BlocProvider<ClientBloc>(
-              create: (_) => ClientBloc(),
-            ),
-            BlocProvider<NationBloc>(
-              create: (_) => NationBloc(),
-            ),
-            BlocProvider<EmployeeBloc>(
-              create: (_) => EmployeeBloc(),
-            ),
-            BlocProvider<EmployeeAddFormBloc>(
-              create: (_) => EmployeeAddFormBloc(),
-            ),
-          ], child: const EmployeeForm()),
+          child: MultiBlocProvider(
+              providers: [
+                BlocProvider<ClientBloc>(
+                  create: (_) => ClientBloc(),
+                ),
+                BlocProvider<NationBloc>(
+                  create: (_) => NationBloc(),
+                ),
+                BlocProvider<EmployeeBloc>(
+                  create: (_) => EmployeeBloc(),
+                ),
+                BlocProvider<EmployeeAddFormBloc>(
+                  create: (_) => EmployeeAddFormBloc(),
+                ),
+              ],
+              child: EmployeeForm(
+                parentContext: context,
+              )),
         );
       },
     );
   }
 
-  _buildAddForm(BuildContext context) async {
+  _buildAddForm(BuildContext parentContext) async {
     return showDialog(
-      context: context,
+      context: parentContext,
       barrierDismissible: true,
       builder: (BuildContext context) {
         return Dialog(
@@ -504,7 +508,7 @@ class _EmployeeDetailsSuccessDesktopState
             BlocProvider<EmployeeAddFormBloc>(
               create: (_) => EmployeeAddFormBloc(),
             ),
-          ], child: const EmployeeForm()),
+          ], child: EmployeeForm(parentContext: parentContext)),
         );
       },
     );

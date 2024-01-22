@@ -289,36 +289,40 @@ class ClientDetailSuccessMobile extends StatelessWidget {
     );
   }
 
-  _buildAddForm(BuildContext context) async {
-    final clientBloc = ClientBloc();
+  _buildAddForm(BuildContext parentContext) async {
     return showDialog(
-      context: context,
+      context: parentContext,
       barrierDismissible: true,
       builder: (BuildContext context) {
         return Dialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(circularRadius),
           ),
-          child: MultiBlocProvider(providers: [
-            BlocProvider<ClientsBloc>(
-              create: (_) => ClientsBloc(clientBloc: clientBloc),
-            ),
-            BlocProvider<ClientBloc>(
-              create: (_) => clientBloc,
-            ),
-            BlocProvider<ClientFormBloc>(
-              create: (_) => ClientFormBloc(),
-            ),
-            BlocProvider<ClientTypeBloc>(
-              create: (_) => ClientTypeBloc(),
-            ),
-            BlocProvider<NationBloc>(
-              create: (_) => NationBloc(),
-            ),
-            BlocProvider<IndustryTypeBloc>(
-              create: (_) => IndustryTypeBloc(),
-            ),
-          ], child: const ClientForm()),
+          child: MultiBlocProvider(
+              providers: [
+                BlocProvider<ClientsBloc>(
+                  create: (_) => ClientsBloc(),
+                ),
+                BlocProvider<ClientBloc>(
+                  create: (_) => ClientBloc(),
+                ),
+                BlocProvider<ClientFormBloc>(
+                  create: (_) => ClientFormBloc(),
+                ),
+                BlocProvider<ClientTypeBloc>(
+                  create: (_) => ClientTypeBloc(),
+                ),
+                BlocProvider<NationBloc>(
+                  create: (_) => NationBloc(),
+                ),
+                BlocProvider<IndustryTypeBloc>(
+                  create: (_) => IndustryTypeBloc(),
+                ),
+              ],
+              child: ClientForm(
+                clientId: clientId,
+                parentContext: parentContext,
+              )),
         );
       },
     );
