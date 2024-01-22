@@ -26,6 +26,9 @@ class ClientModel {
   ClientModel({
     this.id,
     this.name,
+    this.firstName,
+    this.lastName,
+    this.otherName,
     this.address,
     this.tin,
     this.number,
@@ -45,6 +48,9 @@ class ClientModel {
     return ClientModel(
       id: json['id'],
       name: json['name'],
+      firstName: json['first_name'],
+      lastName: json['last_name'],
+      otherName: json['middle_name'],
       address: json['address'],
       tin: json['tin'],
       number: json['number'],
@@ -71,6 +77,9 @@ class ClientModel {
     return ClientModel(
       id: null,
       name: null,
+      firstName: null,
+      lastName: null,
+    otherName: null,
       address: null,
       tin: null,
       number: null,
@@ -91,6 +100,9 @@ class ClientModel {
     return {
       'id': id,
       'name': name,
+      'first_name': firstName,
+      'last_name': lastName,
+      'middle_name': otherName,
       'address': address,
       'tin': tin,
       'number': number,

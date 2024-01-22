@@ -179,7 +179,7 @@ class ClientDetailSuccessTablet extends StatelessWidget {
             height: 72.h,
             child: TabBarView(
               children: [
-                _buildClientMoreDetails(),
+                _buildClientMoreDetails(client),
                 _buildClientLoanDocumentDetails(client),
                 const Icon(Icons.directions_bike),
                 const Icon(Icons.directions_bike),
@@ -192,14 +192,14 @@ class ClientDetailSuccessTablet extends StatelessWidget {
     );
   }
 
-  Widget _buildClientMoreDetails() {
+  Widget _buildClientMoreDetails(ClientModel client) {
     return Padding(
       padding: EdgeInsets.all(padding),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Row(
+           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Column(
@@ -209,7 +209,6 @@ class ClientDetailSuccessTablet extends StatelessWidget {
                   Text("Last Name: "),
                   Text("Other Name: "),
                   Text("Nationality: "),
-                  Text("Business Type: "),
                   Text("City: "),
                   Text("Address: "),
                 ],
@@ -218,34 +217,31 @@ class ClientDetailSuccessTablet extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "0000001",
+                    client.firstName ?? '',
                     style: TextStyle(
                       color: AppColor.red,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    "Vicent Company",
+                    client.lastName ?? '',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "12295200000",
+                    client.otherName ?? '',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "Kampala",
+                    client.nation?.name ?? '',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+
+                  Text(
+                    client.address ?? '',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "APPROVED (4.12.2023)",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    "LV2",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    "Address",
+                    client.address ?? '',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -273,9 +269,9 @@ class ClientDetailSuccessTablet extends StatelessWidget {
               client)); // TODO: Remove when api gets end points for documents.
         }
         if (state.status == ClientStatus.success) {
-          if (client.documents!.isEmpty) {
+          // if (client.documents!.isEmpty) {
             return const DocumentsInitialWidget();
-          }
+          // }
           return LoanDocumentsSuccessWidget(documents: client.documents!);
         }
         if (state.status == ClientStatus.loading) {
