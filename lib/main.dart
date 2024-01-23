@@ -8,7 +8,8 @@ import 'package:smart_loans/pages/clients/bloc/clients_bloc/clients_bloc.dart';
 import 'package:smart_loans/pages/clients/screens/client_details_page.dart';
 import 'package:smart_loans/pages/clients/screens/clients_page.dart';
 import 'package:smart_loans/pages/dashboard/screens/dashboard.dart';
-import 'package:smart_loans/pages/employees/bloc/employee_bloc.dart';
+import 'package:smart_loans/pages/employees/bloc/employee/employee_bloc.dart';
+import 'package:smart_loans/pages/employees/bloc/employees/employees_bloc.dart';
 import 'package:smart_loans/pages/employees/screens/employee_details_page.dart';
 import 'package:smart_loans/pages/employees/screens/employees_page.dart';
 import 'package:smart_loans/pages/loan_duration/bloc/loan_duration_bloc.dart';
@@ -62,6 +63,9 @@ class _SmartLoansAppState extends State<SmartLoansApp> {
                         ),
                         BlocProvider<ClientBloc>(
                           create: (_) => ClientBloc(),
+                        ),
+                        BlocProvider<EmployeesBloc>(
+                          create: (_) => EmployeesBloc(),
                         ),
                         BlocProvider<EmployeeBloc>(
                           create: (_) => EmployeeBloc(),

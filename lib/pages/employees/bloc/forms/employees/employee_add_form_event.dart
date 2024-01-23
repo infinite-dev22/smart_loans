@@ -6,14 +6,7 @@ abstract class EmployeeAddFormEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class GetEmployee extends EmployeeAddFormEvent {
-  GetEmployee(this.idSelected);
 
-  final int idSelected;
-
-  @override
-  List<Object?> get props => [idSelected];
-}
 
 class PutEmployee extends EmployeeAddFormEvent {
   PutEmployee(this.employee, this.idSelected);

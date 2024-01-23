@@ -52,7 +52,6 @@ class EmployeeModel {
     this.salutationId,
     this.maritalStatusId,
     this.nationId,
-    this.createdAt,
   });
 
   factory EmployeeModel.fromJson(Map<String, dynamic> json) {
@@ -62,9 +61,6 @@ class EmployeeModel {
       middleName: json['middle_name'],
       lastName: json['last_name'],
       telephone: json['telephone'],
-      dateOfBirth: json['date_of_birth'] != null
-          ? DateTime.parse(json['date_of_birth'])
-          : null,
       gender: json['gender'],
       departmentId: json['department_id'],
       department: json['department_name'],
@@ -83,7 +79,6 @@ class EmployeeModel {
       userId: json['user_id'],
       salutationId: json['salutation_id'],
       maritalStatusId: json['marital_status_id'],
-      createdAt: DateTime.parse(json['created_at']),
     );
   }
 
@@ -95,7 +90,6 @@ class EmployeeModel {
       'last_name': lastName,
       'full_name': "$firstName ${middleName ?? ""} $lastName",
       'telephone': telephone,
-      'date_of_birth': dateOfBirth?.toIso8601String(),
       'gender': gender,
       'role': department,
       'code': code,
@@ -113,7 +107,6 @@ class EmployeeModel {
       'user_id': userId,
       'salutation_id': salutationId,
       'marital_status_id': maritalStatusId,
-      'created_at': createdAt,
     };
   }
 
@@ -170,7 +163,6 @@ class EmployeeModel {
       userId: null,
       salutationId: null,
       maritalStatusId: null,
-      createdAt: null,
     );
   }
 }

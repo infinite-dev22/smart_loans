@@ -5,8 +5,6 @@ abstract class EmployeeEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class GetEmployees extends EmployeeEvent {}
-
 class GetEmployee extends EmployeeEvent {
   GetEmployee(this.idSelected);
 
@@ -54,3 +52,4 @@ class SelectEmployee extends EmployeeEvent {
 }
 
 class Success extends EmployeeEvent {}
+

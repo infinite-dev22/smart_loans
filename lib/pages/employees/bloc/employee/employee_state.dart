@@ -47,20 +47,6 @@ class EmployeeState extends Equatable {
   }
 }
 
-class EmployeesInitial extends EmployeeState {}
-
-class EmployeesLoading extends EmployeeState {}
-
-class EmployeesSuccess extends EmployeeState {
-  const EmployeesSuccess(employees);
-
-  @override
-  List<Object?> get props => [employees];
-}
-
-class EmployeesError extends EmployeeState {}
-
-class EmployeesNoData extends EmployeeState {}
 
 class EmployeeInitial extends EmployeeState {}
 

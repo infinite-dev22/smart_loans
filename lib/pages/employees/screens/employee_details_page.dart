@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smart_loans/config/responsive.dart';
-import 'package:smart_loans/pages/employees/widgets/details/employee_details_success_widget/desktop.dart';
-import 'package:smart_loans/pages/employees/widgets/details/employee_details_success_widget/mobile.dart';
-import 'package:smart_loans/pages/employees/widgets/details/employee_details_success_widget/tablet.dart';
+import 'package:smart_loans/init.dart';
+import 'package:smart_loans/pages/employees/screens/layouts/employee_detail_page_layout.dart';
 import 'package:smart_loans/widgets/custom_scaffold.dart';
 
 class EmployeeDetailsPage extends StatelessWidget {
@@ -10,15 +8,16 @@ class EmployeeDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CustomScaffold(
+    int? employeeId;
+    if (ModalRoute.of(context)!.settings.arguments != null) {
+      employeeId = ModalRoute.of(context)!.settings.arguments as int;
+      getLocalStorage().write("employee_id", employeeId);
+    } else {
+      employeeId = getLocalStorage().read("employee_id");
+    }
+    return CustomScaffold(
       route: "/employee",
-      body: SingleChildScrollView(
-        child: Responsive(
-          mobile: EmployeeDetailsSuccessMobile(),
-          tablet: EmployeeDetailsSuccessTablet(),
-          desktop: EmployeeDetailsSuccessDesktop(),
-        ),
-      ),
+      body: EmployeeDetailPageLayout(employeeId: employeeId!),
     );
   }
 }
