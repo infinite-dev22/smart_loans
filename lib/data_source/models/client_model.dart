@@ -23,28 +23,13 @@ class ClientModel {
   List<DocumentModel>? documents;
   ClientTypeModel? clientType;
 
-  ClientModel({
-    this.id,
-    this.name,
-    this.address,
-    this.tin,
-    this.number,
-    this.email,
-    this.telephone,
-    this.clientTypeId = 1,
-    this.inCharge,
-    this.nationId,
-    this.businessIndustryId,
-    this.nation,
-    this.clientProfile,
-    this.documents,
-    this.clientType,
-  });
-
   factory ClientModel.fromJson(Map<String, dynamic> json) {
     return ClientModel(
       id: json['id'],
       name: json['name'],
+      firstName: json['first_name'],
+      lastName: json['last_name'],
+      otherName: json['other_name'],
       address: json['address'],
       tin: json['tin'],
       number: json['number'],
@@ -126,4 +111,25 @@ class ClientModel {
       "organisation_id": 1,
     };
   }
+
+  ClientModel(
+      {this.id,
+      this.name,
+      this.firstName,
+      this.lastName,
+      this.otherName,
+      this.occupation,
+      this.address,
+      this.tin,
+      this.number,
+      this.email,
+      this.telephone,
+      this.clientTypeId,
+      this.inCharge,
+      this.nationId,
+      this.businessIndustryId,
+      this.nation,
+      this.clientProfile,
+      this.documents,
+      this.clientType});
 }

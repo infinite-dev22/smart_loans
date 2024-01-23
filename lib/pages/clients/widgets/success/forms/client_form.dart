@@ -146,7 +146,15 @@ class ClientForm extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context, {ClientModel? oldClient}) {
-    print("CLIENT: ${oldClient?.toApiJson()}");
+    firstNameController.text = oldClient?.firstName ?? "";
+    lastNameController.text = oldClient?.lastName ?? "";
+    otherNameController.text = oldClient?.otherName ?? "";
+    nameController.text = oldClient?.name ?? "";
+    telephoneController.text = oldClient?.telephone ?? "";
+    emailController.text = oldClient?.email ?? "";
+    occupationController.text = oldClient?.occupation ?? "";
+    addressController.text = oldClient?.address ?? "";
+    tinController.text = oldClient?.tin ?? "";
     return SingleChildScrollView(
       child: SizedBox(
         width: (Responsive.isDesktop(context)) ? 30.w : 40.w,
@@ -398,138 +406,100 @@ class ClientForm extends StatelessWidget {
       {ClientModel? oldClient}) {
     return Column(
       children: [
-        SizedBox(height: 2.h),
-        SizedBox(
-          height: 50,
-          child: DropdownButtonFormField2(
-            decoration: const InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(8.0),
-                  ),
-                ),
-                label: Text("Salutation")),
-            items: context
-                .read<ClientFormBloc>()
-                .state
-                .roles
-                ?.map((role) => DropdownMenuItem(
-                      value: role.id,
-                      child: Text(role.name),
-                    ))
-                .toList(),
-            onChanged: (value) {},
-          ),
-        ),
-        SizedBox(height: 2.h),
+        SizedBox(height: 1.5.h),
         SizedBox(
           width: constraints.maxWidth,
-          // Make it like Twitter's BootStrap
-          child: Wrap(
-            children: [
-              SizedBox(
-                width: constraints.maxWidth * .31,
-                height: 50,
-                child: TextFormField(
-                  controller: TextEditingController(text: oldClient?.firstName),
-                  decoration: InputDecoration(
-                    label: const Text("First Name"),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
-                  onChanged: (value) => client.firstName = value,
-                ),
-              ),
-              SizedBox(width: 1.h),
-              SizedBox(
-                width: constraints.maxWidth * .31,
-                height: 50,
-                child: TextFormField(
-                  controller: TextEditingController(text: oldClient?.lastName),
-                  decoration: InputDecoration(
-                    label: const Text("Last Name"),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
-                  onChanged: (value) => client.lastName = value,
-                ),
-              ),
-              SizedBox(width: 1.h),
-              SizedBox(
-                width: constraints.maxWidth * .31,
-                height: 50,
-                child: TextFormField(
-                  controller: TextEditingController(text: oldClient?.otherName),
-                  decoration: InputDecoration(
-                    label: const Text("Other Name"),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
-                  onChanged: (value) => client.otherName = value,
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(height: 2.h),
-        SizedBox(
-          width: constraints.maxWidth,
-          child: Row(
-            children: [
-              SizedBox(
-                width: constraints.maxWidth * .475,
-                height: 50,
-                child: TextFormField(
-                  controller: TextEditingController(text: oldClient?.telephone),
-                  decoration: InputDecoration(
-                    label: const Text("Telephone"),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
-                  onChanged: (value) => client.telephone = value,
-                ),
-              ),
-              SizedBox(width: 1.h),
-              SizedBox(
-                width: constraints.maxWidth * .475,
-                height: 50,
-                child: TextFormField(
-                  controller: TextEditingController(text: oldClient?.email),
-                  decoration: InputDecoration(
-                    label: const Text("Email"),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
-                  onChanged: (value) => client.email = value,
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(height: 2.h),
-        SizedBox(
           height: 50,
           child: TextFormField(
-            controller: TextEditingController(text: oldClient?.occupation),
+            controller: firstNameController,
             decoration: InputDecoration(
-              label: const Text("Occupation"),
+              label: const Text("First Name"),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8.0),
               ),
             ),
-            onChanged: (value) => client.occupation = value,
+            onChanged: (value) => client.firstName = value,
           ),
         ),
-        SizedBox(height: 2.h),
+        SizedBox(height: 1.5.h),
+        SizedBox(
+          width: constraints.maxWidth,
+          height: 50,
+          child: TextFormField(
+            controller: lastNameController,
+            decoration: InputDecoration(
+              label: const Text("Last Name"),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+            ),
+            onChanged: (value) => client.lastName = value,
+          ),
+        ),
+        SizedBox(height: 1.5.h),
+        SizedBox(
+          width: constraints.maxWidth,
+          height: 50,
+          child: TextFormField(
+            controller: otherNameController,
+            decoration: InputDecoration(
+              label: const Text("Other Name"),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+            ),
+            onChanged: (value) => client.otherName = value,
+          ),
+        ),
+        SizedBox(height: 1.5.h),
+        SizedBox(
+          width: constraints.maxWidth,
+          height: 50,
+          child: TextFormField(
+            controller: telephoneController,
+            decoration: InputDecoration(
+              label: const Text("Telephone"),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+            ),
+            onChanged: (value) => client.telephone = value,
+          ),
+        ),
+        SizedBox(height: 1.5.h),
+        SizedBox(
+          width: constraints.maxWidth,
+          height: 50,
+          child: TextFormField(
+            controller: emailController,
+            decoration: InputDecoration(
+              label: const Text("Email"),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+            ),
+            onChanged: (value) => client.email = value,
+          ),
+        ),
+        // SizedBox(height: 1.5.h),
+        // SizedBox(
+        //   height: 50,
+        //   child: TextFormField(
+        //     controller: occupationController,
+        //     decoration: InputDecoration(
+        //       label: const Text("Occupation"),
+        //       border: OutlineInputBorder(
+        //         borderRadius: BorderRadius.circular(8.0),
+        //       ),
+        //     ),
+        //     onChanged: (value) => client.occupation = value,
+        //   ),
+        // ),
+        SizedBox(height: 1.5.h),
         SizedBox(
           height: 50,
           child: TextFormField(
-            controller: TextEditingController(text: oldClient?.address),
+            controller: addressController,
             decoration: InputDecoration(
               label: const Text("Address"),
               border: OutlineInputBorder(
@@ -539,7 +509,7 @@ class ClientForm extends StatelessWidget {
             onChanged: (value) => client.address = value,
           ),
         ),
-        SizedBox(height: 2.h),
+        SizedBox(height: 1.5.h),
       ],
     );
   }
@@ -552,7 +522,7 @@ class ClientForm extends StatelessWidget {
         SizedBox(
           height: 50,
           child: TextFormField(
-            controller: TextEditingController(text: oldClient?.name),
+            controller: nameController,
             decoration: InputDecoration(
               label: const Text("Company Name"),
               border: OutlineInputBorder(
@@ -641,7 +611,7 @@ class ClientForm extends StatelessWidget {
                 width: constraints.maxWidth * .475,
                 height: 50,
                 child: TextFormField(
-                  controller: TextEditingController(text: oldClient?.telephone),
+                  controller: telephoneController,
                   decoration: InputDecoration(
                     label: const Text("Telephone"),
                     border: OutlineInputBorder(
@@ -651,11 +621,12 @@ class ClientForm extends StatelessWidget {
                   onChanged: (value) => client.telephone = value,
                 ),
               ),
-              SizedBox(width: 1.h),
+              SizedBox(width: 2.h),
               SizedBox(
                 width: constraints.maxWidth * .475,
                 height: 50,
                 child: TextFormField(
+                  controller: emailController,
                   decoration: InputDecoration(
                     label: const Text("Email"),
                     border: OutlineInputBorder(
@@ -672,7 +643,7 @@ class ClientForm extends StatelessWidget {
         SizedBox(
           height: 50,
           child: TextFormField(
-            controller: TextEditingController(text: oldClient?.tin),
+            controller: tinController,
             decoration: InputDecoration(
               label: const Text("Tin"),
               border: OutlineInputBorder(
@@ -686,7 +657,7 @@ class ClientForm extends StatelessWidget {
         SizedBox(
           height: 50,
           child: TextFormField(
-            controller: TextEditingController(text: oldClient?.address),
+            controller: addressController,
             decoration: InputDecoration(
               label: const Text("Address"),
               border: OutlineInputBorder(

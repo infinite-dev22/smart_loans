@@ -34,11 +34,13 @@ import '../loan_summary_widget.dart';
 class LoanDetailSuccessTablet extends StatelessWidget {
   final LoanDetailModel loanDetail;
   final LoanModel loan;
+  final BuildContext parentContext;
 
   const LoanDetailSuccessTablet({
     super.key,
     required this.loan,
     required this.loanDetail,
+    required this.parentContext,
   });
 
   @override
@@ -329,7 +331,10 @@ class LoanDetailSuccessTablet extends StatelessWidget {
                 create: (_) => InterestFormBloc(),
               ),
             ],
-            child: InterestForm(loanModel: loan!),
+            child: InterestForm(
+              loanModel: loan!,
+              parentContext: parentContext,
+            ),
           ),
         );
       },

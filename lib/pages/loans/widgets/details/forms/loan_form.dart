@@ -506,7 +506,7 @@ class LoanForm extends StatelessWidget {
                 ),
                 child: const Text('Submit'),
                 onPressed: () {
-                  interest.interestAmount = interestController.text;
+                  loan.loanFees = double.parse(feesController.text.replaceAll(",", ""));
                   loan.principalAmount = double.parse(
                       principalAmountController.text.replaceAll(",", ""));
                   context.read<LoanBloc>().add(CreateLoan(loan));
@@ -540,10 +540,10 @@ class LoanForm extends StatelessWidget {
             ],
             onChanged: (value) {
               var percentage = value.isNotEmpty ? double.parse(value) * .01 : 0;
-              var interest = double.parse(
+              var loanFees = double.parse(
                       principalAmountController.text.replaceAll(",", "")) *
                   percentage;
-              interestController.text = interest.toString();
+              feesController.text = loanFees.toString();
             },
           ),
         ),
@@ -552,10 +552,10 @@ class LoanForm extends StatelessWidget {
           width: 25.h,
           child: CustomCurrencyTextField(
             readOnly: true,
-            controller: interestController,
+            controller: feesController,
             decoration: InputDecoration(
               label: Text(
-                  "Interest${loan.currency != null ? '(${loan.currency!.code})' : ''}"),
+                  "Amount${loan.currency != null ? '(${loan.currency!.code})' : ''}"),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(circularRadius),
               ),
@@ -572,12 +572,12 @@ class LoanForm extends StatelessWidget {
       child: CustomCurrencyTextField(
         decoration: InputDecoration(
           label: Text(
-              "Interest${loan.currency != null ? '(${loan.currency!.code})' : ''}"),
+              "Amount${loan.currency != null ? '(${loan.currency!.code})' : ''}"),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(circularRadius),
           ),
         ),
-        controller: interestController,
+        controller: feesController,
       ),
     );
   }

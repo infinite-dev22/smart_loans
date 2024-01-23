@@ -44,7 +44,6 @@ class InterestModel {
   factory InterestModel.fromApiJson(Map<String, dynamic> json) {
     return InterestModel(
       id: json['id'],
-      loanId: json['loan_id'],
     );
   }
 

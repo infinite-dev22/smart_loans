@@ -50,7 +50,6 @@ class LoanBloc extends Bloc<LoanEvent, LoanState> {
     emit(state.copyWith(status: LoanStatus.loading));
     await LoanRepo.post(event.loan).then((loan) {
       emit(state.copyWith(status: LoanStatus.success, loan: loan));
-      add(GetLoans());
     }).onError((error, stackTrace) {
       if (kDebugMode) {
         print(error);
@@ -64,7 +63,6 @@ class LoanBloc extends Bloc<LoanEvent, LoanState> {
     emit(state.copyWith(status: LoanStatus.loading));
     await LoanRepo.put(event.loan, event.idSelected).then((loan) {
       emit(state.copyWith(status: LoanStatus.success, loan: loan));
-      add(GetLoans());
     }).onError((error, stackTrace) {
       if (kDebugMode) {
         print(error);

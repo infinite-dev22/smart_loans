@@ -11,7 +11,7 @@ class LoanModel {
   int? id;
   String? loanNumber;
   dynamic principalAmount; // should be double but api returns int.
-  int? loanFees; // should be double but api returns int.
+  dynamic loanFees; // should be double but api returns int.
   int? loansFeesType;
   String? description;
   int? clientId;
@@ -203,6 +203,7 @@ class LoanModel {
   Map<String, dynamic> toApiJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['principal_amount'] = principalAmount;
+    data['loan_fees'] = loanFees;
     data['description'] = description;
     data['client_id'] = clientId;
     data['loan_type_id'] = loanTypeId;

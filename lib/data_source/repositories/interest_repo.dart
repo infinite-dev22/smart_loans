@@ -24,8 +24,8 @@ class InterestRepo {
     int loanId,
   ) async {
     var interestDao = InterestDaoImpl();
-    var interestMap = await interestDao.post(interest.toJson(), loanId);
-    return InterestModel.fromApiJson(interestMap);
+    await interestDao.post(interest.toJson(), loanId);
+    return null;
   }
 
   static Future put(

@@ -16,10 +16,18 @@ var interest = InterestModel();
 var loanProcess = LoanProcessModel();
 
 var dateController = TextEditingController();
-
 var interestController = TextEditingController();
-
+var feesController = TextEditingController();
 var principalAmountController = TextEditingController();
+var firstNameController = TextEditingController();
+var lastNameController = TextEditingController();
+var otherNameController = TextEditingController();
+var nameController = TextEditingController();
+var telephoneController = TextEditingController();
+var emailController = TextEditingController();
+var occupationController = TextEditingController();
+var addressController = TextEditingController();
+var tinController = TextEditingController();
 
 final FilteringTextInputFormatter formatNumerals =
     FilteringTextInputFormatter(RegExp(r'[^0-9.]'), allow: false);
