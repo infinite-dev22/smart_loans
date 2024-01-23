@@ -445,22 +445,6 @@ class InterestForm extends StatelessWidget {
                               }
                             },
                           ),
-                          SizedBox(height: 1.5.h),
-                          SizedBox(
-                            height: 5.h,
-                            child: TextFormField(
-                              readOnly: true,
-                              decoration: InputDecoration(
-                                label: const Text("Installments"),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                              ),
-                              onChanged: (value) {
-                                interest.installments = value;
-                              },
-                            ),
-                          ),
                           SizedBox(height: 3.h),
                           FilledButton(
                             style: const ButtonStyle(
