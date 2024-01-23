@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile_photo/profile_photo.dart';
@@ -286,11 +287,12 @@ class LoanDetailSuccessDesktop extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(width: 1.w),
-            RightSideWidget(
-              loanDetail: loanDetail,
-              loan: loan,
-            ),
+            if (kDebugMode) SizedBox(width: 1.w),
+            if (kDebugMode)
+              RightSideWidget(
+                loanDetail: loanDetail,
+                loan: loan,
+              ),
           ],
         ),
       ],

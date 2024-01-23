@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile_photo/profile_photo.dart';
@@ -293,10 +294,11 @@ class LoanDetailSuccessTablet extends StatelessWidget {
             ),
           ],
         ),
-        RightSideWidget(
-          loanDetail: loanDetail,
-          loan: loan,
-        ),
+        if (kDebugMode)
+          RightSideWidget(
+            loanDetail: loanDetail,
+            loan: loan,
+          ),
       ],
     );
   }
