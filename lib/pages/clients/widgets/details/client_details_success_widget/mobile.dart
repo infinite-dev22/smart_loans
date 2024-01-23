@@ -14,9 +14,6 @@ import 'package:smart_loans/pages/clients/widgets/details/widgets/documents/docu
 import 'package:smart_loans/pages/clients/widgets/details/widgets/documents/documents_initial_widget.dart';
 import 'package:smart_loans/pages/clients/widgets/details/widgets/documents/documents_loading_widget.dart';
 import 'package:smart_loans/pages/clients/widgets/details/widgets/documents/documents_success_widget.dart';
-import 'package:smart_loans/pages/clients/widgets/error/clients_error_widget.dart';
-import 'package:smart_loans/pages/clients/widgets/initial/client_initial_widget.dart';
-import 'package:smart_loans/pages/clients/widgets/loading/clients_loading_widget.dart';
 import 'package:smart_loans/pages/clients/widgets/success/forms/client_form.dart';
 import 'package:smart_loans/pages/industry_types/bloc/industry_type_bloc.dart';
 import 'package:smart_loans/pages/loans/widgets/details/loan_officer_widget.dart';
@@ -29,29 +26,14 @@ import 'package:smart_loans/widgets/title_with_actions.dart';
 class ClientDetailSuccessMobile extends StatelessWidget {
   const ClientDetailSuccessMobile({
     super.key,
-    required this.clientId,
+    required this.client,
   });
 
-  final int clientId;
+  final ClientModel client;
 
   @override
   Widget build(BuildContext context) {
-    var client;
-    return BlocBuilder<ClientBloc, ClientState>(
-      builder: (context, state) {
-        if (state.status == ClientStatus.initial) {
-          context.read<ClientBloc>().add(GetClient(clientId));
-        } else if (state.status == ClientStatus.success) {
-          client = context.read<ClientBloc>().state.client;
-          return SingleChildScrollView(child: _buildBody(context, client));
-        } else if (state.status == ClientStatus.loading) {
-          return const ClientsLoadingWidget();
-        } else if (state.status == ClientStatus.error) {
-          return const ClientsErrorWidget();
-        }
-        return const ClientsInitialWidget();
-      },
-    );
+    return _buildBody(context, client);
   }
 
   Widget _buildBody(BuildContext context, ClientModel client) {
@@ -320,7 +302,7 @@ class ClientDetailSuccessMobile extends StatelessWidget {
                 ),
               ],
               child: ClientForm(
-                clientId: clientId,
+                clientId: client.id,
                 parentContext: parentContext,
               )),
         );
