@@ -12,26 +12,11 @@ part 'employee_add_form_state.dart';
 class EmployeeAddFormBloc
     extends Bloc<EmployeeAddFormEvent, EmployeeAddFormState> {
   EmployeeAddFormBloc() : super(const EmployeeAddFormState()) {
-    on<GetEmployee>(_mapLoadEmployeeAddFormEventToState);
     on<PostEmployee>(_mapPostEmployeeAddFormEventToState);
     on<PutEmployee>(_mapPutEmployeeAddFormEventToState);
     on<GetRoles>(_mapLoadRoleEventToState);
     on<SetIndividual>(_mapSetIndividualEventToState);
     on<SetCompany>(_mapSetCompanyEventToState);
-  }
-
-  _mapLoadEmployeeAddFormEventToState(
-      GetEmployee event, Emitter<EmployeeAddFormState> emit) async {
-    emit(state.copyWith(status: EmployeeAddFormStatus.loading));
-    await RoleRepo.fetchAll().then((roles) {
-      emit(state.copyWith(status: EmployeeAddFormStatus.success, roles: roles));
-    }).onError((error, stackTrace) {
-      if (kDebugMode) {
-        print(error);
-        print(stackTrace);
-      }
-      emit(state.copyWith(status: EmployeeAddFormStatus.error));
-    });
   }
 
   _mapLoadRoleEventToState(

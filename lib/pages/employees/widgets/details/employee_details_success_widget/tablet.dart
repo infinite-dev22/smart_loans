@@ -11,8 +11,7 @@ import 'package:profile_photo/profile_photo.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/global_values.dart';
 import 'package:smart_loans/pages/clients/bloc/client_bloc/client_bloc.dart';
-import 'package:smart_loans/pages/employees/bloc/employee_bloc.dart';
-import 'package:smart_loans/pages/employees/bloc/forms/clients/employee_add_form_bloc.dart';
+import 'package:smart_loans/pages/employees/bloc/employees/employees_bloc.dart';
 import 'package:smart_loans/pages/employees/widgets/success/forms/employee_form.dart';
 import 'package:smart_loans/pages/loans/widgets/details/loan_officer_widget.dart';
 import 'package:smart_loans/pages/nations/bloc/nation_bloc.dart';
@@ -22,9 +21,12 @@ import 'package:smart_loans/widgets/title_with_actions.dart';
 import '../../../../../data_source/dummy_employee_data.dart';
 import '../../../../../widgets/subtitle_widget.dart';
 import '../../../../../widgets/title_widget.dart';
+import '../../../bloc/forms/employees/employee_add_form_bloc.dart';
 
 class EmployeeDetailsSuccessTablet extends StatefulWidget {
-  const EmployeeDetailsSuccessTablet({super.key});
+  final int employeeId;
+
+  const EmployeeDetailsSuccessTablet({super.key, required this.employeeId});
 
   @override
   State<EmployeeDetailsSuccessTablet> createState() =>
@@ -469,8 +471,8 @@ class _EmployeeDetailsSuccessTabletState
             BlocProvider<NationBloc>(
               create: (_) => NationBloc(),
             ),
-            BlocProvider<EmployeeBloc>(
-              create: (_) => EmployeeBloc(),
+            BlocProvider<EmployeesBloc>(
+              create: (_) => EmployeesBloc(),
             ),
             BlocProvider<EmployeeAddFormBloc>(
               create: (_) => EmployeeAddFormBloc(),
@@ -497,8 +499,8 @@ class _EmployeeDetailsSuccessTabletState
             BlocProvider<NationBloc>(
               create: (_) => NationBloc(),
             ),
-            BlocProvider<EmployeeBloc>(
-              create: (_) => EmployeeBloc(),
+            BlocProvider<EmployeesBloc>(
+              create: (_) => EmployeesBloc(),
             ),
             BlocProvider<EmployeeAddFormBloc>(
               create: (_) => EmployeeAddFormBloc(),

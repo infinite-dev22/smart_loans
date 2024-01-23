@@ -27,7 +27,9 @@ class EmployeeDaoImpl extends SimpleDao {
       );
 
       if (response.statusCode == 200) {
+        print(response.data);
         return response.data;
+
       } else {
         throw Error();
       }

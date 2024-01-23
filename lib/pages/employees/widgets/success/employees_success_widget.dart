@@ -5,12 +5,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_web_data_table/web_data_table.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/config/responsive.dart';
+import 'package:smart_loans/data_source/models/employee_model.dart';
 import 'package:smart_loans/global_values.dart';
 import 'package:smart_loans/pages/clients/bloc/client_bloc/client_bloc.dart';
-import 'package:smart_loans/pages/employees/bloc/employee_bloc.dart';
-import 'package:smart_loans/pages/employees/bloc/forms/clients/employee_add_form_bloc.dart';
+import 'package:smart_loans/pages/employees/bloc/employees/employees_bloc.dart';
 import 'package:smart_loans/pages/employees/widgets/success/forms/employee_form.dart';
 import 'package:smart_loans/pages/nations/bloc/nation_bloc.dart';
+
+import '../../bloc/forms/employees/employee_add_form_bloc.dart';
 
 class EmployeesSuccessWidget extends StatefulWidget {
   const EmployeesSuccessWidget({super.key});
@@ -81,14 +83,15 @@ class _EmployeesTableWidgetState extends State<EmployeesSuccessWidget> {
                 ),
               ],
               rows: context
-                  .read<EmployeeBloc>()
+                  .read<EmployeesBloc>()
                   .state
                   .employees!
                   .map((e) => e.toJson())
                   .toList(),
               selectedRowKeys: _selectedRowKeys,
               onTapRow: (rows, index) {
-                Navigator.pushNamed(context, "/employee");
+                var employee = EmployeeModel.fromJson(rows[index]);
+                Navigator.pushNamed(context, "/employee", arguments: employee.id);
               },
               onSelectRows: (keys) {
                 setState(() {
@@ -188,8 +191,8 @@ class _EmployeesTableWidgetState extends State<EmployeesSuccessWidget> {
             BlocProvider<NationBloc>(
               create: (_) => NationBloc(),
             ),
-            BlocProvider<EmployeeBloc>(
-              create: (_) => EmployeeBloc(),
+            BlocProvider<EmployeesBloc>(
+              create: (_) => EmployeesBloc(),
             ),
             BlocProvider<EmployeeAddFormBloc>(
               create: (_) => EmployeeAddFormBloc(),

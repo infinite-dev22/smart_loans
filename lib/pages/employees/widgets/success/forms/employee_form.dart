@@ -8,12 +8,14 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:smart_loans/config/responsive.dart';
 import 'package:smart_loans/global_values.dart';
 import 'package:smart_loans/init.dart';
-import 'package:smart_loans/pages/employees/bloc/employee_bloc.dart';
-import 'package:smart_loans/pages/employees/bloc/forms/clients/employee_add_form_bloc.dart';
+import 'package:smart_loans/pages/employees/bloc/employees/employees_bloc.dart';
 import 'package:smart_loans/pages/nations/bloc/nation_bloc.dart';
 import 'package:smart_loans/theme/light.dart';
 import 'package:smart_loans/widgets/custom_accordion.dart';
 import 'package:smart_loans/widgets/dialog_title_wdiget.dart';
+
+import '../../../bloc/employee/employee_bloc.dart';
+import '../../../bloc/forms/employees/employee_add_form_bloc.dart';
 
 class EmployeeForm extends StatelessWidget {
   final BuildContext? parentContext;
@@ -22,11 +24,11 @@ class EmployeeForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<EmployeeBloc, EmployeeState>(
+    return BlocListener<EmployeesBloc, EmployeesState>(
       listener: (context, state) {
-        if (state.status == EmployeeStatus.success) {
+        if (state.status == EmployeesStatus.success) {
           if (parentContext != null) {
-            BlocProvider.of<EmployeeBloc>(parentContext!).add(GetEmployees());
+            BlocProvider.of<EmployeesBloc>(parentContext!).add(GetEmployees());
           }
           Navigator.of(context).pop();
         }
@@ -332,9 +334,9 @@ class EmployeeForm extends StatelessWidget {
                         employee.dateOfBirth =
                             DateTime.tryParse(dateController.text.trim());
                         print(jsonEncode(employee.toApiJson()));
-                        context
-                            .read<EmployeeBloc>()
-                            .add(CreateEmployee(employee));
+                        // context
+                        //     .read<EmployeesBloc>()
+                        //     .add(CreateEmployee(employee));
                       },
                     ),
                   ],
